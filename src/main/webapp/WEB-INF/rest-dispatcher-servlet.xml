@@ -1,0 +1,172 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+
+    <!-- DispatcherServlet Context: defines this servlet's request-processing 
+    infrastructure -->
+    <!-- ================================================================== -->
+    <!-- Annotation Configuration -->
+    <!-- ================================================================== -->
+    <context:annotation-config />
+    <mvc:interceptors>
+        <bean class="com.taxi.service.interceptor.AuthInterceptor" />
+    </mvc:interceptors>
+    <!-- Enables the Spring MVC @Controller programming model -->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <!-- Configure bean to convert JSON to POJO and vice versa -->
+            <bean
+                class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+            </bean>
+            <!-- Configure bean to convert XML to POJO and vice versa -->
+            <bean
+                class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter" />
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter" />
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+	
+    <!-- Direct static mappings -->
+    <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/" />
+    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/" />
+
+    <!-- ================================================================== -->
+    <!-- MVC Controllers -->
+    <!-- ================================================================== -->
+    <context:component-scan
+        base-package="taxi;com.taxi;com.taxi.controller" />
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="268435456"/>
+    </bean>
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>image/jpeg</value>
+                        <value>image/png</value>
+                        <value>application/pdf</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <!-- <property name="url" value="jdbc:mysql://localhost:3306/employee_db" />
+        <property name="username" value="root" />
+        <property name="password" value="root" /> -->
+        <!-- START: FOR AWS DEPLOY -->
+        <property name="url" value="jdbc:mysql://localhost:3306/taxi" />
+        <property name="username" value="root" />
+        <property name="password" value="root" />
+        <!-- END: FOR AWS DEPLOY -->
+    </bean>
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="annotatedClasses">
+            <list>
+                <value>com.taxi.domain.User</value>
+                <value>com.taxi.domain.Countries</value>
+                <value>com.taxi.domain.AccessToken</value>
+                <value>com.taxi.domain.Cities</value>
+                <value>com.taxi.domain.Locations</value>
+                <value>com.taxi.domain.States</value>
+                <value>com.taxi.domain.DeviceTokens</value>
+                <value>com.taxi.domain.Drivers</value>
+                <value>com.taxi.domain.PricingGroups</value>
+                <value>com.taxi.domain.Vendors</value>
+                <value>com.taxi.domain.Cabs</value>
+                <value>com.taxi.domain.OrderCategory</value>
+                <value>com.taxi.domain.OrderType</value>
+                <value>com.taxi.domain.SurgePricing</value>
+                <value>com.taxi.domain.CabAttributes</value>
+                <value>com.taxi.domain.CabDocuments</value>
+                <value>com.taxi.domain.DriverAttributes</value>
+                <value>com.taxi.domain.DriverDocuments</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="txManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="persistenceExceptionTranslationPostProcessor"
+          class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+    <bean id="userDao" class="com.taxi.daoImpl.UserDaoImpl"></bean>
+    <bean id="userServices" class="com.taxi.serviceImpl.UserServicesImpl"></bean>
+    
+    <bean id="countriesDao" class="com.taxi.daoImpl.CountriesDaoImpl"></bean>
+    <bean id="countriesService" class="com.taxi.serviceImpl.CountrieServicesImpl"></bean>
+    
+    <bean id="accessTokenDao" class="com.taxi.daoImpl.AccessTokenDaoImpl"></bean>
+    <bean id="accessTokenService" class="com.taxi.serviceImpl.AccessTokenServicesImpl"></bean>
+    
+    <bean id="cabsDao" class="com.taxi.daoImpl.CabsDaoImpl"></bean>
+    <bean id="cabsService" class="com.taxi.serviceImpl.CabsServicesImpl"></bean>
+    
+    <bean id="citiesDao" class="com.taxi.daoImpl.CitiesDaoImpl"></bean>
+    <bean id="citiesService" class="com.taxi.serviceImpl.CitiesServicesImpl"></bean>
+    
+    <bean id="driversDao" class="com.taxi.daoImpl.DriversDaoImpl"></bean>
+    <bean id="driversService" class="com.taxi.serviceImpl.DriversServicesImpl"></bean>
+    
+    <bean id="deviceTokensDao" class="com.taxi.daoImpl.DeviceTokensDaoImpl"></bean>
+    <bean id="deviceTokensService" class="com.taxi.serviceImpl.DeviceTokensServicesImpl"></bean>
+    
+    <bean id="locationsDao" class="com.taxi.daoImpl.LocationsDaoImpl"></bean>
+    <bean id="locationsService" class="com.taxi.serviceImpl.LocationsServicesImpl"></bean>
+    
+    <bean id="pricingGroupsDao" class="com.taxi.daoImpl.PricingGroupsDaoImpl"></bean>
+    <bean id="pricingGroupsService" class="com.taxi.serviceImpl.PricingGroupsServicesImpl"></bean>
+        
+    <bean id="vendorsDao" class="com.taxi.daoImpl.VendorsDaoImpl"></bean>
+    <bean id="vendorsService" class="com.taxi.serviceImpl.VendorsServicesImpl"></bean>
+    
+    <bean id="orderCategoryDao" class="com.taxi.daoImpl.OrderCategoryDaoImpl"></bean>
+    <bean id="orderCategoryService" class="com.taxi.serviceImpl.OrderCategoryServicesImpl"></bean>
+    
+    <bean id="orderTypeDao" class="com.taxi.daoImpl.OrderTypeDaoImpl"></bean>
+    <bean id="orderTypeService" class="com.taxi.serviceImpl.OrderTypeServicesImpl"></bean>
+    
+    <bean id="surgePricingDao" class="com.taxi.daoImpl.SurgePricingDaoImpl"></bean>
+    <bean id="surgePricingService" class="com.taxi.serviceImpl.SurgePricingServicesImpl"></bean>
+    
+    <bean id="cabsAttributesDao" class="com.taxi.daoImpl.CabsAtributesDaoImpl"></bean>
+    <bean id="cabsAttributesService" class="com.taxi.serviceImpl.CabsAttributesServicesImpl"></bean>
+    
+    <bean id="cabsDocumentsDao" class="com.taxi.daoImpl.CabsDocumentsDaoImpl"></bean>
+    <bean id="cabsDocumentsService" class="com.taxi.serviceImpl.CabsDocumentsServicesImpl"></bean>
+        
+    <bean id="driversAttributesDao" class="com.taxi.daoImpl.DriversAttributesDaoImpl"></bean>
+    <bean id="driversAttributesService" class="com.taxi.serviceImpl.DriversAttributesServicesImpl"></bean>
+    
+    <bean id="driversDocumentsDao" class="com.taxi.daoImpl.DriversDocumentsDaoImpl"></bean>
+    <bean id="driversDocumentsService" class="com.taxi.serviceImpl.DriversDocumentsServicesImpl"></bean>
+        
+    <bean id="stateDao" class="com.taxi.daoImpl.StateDaoImpl"></bean>
+    <bean id="stateService" class="com.taxi.serviceImpl.StateServicesImpl"></bean>
+    <bean id="messageSource"
+          class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <value>locale\messages</value>
+        </property>
+    </bean>
+</beans>
