@@ -269,7 +269,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public boolean changePassword(String newPwd, String emailId, String otpValue) throws Exception {
+    public boolean forgotPassword(String newPwd, String emailId, String otpValue) throws Exception {
         boolean isUpdate = false;
         try {
             session = sessionFactory.openSession();
@@ -377,5 +377,29 @@ public class UserDaoImpl implements UserDao {
             }
         }
         return userList;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public boolean changePassword(String newPwd, String emailId) throws Exception {
+        boolean isUpdate = false;
+        try {
+            session = sessionFactory.openSession();
+            tx = session.getTransaction();
+            session.beginTransaction();
+            String hql = "UPDATE User user set user.password =:newPwd "
+                    + "WHERE user.email =:emailId ";
+            Query query = session.createQuery(hql);
+            query.setParameter("newPwd", newPwd);
+            query.setParameter("emailId", emailId);
+            tx.commit();
+        } catch (HibernateException e) {
+            LOG.error("Exception occured while getting changePassword {}" + e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return isUpdate;
     }
 }

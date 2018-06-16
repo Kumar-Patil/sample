@@ -49,6 +49,7 @@ public class Constants {
         urls.add("api-docs");
         urls.add("security");
         urls.add("login/user");
+        urls.add("login/login");
         urls.add("sendOTP");
         urls.add("otpVerification");
         urls.add("changePassword");

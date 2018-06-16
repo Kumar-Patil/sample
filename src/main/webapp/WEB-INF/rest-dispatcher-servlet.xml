@@ -61,9 +61,9 @@
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <!-- <property name="url" value="jdbc:mysql://localhost:3306/employee_db" />
+        <!-- <property name="url" value="jdbc:mysql://root.cjt01miff9hv.us-east-2.rds.amazonaws.com:3306/taxi" />
         <property name="username" value="root" />
-        <property name="password" value="root" /> -->
+        <property name="password" value="bmcAdm1n" /> -->
         <!-- START: FOR AWS DEPLOY -->
         <property name="url" value="jdbc:mysql://localhost:3306/taxi" />
         <property name="username" value="root" />

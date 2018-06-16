@@ -24,11 +24,13 @@ public interface UserService {
 
     public boolean OTPVerification(String emailId, String OTPValue) throws Exception;
 
-    public boolean changePassword(String newPwd, String emailId, String otpValue) throws Exception;
+    public boolean forgotPassword(String newPwd, String emailId, String otpValue) throws Exception;
 
     public boolean updateStatus(long userId) throws Exception;
 
     public List<User> search(String searchVal) throws Exception;
 
     public List<User> getAll() throws Exception;
+    
+    public boolean changePassword(String newPwd, String emailId) throws Exception;
 }

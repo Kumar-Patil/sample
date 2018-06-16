@@ -1,7 +1,6 @@
 package com.taxi.daoImpl;
 
 import com.taxi.dao.*;
-import static com.taxi.daoImpl.UserDaoImpl.LOG;
 import com.taxi.domain.AccessToken;
 import java.util.List;
 

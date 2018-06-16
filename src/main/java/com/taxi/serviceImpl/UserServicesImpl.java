@@ -59,8 +59,8 @@ public class UserServicesImpl implements UserService {
     }
 
     @Override
-    public boolean changePassword(String newPwd, String emailId, String otpValue) throws Exception {
-        return userDao.changePassword(newPwd, emailId, otpValue);
+    public boolean forgotPassword(String newPwd, String emailId, String otpValue) throws Exception {
+        return userDao.forgotPassword(newPwd, emailId, otpValue);
     }
 
     @Override
@@ -76,6 +76,11 @@ public class UserServicesImpl implements UserService {
     @Override
     public List<User> getAll() throws Exception {
         return userDao.getAll();
+    }
+
+    @Override
+    public boolean changePassword(String newPwd, String emailId) throws Exception {
+        return userDao.changePassword(newPwd, emailId);
     }
 
 }
