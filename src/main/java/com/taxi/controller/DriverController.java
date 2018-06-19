@@ -32,6 +32,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,6 +48,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Api(value = "driver")
 @Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 @Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+@CrossOrigin
 public class DriverController {
 
     static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(DriverController.class);
@@ -163,6 +165,7 @@ public class DriverController {
     @ApiOperation(value = "All Driver List", notes = "Retrieves a List of drivers", response = DriversTo.class)
     @RequestMapping(value = "/list", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE,
         MediaType.APPLICATION_JSON_VALUE})
+    @CrossOrigin
     public ResponseEntity<?> driverList(@RequestParam("userId") long userId) {
         try {
             return new ResponseEntity<>(driversService.list(), HttpStatus.OK);

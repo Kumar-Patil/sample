@@ -203,4 +203,30 @@ public class CommonController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/fileHandler", method = RequestMethod.POST)
+    public ResponseEntity<?> fileHandler(@RequestParam("file") MultipartFile file) {
+        if (!file.isEmpty()) {
+            try {
+                byte[] bytes = file.getBytes();
+                String rootPath = System.getProperty("catalina.home");
+                File dir = new File(rootPath + File.separator + "images");
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                String fileName = System.currentTimeMillis() + file.getOriginalFilename();
+                File serverFile = new File(dir.getAbsolutePath()
+                        + File.separator + fileName);
+                try (BufferedOutputStream stream = new BufferedOutputStream(
+                        new FileOutputStream(serverFile))) {
+                    stream.write(bytes);
+                }
+                return new ResponseEntity<>(new fileUpload(fileName), HttpStatus.OK);
+            } catch (IOException e) {
+                return new ResponseEntity<>("You failed to upload " + "" + " => " + e.getMessage(), HttpStatus.OK);
+            }
+        } else {
+            return new ResponseEntity<>("You failed to upload " + file.getOriginalFilename()
+                    + " because the file was empty.", HttpStatus.OK);
+        }
+    }
 }

@@ -18,7 +18,7 @@ public class Constants {
     public static String SUCESS_RESPONCE = "success";
     public static int STATUS_ACTVIE = 1;
     public static int STATUS_INACTIVE = 0;
-
+    public static String UNAUTHORIZED = "unauthorized";
     /**
      *
      * @return
@@ -55,6 +55,7 @@ public class Constants {
         urls.add("changePassword");
         urls.add("swagger-ui.html");
         urls.add("swagger-resources");
+        //urls.add("common/fileHandler");
         return urls;
     }
 
