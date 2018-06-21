@@ -201,7 +201,7 @@ public class DriverController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @ApiOperation(value = "Driver Details", notes = "Retrieves a driver details", response = DriversTo.class)
+    @ApiOperation(value = "Driver Details for edit", notes = "Retrieves a driver details for edit", response = DriverRequestMapper.class)
     @RequestMapping(value = "/details", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE,
         MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
