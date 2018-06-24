@@ -38,6 +38,10 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
 
+    //Additional Cloumns
+    private Timestamp hireDate;
+    private Timestamp hireEndDate;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ_USER_DETAILS")
     @SequenceGenerator(name = "SEQ_USER_DETAILS", sequenceName = "user_id_seq")
@@ -178,6 +182,24 @@ public class User implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @Column(name = "hire_date", nullable = true)
+    public Timestamp getHireDate() {
+        return hireDate;
+    }
+
+    public void setHireDate(Timestamp hireDate) {
+        this.hireDate = hireDate;
+    }
+
+    @Column(name = "hire_end_date", nullable = true)
+    public Timestamp getHireEndDate() {
+        return hireEndDate;
+    }
+
+    public void setHireEndDate(Timestamp hireEndDate) {
+        this.hireEndDate = hireEndDate;
     }
 
     @Override

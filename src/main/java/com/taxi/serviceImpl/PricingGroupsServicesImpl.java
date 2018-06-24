@@ -1,6 +1,5 @@
 package com.taxi.serviceImpl;
 
-import com.taxi.RequestMapper.PricingGroupsMapping;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,7 @@ import com.taxi.dao.PricingGroupsDao;
 import com.taxi.domain.PricingGroups;
 import com.taxi.service.PricingGroupsService;
 import com.taxi.to.PricingGroupsTo;
+import com.taxi.to.PricingTo;
 
 public class PricingGroupsServicesImpl implements PricingGroupsService {
 
@@ -36,7 +36,7 @@ public class PricingGroupsServicesImpl implements PricingGroupsService {
     }
 
     @Override
-    public List<PricingGroupsMapping> list() throws Exception {
+    public List<PricingTo> list() throws Exception {
         return pricingGroupsDao.list();
     }
 

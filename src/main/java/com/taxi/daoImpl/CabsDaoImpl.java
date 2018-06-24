@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.taxi.to.CabsTo;
+import com.taxi.util.Constants;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -69,7 +70,7 @@ public class CabsDaoImpl implements CabsDao {
                             cabs.getUpdatedAt(), cabs.getDeletedAt(),
                             cabs.getCabId(), cabs.getCabType(),
                             cabs.getCabModel(), cabs.getCabColor(),
-                            cabs.getCabNo(), cabs.getCabRegistrationNo(), cabs.getStatus(),
+                            cabs.getCabNo(), cabs.getCabRegistrationNo(), Constants.status().get(cabs.getStatus()),
                             cabs.getVendors().getVendorId(), cabs.getPricingGroups().getPricingId());
                 }
             }
@@ -104,7 +105,7 @@ public class CabsDaoImpl implements CabsDao {
                             cabs.getUpdatedAt(), cabs.getDeletedAt(),
                             cabs.getCabId(), cabs.getCabType(),
                             cabs.getCabModel(), cabs.getCabColor(),
-                            cabs.getCabNo(), cabs.getCabRegistrationNo(), cabs.getStatus(),
+                            cabs.getCabNo(), cabs.getCabRegistrationNo(), Constants.status().get(cabs.getStatus()),
                             cabs.getVendors().getVendorId(), cabs.getPricingGroups().getPricingId()));
                 }
             }
@@ -159,7 +160,7 @@ public class CabsDaoImpl implements CabsDao {
                             cabs.getUpdatedAt(), cabs.getDeletedAt(),
                             cabs.getCabId(), cabs.getCabType(),
                             cabs.getCabModel(), cabs.getCabColor(),
-                            cabs.getCabNo(), cabs.getCabRegistrationNo(), cabs.getStatus(),
+                            cabs.getCabNo(), cabs.getCabRegistrationNo(), Constants.status().get(cabs.getStatus()),
                             cabs.getVendors().getVendorId(), cabs.getPricingGroups().getPricingId());
                 }
             }
@@ -227,7 +228,7 @@ public class CabsDaoImpl implements CabsDao {
                             cabs.getUpdatedAt(), cabs.getDeletedAt(),
                             cabs.getCabId(), cabs.getCabType(),
                             cabs.getCabModel(), cabs.getCabColor(),
-                            cabs.getCabNo(), cabs.getCabRegistrationNo(), cabs.getStatus(),
+                            cabs.getCabNo(), cabs.getCabRegistrationNo(), Constants.status().get(cabs.getStatus()),
                             cabs.getVendors().getVendorId(), cabs.getPricingGroups().getPricingId()));
                 }
             }
@@ -263,7 +264,7 @@ public class CabsDaoImpl implements CabsDao {
                             cabs.getUpdatedAt(), cabs.getDeletedAt(),
                             cabs.getCabId(), cabs.getCabType(),
                             cabs.getCabModel(), cabs.getCabColor(),
-                            cabs.getCabNo(), cabs.getCabRegistrationNo(), cabs.getStatus(),
+                            cabs.getCabNo(), cabs.getCabRegistrationNo(), Constants.status().get(cabs.getStatus()),
                             cabs.getVendors().getVendorId(), cabs.getPricingGroups().getPricingId()));
                 }
             }

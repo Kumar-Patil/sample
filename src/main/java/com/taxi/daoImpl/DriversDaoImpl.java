@@ -5,6 +5,7 @@ import com.taxi.dao.*;
 import com.taxi.domain.Drivers;
 import com.taxi.to.DriversTo;
 import com.taxi.to.ViewDriver;
+import com.taxi.util.Constants;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -141,7 +142,7 @@ public class DriversDaoImpl implements DriversDao {
             driverList = query.list();
             for (Drivers drivers1 : driverList) {
                 drivers.add(new DriversTo(drivers1.getFirstName(), drivers1.getLastName(),
-                        drivers1.getSex(), drivers1.getStatus(), drivers1.getMobileNo(), drivers1.getEmail(), drivers1.getDriverId()));
+                        drivers1.getSex(), Constants.status().get(drivers1.getStatus()), drivers1.getMobileNo(), drivers1.getEmail(), drivers1.getDriverId()));
             }
             tx.commit();
         } catch (HibernateException e) {
@@ -291,7 +292,7 @@ public class DriversDaoImpl implements DriversDao {
             driverList = query.list();
             for (Drivers drivers1 : driverList) {
                 drivers.add(new DriversTo(drivers1.getFirstName(), drivers1.getLastName(),
-                        drivers1.getSex(), drivers1.getStatus(), drivers1.getMobileNo(), drivers1.getEmail(), drivers1.getDriverId()));
+                        drivers1.getSex(), Constants.status().get(drivers1.getStatus()), drivers1.getMobileNo(), drivers1.getEmail(), drivers1.getDriverId()));
             }
             tx.commit();
         } catch (HibernateException e) {
@@ -348,7 +349,7 @@ public class DriversDaoImpl implements DriversDao {
             driverList = query.list();
             for (Drivers drivers1 : driverList) {
                 drivers.add(new DriversTo(drivers1.getFirstName(), drivers1.getLastName(),
-                        drivers1.getSex(), drivers1.getStatus(), drivers1.getMobileNo(), drivers1.getEmail(), drivers1.getDriverId()));
+                        drivers1.getSex(), Constants.status().get(drivers1.getStatus()), drivers1.getMobileNo(), drivers1.getEmail(), drivers1.getDriverId()));
             }
             tx.commit();
         } catch (HibernateException e) {

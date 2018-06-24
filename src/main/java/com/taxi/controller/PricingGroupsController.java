@@ -8,8 +8,8 @@ import com.taxi.service.AccessTokenService;
 import com.taxi.service.PricingGroupsService;
 import com.taxi.service.VendorsService;
 import com.taxi.to.PricingGroupsTo;
+import com.taxi.to.PricingTo;
 import com.taxi.to.Response;
-import com.taxi.to.VendorsTo;
 import com.taxi.util.Constants;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -128,7 +128,7 @@ public class PricingGroupsController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "All pricing List", notes = "Retrieves a List of pricing", response = PricingGroupsMapping.class)
+    @ApiOperation(value = "All pricing List", notes = "Retrieves a List of pricing", response = PricingTo.class)
     @RequestMapping(value = "/list", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE,
         MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> priceDetails(@RequestParam("userId") long userId) {
@@ -153,7 +153,7 @@ public class PricingGroupsController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @ApiOperation(value = "Search pricing Details", notes = "Search pricing Details", response = VendorsTo.class)
+    @ApiOperation(value = "Search pricing Details", notes = "Search pricing Details", response = PricingTo.class)
     @RequestMapping(value = "/search", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> priceSearch(@RequestParam("userId") long userId, @RequestBody SearchPriceRequestMapping searchPriceRequestMapping) {
         try {

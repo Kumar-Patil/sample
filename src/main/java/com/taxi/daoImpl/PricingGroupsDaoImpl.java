@@ -2,12 +2,10 @@ package com.taxi.daoImpl;
 
 import com.taxi.RequestMapper.PricingGroupsMapping;
 import com.taxi.dao.*;
-import static com.taxi.daoImpl.VendorsDaoImpl.LOG;
 import com.taxi.domain.Cabs;
 import com.taxi.domain.PricingGroups;
-import com.taxi.domain.Vendors;
 import com.taxi.to.PricingGroupsTo;
-import com.taxi.to.VendorsTo;
+import com.taxi.to.PricingTo;
 import com.taxi.util.Constants;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -87,8 +85,8 @@ public class PricingGroupsDaoImpl implements PricingGroupsDao {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<PricingGroupsMapping> list() throws Exception {
-        List<PricingGroupsMapping> pricingGroupsLists = new ArrayList<>();
+    public List<PricingTo> list() throws Exception {
+        List<PricingTo> pricingGroupsLists = new ArrayList<>();
         try {
             session = sessionFactory.openSession();
             tx = session.getTransaction();
@@ -102,8 +100,8 @@ public class PricingGroupsDaoImpl implements PricingGroupsDao {
             tx.commit();
             if (pricingGroupsList.size() > 0) {
                 for (PricingGroups pricingGroups : pricingGroupsList) {
-                    pricingGroupsLists.add(new PricingGroupsMapping(pricingGroups.getPricingId(),
-                            pricingGroups.getStatus(), pricingGroups.getPricePerUnitDistance(),
+                    pricingGroupsLists.add(new PricingTo(pricingGroups.getPricingId(),
+                            Constants.status().get(pricingGroups.getStatus()), pricingGroups.getPricePerUnitDistance(),
                             pricingGroups.getPricePerMinute(),
                             pricingGroups.getVendors().getVendorId(),
                             pricingGroups.getName(), pricingGroups.getVendors().getFirstName()));
@@ -215,8 +213,8 @@ public class PricingGroupsDaoImpl implements PricingGroupsDao {
             List<PricingGroups> pricingGroupsList = null;
             String hql = null;
             hql = "from PricingGroups pricingGroups where pricingGroups.pricePerUnitDistance like "
-                    + "'" + searchVal + "%' " +
-                    "or pricingGroups.name like '" + searchVal + "%' ";
+                    + "'" + searchVal + "%' "
+                    + "or pricingGroups.name like '" + searchVal + "%' ";
             Query query = (Query) session.createQuery(hql);
             pricingGroupsList = query.list();
             tx.commit();

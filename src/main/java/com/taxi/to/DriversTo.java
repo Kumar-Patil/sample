@@ -8,7 +8,7 @@ public class DriversTo {
 
     private String firstName;
     private String lastName;
-    private int status;
+    private String status;
     private String mobileNo;
     private String email;
     private long driverId;
@@ -33,7 +33,7 @@ public class DriversTo {
     public DriversTo() {
     }
 
-    public DriversTo(String firstName, String lastName, String sex, int status, String mobileNo, String email, long driverId) {
+    public DriversTo(String firstName, String lastName, String sex, String status, String mobileNo, String email, long driverId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.sex = sex;
@@ -59,11 +59,11 @@ public class DriversTo {
         this.lastName = lastName;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

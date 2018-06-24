@@ -17,11 +17,11 @@ public class CabsTo {
     private String cabColor;
     private String cabNo;
     private String cabRegistrationNo;
-    private int status;
+    private String status;
     private long vendorId;
     private long pricingId;
 
-    public CabsTo(Timestamp createdAt, Timestamp updatedAt, Timestamp deletedAt, Long cabId, String cabType, String cabModel, String cabColor, String cabNo, String cabRegistrationNo, int status, long vendorId, long pricingId) {
+    public CabsTo(Timestamp createdAt, Timestamp updatedAt, Timestamp deletedAt, Long cabId, String cabType, String cabModel, String cabColor, String cabNo, String cabRegistrationNo, String status, long vendorId, long pricingId) {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
@@ -108,11 +108,11 @@ public class CabsTo {
         this.cabRegistrationNo = cabRegistrationNo;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

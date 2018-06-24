@@ -12,7 +12,17 @@ public class UserDetails {
     private String email;
     private String firstName;
     private String lastName;
+    private String status;
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    
     public String getFirstName() {
         return firstName;
     }
@@ -61,13 +71,16 @@ public class UserDetails {
         this.email = email;
     }
 
-    public UserDetails(long id, String role, String phone, String email, String firstName, String lastName) {
+    public UserDetails(long id, String role, String phone, String email, String firstName, String lastName, String status) {
         this.id = id;
         this.role = role;
         this.phone = phone;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.status = status;
     }
+
+    
 
 }

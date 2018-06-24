@@ -137,7 +137,7 @@ public class UserController {
             List<User> users = null;
             users = userServices.search(searchRequestMapping.getSearch());
             for (User user : users) {
-                details.add(new UserDetails(user.getId(), user.getRole(), user.getPhone(), user.getEmail(), user.getFirstName(), user.getLastName()));
+                details.add(new UserDetails(user.getId(), user.getRole(), user.getPhone(), user.getEmail(), user.getFirstName(), user.getLastName(), Constants.status().get(user.getStatus())));
             }
 
         } catch (Exception ex) {
@@ -174,7 +174,7 @@ public class UserController {
             List<User> users = null;
             users = userServices.list();
             for (User user : users) {
-                details.add(new UserDetails(user.getId(), user.getRole(), user.getPhone(), user.getEmail(), user.getFirstName(), user.getLastName()));
+                details.add(new UserDetails(user.getId(), user.getRole(), user.getPhone(), user.getEmail(), user.getFirstName(), user.getLastName(), Constants.status().get(user.getStatus())));
             }
         } catch (Exception ex) {
             LOG.error("Exception occured while search records {}" + ex.getMessage());
