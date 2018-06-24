@@ -41,6 +41,8 @@ public class User implements Serializable {
     //Additional Cloumns
     private Timestamp hireDate;
     private Timestamp hireEndDate;
+    private String otherphone;
+    private String sex;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ_USER_DETAILS")
@@ -200,6 +202,24 @@ public class User implements Serializable {
 
     public void setHireEndDate(Timestamp hireEndDate) {
         this.hireEndDate = hireEndDate;
+    }
+
+    @Column(name = "otherphone", nullable = true)
+    public String getOtherphone() {
+        return otherphone;
+    }
+
+    public void setOtherphone(String otherphone) {
+        this.otherphone = otherphone;
+    }
+
+    @Column(name = "sex", nullable = true)
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     @Override

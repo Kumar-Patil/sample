@@ -140,6 +140,50 @@ public class UserRequestMapper {
     /* Added new column */
     private Timestamp hireDate;
     private Timestamp hireEndDate;
+    private String otherphone;
+    private String sex;
+    private String name;
+    private String ifsc;
+    private String accountNo;
+    
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getIfsc() {
+        return ifsc;
+    }
+
+    public void setIfsc(String ifsc) {
+        this.ifsc = ifsc;
+    }
+
+    public String getAccountNo() {
+        return accountNo;
+    }
+
+    public void setAccountNo(String accountNo) {
+        this.accountNo = accountNo;
+    }
+    public String getOtherphone() {
+        return otherphone;
+    }
+
+    public void setOtherphone(String otherphone) {
+        this.otherphone = otherphone;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
     
     /* Documents */
     private String userPic;
