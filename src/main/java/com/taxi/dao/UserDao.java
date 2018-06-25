@@ -1,5 +1,6 @@
 package com.taxi.dao;
 
+import com.taxi.RequestMapper.UserRequestMapper;
 import java.util.List;
 
 import com.taxi.domain.User;
@@ -31,7 +32,10 @@ public interface UserDao {
     public List<User> search(String searchVal) throws Exception;
 
     public List<User> getAll() throws Exception;
-    
+
     public boolean changePassword(String newPwd, String emailId) throws Exception;
 
+    public boolean update(User user) throws Exception;
+
+    UserRequestMapper details(long id) throws Exception;
 }

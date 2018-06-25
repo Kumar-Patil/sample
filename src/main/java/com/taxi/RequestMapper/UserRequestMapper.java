@@ -254,4 +254,5 @@ public class UserRequestMapper {
     private String phone;
     private String email;
     private String password;
+    
 }

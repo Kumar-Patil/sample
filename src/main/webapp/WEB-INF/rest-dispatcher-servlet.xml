@@ -93,6 +93,8 @@
                 <value>com.taxi.domain.CabDocuments</value>
                 <value>com.taxi.domain.DriverAttributes</value>
                 <value>com.taxi.domain.DriverDocuments</value>
+                <value>com.taxi.domain.UserDocuments</value>
+                <value>com.taxi.domain.BankAccountDetails</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -163,6 +165,13 @@
         
     <bean id="stateDao" class="com.taxi.daoImpl.StateDaoImpl"></bean>
     <bean id="stateService" class="com.taxi.serviceImpl.StateServicesImpl"></bean>
+    
+    <bean id="bankAccountDetailsDao" class="com.taxi.daoImpl.BankAccountDetailsDaoImpl"></bean>
+    <bean id="bankAccountDetailsService" class="com.taxi.serviceImpl.BankAccountDetailsServicesImpl"></bean>
+    
+    <bean id="userDocumentsDao" class="com.taxi.daoImpl.UsersDocumentsDaoImpl"></bean>
+    <bean id="usersDocumentsService" class="com.taxi.serviceImpl.UsersDocumentsServicesImpl"></bean>
+    
     <bean id="messageSource"
           class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basenames">

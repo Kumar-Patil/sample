@@ -31,9 +31,10 @@ public class UserDocuments implements Serializable {
         return userId;
     }
 
-    public void setDocumentId(Long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
+
     private String userPic;
     private String proofOfAddress;
     private String aggrement1;
@@ -115,7 +116,7 @@ public class UserDocuments implements Serializable {
         this.userPic = userPic;
     }
 
-    @Column(name = "aggrement1", nullable = true)
+    @Column(name = "agreement1", nullable = true)
     public String getAggrement1() {
         return aggrement1;
     }
@@ -124,7 +125,7 @@ public class UserDocuments implements Serializable {
         this.aggrement1 = aggrement1;
     }
 
-    @Column(name = "aggrement2", nullable = true)
+    @Column(name = "agreement2", nullable = true)
     public String getAggrement2() {
         return aggrement2;
     }
@@ -133,7 +134,7 @@ public class UserDocuments implements Serializable {
         this.aggrement2 = aggrement2;
     }
 
-    @Column(name = "aggrement3", nullable = true)
+    @Column(name = "agreement3", nullable = true)
     public String getAggrement3() {
         return aggrement3;
     }
@@ -142,7 +143,7 @@ public class UserDocuments implements Serializable {
         this.aggrement3 = aggrement3;
     }
 
-    @Column(name = "aggrement4", nullable = true)
+    @Column(name = "agreement4", nullable = true)
     public String getAggrement4() {
         return aggrement4;
     }

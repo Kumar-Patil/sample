@@ -1,5 +1,6 @@
 package com.taxi.serviceImpl;
 
+import com.taxi.RequestMapper.UserRequestMapper;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +82,16 @@ public class UserServicesImpl implements UserService {
     @Override
     public boolean changePassword(String newPwd, String emailId) throws Exception {
         return userDao.changePassword(newPwd, emailId);
+    }
+
+    @Override
+    public boolean update(User user) throws Exception {
+        return userDao.update(user);
+    }
+
+    @Override
+    public UserRequestMapper details(long id) throws Exception {
+        return userDao.details(id);
     }
 
 }

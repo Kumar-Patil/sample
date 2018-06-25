@@ -23,6 +23,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -228,5 +230,23 @@ public class CommonController {
             return new ResponseEntity<>("You failed to upload " + file.getOriginalFilename()
                     + " because the file was empty.", HttpStatus.OK);
         }
+    }
+    
+    @ApiOperation(value = "cityList List", notes = "cityList List", response = City.class)
+    @RequestMapping(value = "/AllData", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE,
+        MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> allList(@RequestParam("userId") long userId) {
+        Response response = null;
+        try {
+            Map m = new HashMap<Object, Object>();
+            m.put("cityList",citiesService.list());
+            m.put("statesList",stateService.list());
+            m.put("countryList",countriesService.list());
+            return new ResponseEntity<>(m, HttpStatus.OK);
+
+        } catch (Exception e) {
+            LOG.error("Exception occured in logout {}" + e.toString());
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

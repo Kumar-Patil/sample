@@ -2,9 +2,16 @@ package com.taxi.controller;
 
 import com.taxi.RequestMapper.SearchRequestMapping;
 import com.taxi.RequestMapper.UserRequestMapper;
+import com.taxi.TransferObject.UserObject;
+import com.taxi.domain.BankAccountDetails;
+import com.taxi.domain.Locations;
 import com.taxi.domain.User;
+import com.taxi.domain.UserDocuments;
 import com.taxi.service.AccessTokenService;
+import com.taxi.service.BankAccountDetailsService;
+import com.taxi.service.LocationsService;
 import com.taxi.service.UserService;
+import com.taxi.service.UsersDocumentsService;
 import com.taxi.to.Response;
 import com.taxi.to.UserDetails;
 import com.taxi.util.Constants;
@@ -16,14 +23,12 @@ import java.util.Calendar;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,6 +51,15 @@ public class UserController {
 
     @Autowired
     AccessTokenService accessTokenService;
+
+    @Autowired
+    LocationsService locationsService;
+
+    @Autowired
+    BankAccountDetailsService accountDetailsService;
+
+    @Autowired
+    UsersDocumentsService documentsService;
 
     @ApiOperation(value = "User exist", notes = "User exist", response = Response.class)
     @RequestMapping(value = "/exist", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE,
@@ -70,8 +84,40 @@ public class UserController {
     public ResponseEntity<?> addUser(@RequestParam("userId") long userId, @RequestBody UserRequestMapper userRequestMapper) {
         Response response = null;
         try {
+            Locations locations = new Locations();
+            locations = UserObject.userObject(true, userRequestMapper);
+            Long locationId = locationsService.add(locations);
+            locations.setLocationId(locationId);
+
             Calendar calendar = Calendar.getInstance();
             Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
+            //Bank Details
+            BankAccountDetails bankAccountDetails = new BankAccountDetails();
+            bankAccountDetails.setAccountNo(userRequestMapper.getAccountNo());
+            bankAccountDetails.setAdddress(userRequestMapper.getAddress());
+            bankAccountDetails.setAdddress1(userRequestMapper.getAddress());
+            bankAccountDetails.setAdddress2(userRequestMapper.getAddress());
+            bankAccountDetails.setCreatedAt(currentTimestamp);
+            bankAccountDetails.setUpdatedAt(currentTimestamp);
+            bankAccountDetails.setIfsc(userRequestMapper.getIfsc());
+            bankAccountDetails.setName(userRequestMapper.getName());
+            bankAccountDetails.setStatus(userRequestMapper.getStatus());
+            Long id = accountDetailsService.add(bankAccountDetails);
+            bankAccountDetails.setAccountId(id);
+            //Dcoumnets Details
+            UserDocuments UserDocuments = new UserDocuments();
+            UserDocuments.setAggrement1(userRequestMapper.getAggrement1());
+            UserDocuments.setAggrement2(userRequestMapper.getAggrement2());
+            UserDocuments.setAggrement3(userRequestMapper.getAggrement3());
+            UserDocuments.setAggrement4(userRequestMapper.getAggrement4());
+            UserDocuments.setCreatedAt(currentTimestamp);
+            UserDocuments.setProofOfAddress(userRequestMapper.getProofOfAddress());
+            UserDocuments.setStatus(userRequestMapper.getStatus());
+            UserDocuments.setUpdatedAt(currentTimestamp);
+            UserDocuments.setUserPic(userRequestMapper.getUserPic());
+            Long documentId = documentsService.add(UserDocuments);
+            UserDocuments.setUserId(documentId);
+
             User user = new User();
             user.setEmail(userRequestMapper.getEmail());
             user.setCreatedAt(currentTimestamp);
@@ -79,11 +125,20 @@ public class UserController {
             user.setPassword(userRequestMapper.getPassword());
             user.setPhone(userRequestMapper.getPhone());
             user.setRole(userRequestMapper.getRole());
-            user.setStatus(1);
+            user.setStatus(userRequestMapper.getStatus());
             user.setFirstName(userRequestMapper.getFirstName());
             user.setLastName(userRequestMapper.getLastName());
             user.setEmailVerified(0);
             user.setPhoneVerified(0);
+            //Additional Fields
+            user.setHireDate(currentTimestamp);
+            user.setHireEndDate(currentTimestamp);
+            user.setSex(userRequestMapper.getSex());
+            user.setOtherphone(userRequestMapper.getOtherphone());
+            //Mapping setting here
+            user.setUserDocuments(UserDocuments);
+            user.setAccountDetails(bankAccountDetails);
+            user.setLocations(locations);
             boolean isUserAdded = userServices.add(user);
             if (isUserAdded) {
                 response = new Response(Constants.SUCESS_RESPONCE, "yes");
@@ -105,18 +160,60 @@ public class UserController {
             Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
             User user = new User();
             User userDetails = userServices.findById(userRequestMapper.getId());
+            Locations locations = new Locations();
+            locations = UserObject.userObject(true, userRequestMapper);
+            locations.setLocationId(userDetails.getLocations().getLocationId());
+            locationsService.update(locations);
+
+            //Bank Details
+            BankAccountDetails bankAccountDetails = new BankAccountDetails();
+            bankAccountDetails.setAccountNo(userRequestMapper.getAccountNo());
+            bankAccountDetails.setAdddress(userRequestMapper.getAddress());
+            bankAccountDetails.setAdddress1(userRequestMapper.getAddress());
+            bankAccountDetails.setAdddress2(userRequestMapper.getAddress());
+            bankAccountDetails.setCreatedAt(currentTimestamp);
+            bankAccountDetails.setUpdatedAt(currentTimestamp);
+            bankAccountDetails.setIfsc(userRequestMapper.getIfsc());
+            bankAccountDetails.setName(userRequestMapper.getName());
+            bankAccountDetails.setStatus(userRequestMapper.getStatus());
+            bankAccountDetails.setAccountId(userDetails.getAccountDetails().getAccountId());
+            accountDetailsService.update(bankAccountDetails);
+
+            //Dcoumnets Details
+            UserDocuments UserDocuments = new UserDocuments();
+            UserDocuments.setAggrement1(userRequestMapper.getAggrement1());
+            UserDocuments.setAggrement2(userRequestMapper.getAggrement2());
+            UserDocuments.setAggrement3(userRequestMapper.getAggrement3());
+            UserDocuments.setAggrement4(userRequestMapper.getAggrement4());
+            UserDocuments.setCreatedAt(currentTimestamp);
+            UserDocuments.setProofOfAddress(userRequestMapper.getProofOfAddress());
+            UserDocuments.setStatus(userRequestMapper.getStatus());
+            UserDocuments.setUpdatedAt(currentTimestamp);
+            UserDocuments.setUserPic(userRequestMapper.getUserPic());
+            UserDocuments.setUserId(userDetails.getUserDocuments().getUserId());
+            documentsService.update(UserDocuments);
+
             user.setEmail(userRequestMapper.getEmail());
-            user.setCreatedAt(userDetails.getDeletedAt());
+            user.setCreatedAt((Timestamp) userDetails.getCreatedAt());
             user.setUpdatedAt(currentTimestamp);
             user.setPassword(userRequestMapper.getPassword());
             user.setPhone(userRequestMapper.getPhone());
             user.setRole(userRequestMapper.getRole());
-            user.setStatus(1);
-            user.setId(userRequestMapper.getId());
+            user.setStatus(userRequestMapper.getStatus());
             user.setFirstName(userRequestMapper.getFirstName());
             user.setLastName(userRequestMapper.getLastName());
             user.setEmailVerified(0);
             user.setPhoneVerified(0);
+            //Additional Fields
+            user.setHireDate(currentTimestamp);
+            user.setHireEndDate(currentTimestamp);
+            user.setSex(userRequestMapper.getSex());
+            user.setOtherphone(userRequestMapper.getOtherphone());
+            //Mapping setting here
+            user.setUserDocuments(UserDocuments);
+            user.setAccountDetails(bankAccountDetails);
+            user.setLocations(locations);
+            user.setId(userRequestMapper.getId());
             boolean isUserAdded = userServices.add(user);
             if (isUserAdded) {
                 response = new Response(Constants.SUCESS_RESPONCE, "yes");
@@ -194,15 +291,14 @@ public class UserController {
         return new ResponseEntity<>(details, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "user details", notes = "user details", response = User.class)
+    @ApiOperation(value = "user details", notes = "user details", response = UserRequestMapper.class)
     @RequestMapping(value = "/details", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> details(@RequestParam("userId") long userId, @RequestParam("id") long id) {
-        User details = null;
         try {
-            details = userServices.viewById(id);
+            return new ResponseEntity<>(userServices.details(id), HttpStatus.OK);
         } catch (Exception ex) {
             LOG.error("Exception occured while search view {}" + ex.getMessage());
         }
-        return new ResponseEntity<>(details, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

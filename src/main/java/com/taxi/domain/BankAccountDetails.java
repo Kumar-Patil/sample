@@ -20,6 +20,9 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class BankAccountDetails implements Serializable {
 
+    public BankAccountDetails() {
+    }
+
     private Long accountId;
     private Timestamp createdAt;
     private Timestamp updatedAt;

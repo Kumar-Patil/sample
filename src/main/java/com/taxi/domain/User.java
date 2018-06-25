@@ -7,9 +7,12 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -43,7 +46,11 @@ public class User implements Serializable {
     private Timestamp hireEndDate;
     private String otherphone;
     private String sex;
+    private BankAccountDetails accountDetails;
+    private UserDocuments userDocuments;
+    private Locations Locations;
 
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ_USER_DETAILS")
     @SequenceGenerator(name = "SEQ_USER_DETAILS", sequenceName = "user_id_seq")
@@ -222,6 +229,36 @@ public class User implements Serializable {
         this.sex = sex;
     }
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_bank_account_id", nullable = true)
+    public BankAccountDetails getAccountDetails() {
+        return accountDetails;
+    }
+
+    public void setAccountDetails(BankAccountDetails accountDetails) {
+        this.accountDetails = accountDetails;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_document_id", nullable = true)
+    public UserDocuments getUserDocuments() {
+        return userDocuments;
+    }
+
+    public void setUserDocuments(UserDocuments userDocuments) {
+        this.userDocuments = userDocuments;
+    }
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "location_id", nullable = true)
+    public Locations getLocations() {
+        return Locations;
+    }
+
+    public void setLocations(Locations Locations) {
+        this.Locations = Locations;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;

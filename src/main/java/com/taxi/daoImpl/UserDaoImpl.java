@@ -1,5 +1,6 @@
 package com.taxi.daoImpl;
 
+import com.taxi.RequestMapper.UserRequestMapper;
 import com.taxi.dao.*;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.taxi.domain.User;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -401,5 +403,81 @@ public class UserDaoImpl implements UserDao {
             }
         }
         return isUpdate;
+    }
+
+    @Override
+    @Cascade({CascadeType.SAVE_UPDATE})
+    public boolean update(User user) throws Exception {
+        boolean isAdded = false;
+        try {
+            session = sessionFactory.openSession();
+            tx = session.beginTransaction();
+            session.update(user);
+            tx.commit();
+            isAdded = true;
+        } catch (HibernateException e) {
+            LOG.error("Exception occured while adding {}" + e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return isAdded;
+    }
+
+    @Override
+    public UserRequestMapper details(long id) throws Exception {
+        try {
+            session = sessionFactory.openSession();
+            tx = session.getTransaction();
+            session.beginTransaction();
+            List<User> userList = null;
+            String hql = null;
+            hql = "from User user where user.id =:id";
+            Query query = (Query) session.createQuery(hql);
+            query.setParameter("id", id);
+            userList = query.list();
+            tx.commit();
+            if (userList.size() > 0) {
+                for (User users : userList) {
+                    UserRequestMapper requestMapper = new UserRequestMapper();
+                    requestMapper.setAccountNo(users.getAccountDetails().getAccountNo());
+                    requestMapper.setAddress(users.getAccountDetails().getAdddress());
+                    requestMapper.setAggrement1(users.getUserDocuments().getAggrement1());
+                    requestMapper.setAggrement2(users.getUserDocuments().getAggrement2());
+                    requestMapper.setAggrement3(users.getUserDocuments().getAggrement3());
+                    requestMapper.setAggrement4(users.getUserDocuments().getAggrement4());
+                    requestMapper.setCityId(users.getLocations().getCities().getCityId());
+                    requestMapper.setCountryId(users.getLocations().getCountries().getCountriId());
+                    requestMapper.setEmail(users.getEmail());
+                    requestMapper.setFirstName(users.getFirstName());
+                    requestMapper.setHireDate(users.getHireDate());
+                    requestMapper.setHireEndDate(users.getHireEndDate());
+                    requestMapper.setIfsc(users.getAccountDetails().getIfsc());
+                    requestMapper.setLastName(users.getLastName());
+                    requestMapper.setName(users.getAccountDetails().getName());
+                    requestMapper.setOtherphone(users.getOtherphone());
+                    requestMapper.setPassword(users.getPassword());
+                    requestMapper.setProofOfAddress(users.getUserDocuments().getProofOfAddress());
+                    requestMapper.setRole(users.getRole());
+                    requestMapper.setSex(users.getSex());
+                    requestMapper.setStateId(users.getLocations().getStates().getStateId());
+                    requestMapper.setStatus(users.getStatus());
+                    requestMapper.setStreet(users.getLocations().getStreet());
+                    requestMapper.setUserPic(users.getUserDocuments().getUserPic());
+                    requestMapper.setZip(users.getLocations().getZip());
+                    requestMapper.setId(users.getId());
+                    requestMapper.setPhone(users.getPhone());
+                    return requestMapper;
+                }
+            }
+        } catch (HibernateException e) {
+            LOG.error("Exception occured while getting ViewById {}" + e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return null;
     }
 }
