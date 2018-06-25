@@ -37,7 +37,7 @@ CREATE TABLE `bank_account_details` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=241 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=247 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +46,7 @@ CREATE TABLE `bank_account_details` (
 
 LOCK TABLES `bank_account_details` WRITE;
 /*!40000 ALTER TABLE `bank_account_details` DISABLE KEYS */;
-INSERT INTO `bank_account_details` VALUES (1,'axis','233','234234','asdasd','asdasd','asdsad',1,NULL,NULL,NULL);
+INSERT INTO `bank_account_details` VALUES (1,'axis','233','234234','asdasd','asdasd','asdsad',1,NULL,NULL,NULL),(241,'ICIC','ICIC','1529927183781','1529927183781','1529927183781','1529927183781',1,'2018-06-25 11:55:04','2018-06-25 11:55:04',NULL),(242,'ICIC','ICIC','1529927183781','1529927183781','1529927183781','1529927183781',1,'2018-06-25 11:56:03','2018-06-25 11:56:03',NULL),(243,'ICIC','ICIC','1529927183781','1529927183781','1529927183781','1529927183781',1,'2018-06-25 12:01:42','2018-06-25 12:01:42',NULL),(244,'ICIC','ICIC','1529927183781','1529927183781','1529927183781','1529927183781',1,'2018-06-25 12:01:55','2018-06-25 12:01:55',NULL),(245,'ICIC','ICIC','1529927183781','1529927183781','1529927183781','1529927183781',1,'2018-06-25 12:10:39','2018-06-25 12:10:39',NULL),(246,'ICIC','ICIC','1529927183781','1529927183781','1529927183781','1529927183781',1,'2018-06-25 12:37:26','2018-06-25 12:37:26',NULL);
 /*!40000 ALTER TABLE `bank_account_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -402,7 +402,7 @@ CREATE TABLE `locations` (
   CONSTRAINT `locations_city_id_foreign` FOREIGN KEY (`city_id`) REFERENCES `cities` (`city_id`) ON DELETE CASCADE,
   CONSTRAINT `locations_country_id_foreign` FOREIGN KEY (`country_id`) REFERENCES `countries` (`countri_id`) ON DELETE CASCADE,
   CONSTRAINT `locations_state_id_foreign` FOREIGN KEY (`state_id`) REFERENCES `states` (`state_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=232 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=238 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -411,6 +411,7 @@ CREATE TABLE `locations` (
 
 LOCK TABLES `locations` WRITE;
 /*!40000 ALTER TABLE `locations` DISABLE KEYS */;
+INSERT INTO `locations` VALUES (232,'1529927183781','Housa road','560100',1,1,1,0.00000000,0.00000000),(233,'1529927183781','Housa road','560100',1,1,1,0.00000000,0.00000000),(234,'1529927183781','Housa road','560100',1,1,1,0.00000000,0.00000000),(235,'1529927183781','Housa road','560100',1,1,1,0.00000000,0.00000000),(236,'1529927183781','Housa road','560100',1,1,1,0.00000000,0.00000000),(237,'1529927183781','Housa road','560100',1,1,1,0.00000000,0.00000000);
 /*!40000 ALTER TABLE `locations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -428,7 +429,7 @@ CREATE TABLE `oauth_access_tokens` (
   `exipary_at` timestamp NULL DEFAULT NULL,
   `user_id` bigint(20) unsigned DEFAULT NULL,
   PRIMARY KEY (`access_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=241 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=255 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -437,7 +438,7 @@ CREATE TABLE `oauth_access_tokens` (
 
 LOCK TABLES `oauth_access_tokens` WRITE;
 /*!40000 ALTER TABLE `oauth_access_tokens` DISABLE KEYS */;
-INSERT INTO `oauth_access_tokens` VALUES (1,'k1rZ86eHssj2ZY9azZ3Y9GDEV7AaosNofkgMjV9LjTLC5Pr8mKqCeAiRy12ezj1JlUSHKbxvfPTRaVVR9ExwMO9F9hHabJe5Mga4','k1rZ86eHssj2ZY9azZ3Y9GDEV7AaosNofkgMjV9LjTLC5Pr8mKqCeAiRy12ezj1JlUSHKbxvfPTRaVVR9ExwMO9F9hHabJe5Mga4',NULL,1);
+INSERT INTO `oauth_access_tokens` VALUES (251,'uqiqQ23fAibevyQCwBRb9n5RIRK3RJx3u2LqtDUuTeJgC2slVzA82yR9Dgk5ylNRitN37p92AjAt71ZhPPPQhGVaDS92nXvx6ean','VigTPk3ZX3aspu86PK68sA4vB1kNfbTP5MFfCMtv3UEiUcBkTQY7LRlWQMOSoUHDjfcK7mYCCVex4ZMdUGQ9olWHoWYQ7jsxAkw9','2018-06-25 15:36:45',88),(252,'laDEbszq2aucUKrEA1DTRDfLr3AKEoz8WDkc4Lquf1saFrnMOzXpTtHt5U1BFHagf6xTmK3Juss8F4Tuaf6StJGnpU1WbE9SVMhM','Bo2ILSGwkNTNavYYKTpTkukJ69qOkvYDgNKjoCHWzS7LvTQ6knEGpQXb3qffatlg2CLHakcj8YAMa61WDxJISrSEFz1DML3YljQ3','2018-06-25 16:08:18',88),(253,'gG8qsbkYDEETO1Yv1Iz8h81gdQmnyY68JR3qlPmK43rRrOC344s9LSSuVaY2UA8QLuZu6eGiRqrHtBA5k3TkSHreZd3MSWeuHeYW','QADoq5Qc91AKC5ihgqVZyWsK7zjYUy3HtYkMujjXcHRwkkbr8VipcWuS1ZycO9BfexZSOiT3AkwyENUjCFKFfYgVmQQFQP9BjkhT','2018-06-25 17:32:09',88),(254,'3dz9FeptsuwHCaaLrEonKWz3qetg4Qfhi5C7U7uQyvKaDwewXOgezqKstiey7hlKCjTKSswmaJWRsm3joYVhXn1aZwFF6zppN1G1','bbg3onSKz4ahUcQ5bqIrc5YDwXIkP4TVRltVAPLKammQFrSLk8kPAAeZh1i2ssdLGUybzOqKMdaxv1B2t9xVJsKRGXwBA6j7GeDy','2018-06-25 18:49:43',88);
 /*!40000 ALTER TABLE `oauth_access_tokens` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -518,7 +519,7 @@ CREATE TABLE `pricing_groups` (
 
 LOCK TABLES `pricing_groups` WRITE;
 /*!40000 ALTER TABLE `pricing_groups` DISABLE KEYS */;
-INSERT INTO `pricing_groups` VALUES (1,1,'DSSS',12.00,12.00,NULL,NULL,NULL,0),(2,1,'sfsdf',34.00,2343.00,NULL,NULL,NULL,0);
+INSERT INTO `pricing_groups` VALUES (1,1,'DSSS',12.00,12.00,NULL,NULL,'2018-06-25 18:52:13',0),(2,1,'sfsdf',34.00,2343.00,NULL,NULL,'2018-06-25 18:50:46',0);
 /*!40000 ALTER TABLE `pricing_groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -645,7 +646,7 @@ DROP TABLE IF EXISTS `user_documents`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `user_documents` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `userPic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_pic` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `proof_of_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `agreement1` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `agreement2` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -656,7 +657,7 @@ CREATE TABLE `user_documents` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=241 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=242 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -665,7 +666,7 @@ CREATE TABLE `user_documents` (
 
 LOCK TABLES `user_documents` WRITE;
 /*!40000 ALTER TABLE `user_documents` DISABLE KEYS */;
-INSERT INTO `user_documents` VALUES (1,'asdasd','asdasd','asdasd','asdasdasd',NULL,NULL,1,NULL,NULL,NULL);
+INSERT INTO `user_documents` VALUES (1,'asdasd','asdasd','asdasd','asdasdasd',NULL,NULL,1,NULL,NULL,NULL),(241,'pic.png','3415345','1529927183781','1529927183781','1529927183781','1529927183781',1,'2018-06-25 12:37:26','2018-06-25 12:37:26',NULL);
 /*!40000 ALTER TABLE `user_documents` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -678,7 +679,7 @@ DROP TABLE IF EXISTS `users`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `users` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `role` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_document_id` bigint(20) unsigned DEFAULT NULL,
   `user_bank_account_id` bigint(20) unsigned DEFAULT NULL,
@@ -697,6 +698,9 @@ CREATE TABLE `users` (
   `OTP_VALUE` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `hire_end_date` timestamp NULL DEFAULT NULL,
   `hire_date` timestamp NULL DEFAULT NULL,
+  `sex` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `otherphone` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vendor_registration_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `usersuser_phone_unique` (`phone`),
   UNIQUE KEY `users_email_unique` (`email`),
@@ -706,7 +710,7 @@ CREATE TABLE `users` (
   CONSTRAINT `user_bank_account_id_foreign` FOREIGN KEY (`user_bank_account_id`) REFERENCES `bank_account_details` (`id`) ON DELETE SET NULL,
   CONSTRAINT `user_document_id_foreign` FOREIGN KEY (`user_document_id`) REFERENCES `user_documents` (`id`) ON DELETE SET NULL,
   CONSTRAINT `user_location_id_foreign` FOREIGN KEY (`location_id`) REFERENCES `locations` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -715,7 +719,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'super admi','sadsada',1,1,NULL,'Santosh','patil','santhu.gouda@gmail.com','san',1,0,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `users` VALUES (1,'Supreme User','sadsada',1,1,NULL,'Santosh','patil','santhu.gouda@gmail.com1','san',1,0,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(83,'Supreme User','345345',NULL,NULL,NULL,'Kumar','Patil','info.patil87@gmail.com','san',1,0,0,NULL,'2018-06-25 11:55:04','2018-06-25 11:55:04',NULL,NULL,'2018-06-25 11:55:04','2018-06-25 11:55:04','male','900909',NULL),(88,'Supreme User','34532249015',241,246,237,'Kumar','Patil','santhu.gouda@gmail.com','san',1,0,0,NULL,'2018-06-25 12:16:01','2018-06-25 12:37:26','2018-06-25 12:39:14',NULL,'2018-06-25 12:37:26','2018-06-25 12:37:26','male','900909',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -739,6 +743,7 @@ CREATE TABLE `vendors` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
+  `vendor_registration_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `vendors_user_id_foreign` (`user_id`),
   KEY `vendors_location_id_foreign` (`location_id`),
@@ -753,13 +758,9 @@ CREATE TABLE `vendors` (
 
 LOCK TABLES `vendors` WRITE;
 /*!40000 ALTER TABLE `vendors` DISABLE KEYS */;
-INSERT INTO `vendors` VALUES (1,1,1,'Sanosh','Patil','asd','23434','santhu.gouda@gmail.com',NULL,NULL,NULL,NULL);
+INSERT INTO `vendors` VALUES (1,1,1,'Sanosh','Patil','asd','23434','santhu.gouda@gmail.com',NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `vendors` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping routines for database 'taxi'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -770,4 +771,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-24 23:35:19
+-- Dump completed on 2018-06-26  0:34:06
