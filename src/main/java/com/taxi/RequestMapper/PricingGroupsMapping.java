@@ -17,25 +17,6 @@ public class PricingGroupsMapping {
 
     }
 
-    public PricingGroupsMapping(long pricingId, int status, float pricePerUnitDistance, float pricePerMinute, long vendorId, String pricingGroupName, String vendorName) {
-        this.pricingId = pricingId;
-        this.status = status;
-        this.pricePerUnitDistance = pricePerUnitDistance;
-        this.pricePerMinute = pricePerMinute;
-        this.vendorId = vendorId;
-        this.pricingGroupName = pricingGroupName;
-        this.vendorName = vendorName;
-    }
-    private String vendorName;
-
-    public String getVendorName() {
-        return vendorName;
-    }
-
-    public void setVendorName(String vendorName) {
-        this.vendorName = vendorName;
-    }
-
     public String getPricingGroupName() {
         return pricingGroupName;
     }

@@ -42,7 +42,7 @@ public class DriversDaoImpl implements DriversDao {
         try {
             session = sessionFactory.openSession();
             tx = session.beginTransaction();
-            session.saveOrUpdate(drivers);
+            session.update(drivers);
             tx.commit();
             return isAdded = true;
         } catch (HibernateException e) {

@@ -104,7 +104,7 @@ public class PricingGroupsDaoImpl implements PricingGroupsDao {
                             Constants.status().get(pricingGroups.getStatus()), pricingGroups.getPricePerUnitDistance(),
                             pricingGroups.getPricePerMinute(),
                             pricingGroups.getVendors().getVendorId(),
-                            pricingGroups.getName(), pricingGroups.getVendors().getFirstName()));
+                            pricingGroups.getName(), pricingGroups.getVendors().getFirstName(), pricingGroups.getVendors().getVendorRegistrationNo()));
                 }
             }
         } catch (HibernateException e) {

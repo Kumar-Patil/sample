@@ -1,6 +1,7 @@
 package com.taxi.util;
 
 import com.taxi.email.MailUtils;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import org.apache.log4j.Logger;
@@ -52,5 +53,12 @@ public class Util {
             }
         }
         return false;
+    }
+
+    public static List<com.taxi.to.Status> getStatusList() {
+        List<com.taxi.to.Status> statusList = new ArrayList<>();
+        statusList.add(new com.taxi.to.Status(1, "Active"));
+        statusList.add(new com.taxi.to.Status(2, "InActive"));
+        return statusList;
     }
 }

@@ -55,7 +55,7 @@ public class Constants {
         urls.add("changePassword");
         urls.add("swagger-ui.html");
         urls.add("swagger-resources");
-        //urls.add("common/fileHandler");
+        urls.add("common/fileHandler");
         return urls;
     }
 

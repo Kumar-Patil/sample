@@ -8,6 +8,7 @@ import com.taxi.dao.SurgePricingDao;
 import com.taxi.domain.SurgePricing;
 import com.taxi.service.SurgePricingService;
 import com.taxi.to.SurgePricingTo;
+import com.taxi.to.SurgePricingViewTo;
 
 public class SurgePricingServicesImpl implements SurgePricingService {
 
@@ -47,6 +48,11 @@ public class SurgePricingServicesImpl implements SurgePricingService {
     @Override
     public List<SurgePricingTo> search(String searchVal) throws Exception {
         return surgePricingDao.search(searchVal);
+    }
+
+    @Override
+    public SurgePricingViewTo updateDetails(long id) throws Exception {
+        return surgePricingDao.updateDetails(id);
     }
 
 }

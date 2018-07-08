@@ -2,6 +2,7 @@ package com.taxi.dao;
 
 import com.taxi.domain.SurgePricing;
 import com.taxi.to.SurgePricingTo;
+import com.taxi.to.SurgePricingViewTo;
 import java.util.List;
 
 public interface SurgePricingDao {
@@ -19,4 +20,5 @@ public interface SurgePricingDao {
     public boolean updateStatus(long pricingId) throws Exception;
 
     public List<SurgePricingTo> search(String searchVal) throws Exception;
+    public SurgePricingViewTo updateDetails(long id) throws Exception;
 }

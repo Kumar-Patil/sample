@@ -6,24 +6,31 @@ import com.taxi.domain.OrderCategory;
 import com.taxi.domain.OrderType;
 import com.taxi.exception.FileNotFoundException;
 import com.taxi.service.AccessTokenService;
+import com.taxi.service.CabsService;
 import com.taxi.service.CitiesService;
 import com.taxi.service.CountriesService;
 import com.taxi.service.OrderCategoryService;
 import com.taxi.service.OrderTypeService;
 import com.taxi.service.StateService;
 import com.taxi.service.UserService;
+import com.taxi.service.VendorsService;
 import com.taxi.to.City;
 import com.taxi.to.Response;
 import com.taxi.to.State;
+import com.taxi.to.VendorsTo;
 import com.taxi.to.fileUpload;
 import com.taxi.util.Constants;
+import com.taxi.to.Status;
+import com.taxi.util.Util;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
@@ -75,6 +82,12 @@ public class CommonController {
 
     @Autowired
     OrderCategoryService orderCategoryService;
+
+    @Autowired
+    VendorsService vendorsService;
+
+    @Autowired
+    CabsService cabsService;
 
     @ApiOperation(value = "Country List", notes = "Country List", response = Countries.class)
     @RequestMapping(value = "/countryList", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE,
@@ -210,7 +223,7 @@ public class CommonController {
         if (!file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();
-                String rootPath = System.getProperty("catalina.home");
+                String rootPath = "D:\\Freelancer";
                 File dir = new File(rootPath + File.separator + "images");
                 if (!dir.exists()) {
                     dir.mkdirs();
@@ -231,22 +244,55 @@ public class CommonController {
                     + " because the file was empty.", HttpStatus.OK);
         }
     }
-    
-    @ApiOperation(value = "cityList List", notes = "cityList List", response = City.class)
-    @RequestMapping(value = "/AllData", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE,
+
+    @ApiOperation(value = "Get pop data", notes = "Get pop data", response = City.class)
+    @RequestMapping(value = "/popData", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE,
         MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> allList(@RequestParam("userId") long userId) {
         Response response = null;
         try {
             Map m = new HashMap<Object, Object>();
-            m.put("cityList",citiesService.list());
-            m.put("statesList",stateService.list());
-            m.put("countryList",countriesService.list());
+            m.put("cityList", citiesService.list());
+            m.put("statesList", stateService.list());
+            m.put("countryList", countriesService.list());
+            m.put("cabList", cabsService.list());
+            m.put("statusList", Util.getStatusList());
             return new ResponseEntity<>(m, HttpStatus.OK);
 
         } catch (Exception e) {
-            LOG.error("Exception occured in logout {}" + e.toString());
+            LOG.error("Exception occured in popData {}" + e.toString());
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @ApiOperation(value = "Vendor List", notes = "Vendor List", response = VendorsTo.class)
+    @RequestMapping(value = "/vendorList", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE,
+        MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> vendorList(@RequestParam("userId") long userId) {
+        Response response = null;
+        try {
+            return new ResponseEntity<>(vendorsService.list(), HttpStatus.OK);
+        } catch (Exception e) {
+            LOG.error("Exception occured in vendorList {}" + e.toString());
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Get status List", notes = "Get status List", response = Status.class)
+    @RequestMapping(value = "/statusList", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE,
+        MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> statusList(@RequestParam("userId") long userId) {
+        Response response = null;
+        try {
+            List<Status> statusList = new ArrayList<>();
+            statusList.add(new Status(1, "Active"));
+            statusList.add(new Status(2, "InActive"));
+            return new ResponseEntity<>(statusList, HttpStatus.OK);
+
+        } catch (Exception e) {
+            LOG.error("Exception occured in statusList {}" + e.toString());
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 }

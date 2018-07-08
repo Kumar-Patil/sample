@@ -10,11 +10,15 @@ import com.taxi.service.VendorsService;
 import com.taxi.to.PricingGroupsTo;
 import com.taxi.to.PricingTo;
 import com.taxi.to.Response;
+import com.taxi.to.Status;
 import com.taxi.util.Constants;
+import com.taxi.util.Util;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,5 +180,23 @@ public class PricingGroupsController {
             response = new Response(Constants.ERROR_RESPONCE, ex.getMessage());
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @ApiOperation(value = "Get status List and vendor list", notes = "Get status List and vendor list", response = Status.class)
+    @RequestMapping(value = "/statusAndVendorList", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE,
+        MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> statusAndVendorList(@RequestParam("userId") long userId) {
+        Response response = null;
+        try {
+            
+            Map m = new HashMap<Object, Object>();
+            m.put("statusList", Util.getStatusList());
+            m.put("vendorList", vendorsService.list());
+            return new ResponseEntity<>(m, HttpStatus.OK);
+
+        } catch (Exception e) {
+            LOG.error("Exception occured in statusAndVendorList {}" + e.toString());
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

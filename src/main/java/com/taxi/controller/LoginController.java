@@ -11,6 +11,7 @@ import com.taxi.to.Response;
 import com.taxi.to.SessionResponse;
 import com.taxi.util.Config;
 import com.taxi.util.Constants;
+import com.taxi.util.StaticSessionHandler;
 import com.taxi.util.Util;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -103,6 +104,8 @@ public class LoginController {
                 sessionResponse.setRole(user.getRole());
                 sessionResponse.setStatus(user.getStatus());
                 sessionResponse.setUserId(userId);
+                String numberAsString = String.valueOf(userId);
+                StaticSessionHandler.sessionMap(numberAsString,accessToken.getAccessToken());
                 return new ResponseEntity<>(sessionResponse, HttpStatus.OK);
             } else {
                 Response response = new Response(Constants.ERROR_RESPONCE, "Not able to generate access token, try again");

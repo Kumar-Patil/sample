@@ -287,7 +287,7 @@ public class CabsDaoImpl implements CabsDao {
             session.beginTransaction();
             List<Cabs> cabsList = null;
             String hql = null;
-            hql = "SELECT cabs.vendors.vendorId from Cabs cabs where cabs.cabId = :cabId";
+            hql = "from Cabs cabs where cabs.cabId = :cabId";
             Query query = (Query) session.createQuery(hql);
             query.setParameter("cabId", id);
             cabsList = query.list();

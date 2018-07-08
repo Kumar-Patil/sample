@@ -4,6 +4,7 @@ import com.taxi.dao.*;
 import com.taxi.domain.Cabs;
 import com.taxi.domain.SurgePricing;
 import com.taxi.to.SurgePricingTo;
+import com.taxi.to.SurgePricingViewTo;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -268,5 +269,42 @@ public class SurgePricingDaoImpl implements SurgePricingDao {
             }
         }
         return surgePricingTo;
+    }
+    
+    @Override
+    public SurgePricingViewTo updateDetails(long id) throws Exception {
+        try {
+            session = sessionFactory.openSession();
+            tx = session.getTransaction();
+            session.beginTransaction();
+            List<SurgePricing> surgePricingGroupsList = null;
+            String hql = null;
+            hql = "from SurgePricing surgePricing where surgePricing.surgeId =:surgeId";
+            Query query = (Query) session.createQuery(hql);
+            query.setParameter("surgeId", id);
+            surgePricingGroupsList = query.list();
+            tx.commit();
+            if (surgePricingGroupsList.size() > 0) {
+                for (SurgePricing surgePricing : surgePricingGroupsList) {
+
+                    return new SurgePricingViewTo(
+                            surgePricing.getSurgeId(),
+                            surgePricing.getName(),
+                            surgePricing.getStatus(),
+                            surgePricing.getSurgeExpiryStartDate(),
+                            surgePricing.getSurgeExpiryEndDate(),
+                            surgePricing.getLatitudeStart(), surgePricing.getLatitudeEnd(),
+                            surgePricing.getLongitudeStart(), surgePricing.getLongitudeEnd(),
+                            surgePricing.getFactor());
+                }
+            }
+        } catch (HibernateException e) {
+            LOG.error("Exception occured while getting findById {}" + e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return null;
     }
 }

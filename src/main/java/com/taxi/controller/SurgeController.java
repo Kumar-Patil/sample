@@ -8,6 +8,7 @@ import com.taxi.service.SurgePricingService;
 import com.taxi.service.VendorsService;
 import com.taxi.to.Response;
 import com.taxi.to.SurgePricingTo;
+import com.taxi.to.SurgePricingViewTo;
 import com.taxi.util.Constants;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,7 +16,6 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -147,7 +147,7 @@ public class SurgeController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @ApiOperation(value = "Surge Pricing details", notes = "Retrieves a surge pricing details", response = SurgePricingTo.class)
+    @ApiOperation(value = "Surge Pricing details", notes = "Retrieves a surge pricing details", response = SurgePricingViewTo.class)
     @RequestMapping(value = "/view", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE,
         MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> viewSurge(@RequestParam("userId") long userId, @RequestParam("id") long id) {
@@ -170,13 +170,13 @@ public class SurgeController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @ApiOperation(value = "Surge Pricing Details", notes = "Surge Pricing Details", response = SurgePricingTo.class)
+    @ApiOperation(value = "Surge Pricing Details", notes = "Surge Pricing Details", response = SurgePricingViewTo.class)
     @RequestMapping(value = "/details", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE,
         MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getSurgeEditDetail(@RequestParam("userId") long userId, @RequestParam("id") long id) {
         Response response = null;
         try {
-            return new ResponseEntity<>(surgePricingService.ViewById(id), HttpStatus.OK);
+            return new ResponseEntity<>(surgePricingService.updateDetails(id), HttpStatus.OK);
         } catch (Exception ex) {
             response = new Response(Constants.ERROR_RESPONCE, ex.getMessage());
         }

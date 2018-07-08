@@ -7,16 +7,20 @@ import com.taxi.domain.PricingGroups;
 import com.taxi.domain.Vendors;
 import com.taxi.service.AccessTokenService;
 import com.taxi.service.CabsService;
+import com.taxi.service.PricingGroupsService;
 import com.taxi.service.VendorsService;
 import com.taxi.to.CabsTo;
+import com.taxi.to.City;
 import com.taxi.to.Response;
 import com.taxi.to.UserDetails;
 import com.taxi.util.Constants;
+import com.taxi.util.Util;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.ws.rs.Consumes;
@@ -55,6 +59,9 @@ public class CabsController {
 
     @Autowired
     AccessTokenService accessTokenService;
+
+    @Autowired
+    PricingGroupsService pricingGroupsService;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> add(@RequestHeader(value = "api_key") String api_key, @QueryParam("userId") long userId, @RequestBody CabsRequestMapping cabsRequestMapping) {
@@ -213,6 +220,24 @@ public class CabsController {
             }
         } catch (Exception ex) {
             response = new Response(Constants.ERROR_RESPONCE, ex.getMessage());
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Get popUPData", notes = "popUPData", response = City.class)
+    @RequestMapping(value = "/popUPData", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE,
+        MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> allList(@RequestParam("userId") long userId) {
+        Response response = null;
+        try {
+            Map m = new HashMap<Object, Object>();
+            m.put("statusList", Util.getStatusList());
+            m.put("vendorList", vendorsService.list());
+            m.put("priceList", pricingGroupsService.list());
+            return new ResponseEntity<>(m, HttpStatus.OK);
+
+        } catch (Exception e) {
+            LOG.error("Exception occured in popData {}" + e.toString());
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

@@ -1,4 +1,4 @@
-package com.taxi.RequestMapper;
+package com.taxi.to;
 
 import java.sql.Timestamp;
 
@@ -6,20 +6,28 @@ import java.sql.Timestamp;
  *
  * @author
  */
-public class SurgePricingMapping {
+public class SurgePricingViewTo {
 
     private long surgeId;
     private String name;
     private int status;
-    private Timestamp surgeExpiryStartDate;
-    private Timestamp surgeExpiryEndDate;
-    private float latitudeStart;
-    private float latitudeEnd;
-    private float longitudeStart;
-    private float longitudeEnd;
-    private float factor;
+   
 
-    public SurgePricingMapping() {
+    public SurgePricingViewTo() {
+    }
+
+    public SurgePricingViewTo(long surgeId, String name, int status,  Timestamp surgeExpiryStartDate, Timestamp surgeExpiryEndDate, float latitudeStart, float latitudeEnd, float longitudeStart, float longitudeEnd, float factor) {
+        this.surgeId = surgeId;
+        this.name = name;
+        this.status = status;
+      
+        this.surgeExpiryStartDate = surgeExpiryStartDate;
+        this.surgeExpiryEndDate = surgeExpiryEndDate;
+        this.latitudeStart = latitudeStart;
+        this.latitudeEnd = latitudeEnd;
+        this.longitudeStart = longitudeStart;
+        this.longitudeEnd = longitudeEnd;
+        this.factor = factor;
     }
 
     public long getSurgeId() {
@@ -101,17 +109,12 @@ public class SurgePricingMapping {
     public void setFactor(float factor) {
         this.factor = factor;
     }
+    private Timestamp surgeExpiryStartDate;
+    private Timestamp surgeExpiryEndDate;
+    private float latitudeStart;
+    private float latitudeEnd;
+    private float longitudeStart;
+    private float longitudeEnd;
+    private float factor;
 
-    public SurgePricingMapping(long surgeId, String name, int status, Timestamp surgeExpiryStartDate, Timestamp surgeExpiryEndDate, float latitudeStart, float latitudeEnd, float longitudeStart, float longitudeEnd, float factor) {
-        this.surgeId = surgeId;
-        this.name = name;
-        this.status = status;
-        this.surgeExpiryStartDate = surgeExpiryStartDate;
-        this.surgeExpiryEndDate = surgeExpiryEndDate;
-        this.latitudeStart = latitudeStart;
-        this.latitudeEnd = latitudeEnd;
-        this.longitudeStart = longitudeStart;
-        this.longitudeEnd = longitudeEnd;
-        this.factor = factor;
-    }
 }

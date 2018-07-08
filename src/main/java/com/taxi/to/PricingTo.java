@@ -15,7 +15,15 @@ public class PricingTo {
     private long vendorId;
     private String pricingGroupName;
     private String vendorName;
+    private String vendorReg;
 
+    public String getVendorReg() {
+        return vendorReg;
+    }
+
+    public void setVendorReg(String vendorReg) {
+        this.vendorReg = vendorReg;
+    }
     public String getVendorName() {
         return vendorName;
     }
@@ -24,7 +32,7 @@ public class PricingTo {
         this.vendorName = vendorName;
     }
 
-    public PricingTo(long pricingId, String status, float pricePerUnitDistance, float pricePerMinute, long vendorId, String pricingGroupName, String vendorName) {
+    public PricingTo(long pricingId, String status, float pricePerUnitDistance, float pricePerMinute, long vendorId, String pricingGroupName, String vendorName, String vendorReg) {
         this.pricingId = pricingId;
         this.status = status;
         this.pricePerUnitDistance = pricePerUnitDistance;
@@ -32,6 +40,7 @@ public class PricingTo {
         this.vendorId = vendorId;
         this.pricingGroupName = pricingGroupName;
         this.vendorName = vendorName;
+        this.vendorReg = vendorReg;
     }
 
     public long getPricingId() {

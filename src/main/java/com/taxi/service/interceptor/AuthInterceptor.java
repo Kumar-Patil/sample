@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.taxi.service.AccessTokenService;
 import com.taxi.to.Response;
 import com.taxi.util.Constants;
+import com.taxi.util.StaticSessionHandler;
 import com.taxi.util.Util;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.logging.Logger;
-import javax.mail.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -33,7 +33,8 @@ public class AuthInterceptor implements HandlerInterceptor {
         String uri = httpServletRequest.getRequestURI();
         if (Util.containsAKeyword(uri, Constants.urls())) {
             return true;
-        } else if (accessTokenService.isAccessTokenValid(isValid(httpServletRequest), api_key)) {
+        } else if (StaticSessionHandler.isValidAccessToken(isValid(httpServletRequest))) {
+            //accessTokenService.isAccessTokenValid(isValid(httpServletRequest), api_key);
             httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
             return true;
         } else {
@@ -58,13 +59,13 @@ public class AuthInterceptor implements HandlerInterceptor {
         logger.info(" After Completion ");
     }
 
-    private Long isValid(HttpServletRequest httpServletRequest) {
+    private String isValid(HttpServletRequest httpServletRequest) {
         try {
             String userId = httpServletRequest.getParameter("userId");
-            return Long.parseLong(userId);
+            return userId;
         } catch (NumberFormatException ex) {
 
         }
-        return 0L;
+        return null;
     }
 }

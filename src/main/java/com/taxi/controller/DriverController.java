@@ -122,13 +122,13 @@ public class DriverController {
             //Driver Attributes
             DriverAttributes driverAttributes = new DriverAttributes();
             driverAttributes = DriverAtrributesObject.driverAttributesObject(true, driverRequestMapper);
-            driverAttributes.setDriverAttribteId(driverRequestMapper.getDriverAttribteId());
+            driverAttributes.setDriverAttribteId(details.getDriverAttributes().getDriverAttribteId());
             driversAttributesService.update(driverAttributes);
 
             //Driver documents
             DriverDocuments driverDocuments = new DriverDocuments();
             driverDocuments = DriverDocumentsObject.driverDocumentObject(true, driverRequestMapper);
-            driverDocuments.setDriverDocumentId(driverRequestMapper.getDriverDocumentId());
+            driverDocuments.setDriverDocumentId(details.getDriverDocuments().getDriverDocumentId());
             driversDocumentsService.update(driverDocuments);
 
             boolean isDriverAdded = driversService.add(DriverObject.driverObject(true, locations, driverRequestMapper, userId, details, cabsService, driverDocuments, driverAttributes));
