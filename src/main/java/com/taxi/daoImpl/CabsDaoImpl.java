@@ -1,5 +1,6 @@
 package com.taxi.daoImpl;
 
+import com.taxi.RequestMapper.CabsRequestMapping;
 import com.taxi.dao.*;
 import com.taxi.domain.Cabs;
 import java.util.List;
@@ -9,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.taxi.to.CabsTo;
+import com.taxi.to.CabsViewTo;
 import com.taxi.util.Constants;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -52,7 +54,7 @@ public class CabsDaoImpl implements CabsDao {
     }
 
     @Override
-    public CabsTo findById(long id) throws Exception {
+    public Cabs findById(long id) throws Exception {
         try {
             session = sessionFactory.openSession();
             tx = session.getTransaction();
@@ -66,12 +68,7 @@ public class CabsDaoImpl implements CabsDao {
             tx.commit();
             if (cabsList.size() > 0) {
                 for (Cabs cabs : cabsList) {
-                    return new CabsTo(cabs.getCreatedAt(),
-                            cabs.getUpdatedAt(), cabs.getDeletedAt(),
-                            cabs.getCabId(), cabs.getCabType(),
-                            cabs.getCabModel(), cabs.getCabColor(),
-                            cabs.getCabNo(), cabs.getCabRegistrationNo(), Constants.status().get(cabs.getStatus()),
-                            cabs.getVendors().getVendorId(), cabs.getPricingGroups().getPricingId());
+                    return cabs;
                 }
             }
         } catch (HibernateException e) {
@@ -305,5 +302,140 @@ public class CabsDaoImpl implements CabsDao {
             }
         }
         return vendorId;
+    }
+
+    @Override
+    public CabsRequestMapping details(long id) throws Exception {
+
+        try {
+            session = sessionFactory.openSession();
+            tx = session.getTransaction();
+            session.beginTransaction();
+            List<Cabs> cabsList = null;
+            String hql = null;
+            hql = "from Cabs cabs where cabs.cabId =:cabId";
+            Query query = (Query) session.createQuery(hql);
+            query.setParameter("cabId", id);
+            cabsList = query.list();
+            tx.commit();
+            if (cabsList.size() > 0) {
+                for (Cabs cabs : cabsList) {
+                    CabsRequestMapping cabsRequestMapping = new CabsRequestMapping();
+                    cabsRequestMapping.setAttributeId(cabs.getCabAttributes().getAttributeId());
+                    cabsRequestMapping.setAvgCondition(cabs.getCabAttributes().getAvgCondition());
+                    cabsRequestMapping.setCabColor(cabs.getCabColor());
+                    cabsRequestMapping.setCabId(cabs.getCabId());
+                    cabsRequestMapping.setCabModel(cabs.getCabModel());
+                    cabsRequestMapping.setCabNo(cabs.getCabNo());
+                    cabsRequestMapping.setCabRegistrationNo(cabs.getCabRegistrationNo());
+                    cabsRequestMapping.setCabType(cabs.getCabType());
+                    cabsRequestMapping.setDocumentId(cabs.getCabDocuments().getDocumentId());
+                    cabsRequestMapping.setEightSeater(cabs.getCabAttributes().getEightSeater());
+                    cabsRequestMapping.setExexutive(cabs.getCabAttributes().getExexutive());
+                    cabsRequestMapping.setFiveSeater(cabs.getCabAttributes().getFiveSeater());
+                    cabsRequestMapping.setFourSeater(cabs.getCabAttributes().getFourSeater());
+                    cabsRequestMapping.setGoodCOndition(cabs.getCabAttributes().getGoodCOndition());
+                    cabsRequestMapping.setHireExpiry(cabs.getHireExpiry());
+                    cabsRequestMapping.setInsurancePolicyNumber(cabs.getInsurancePolicyNumber());
+                    cabsRequestMapping.setInsurer(cabs.getInsurer());
+                    cabsRequestMapping.setInuranceExpiryDate(cabs.getInuranceExpiryDate());
+                    cabsRequestMapping.setInuranceCopy(cabs.getCabDocuments().getInuranceCopy());
+                    cabsRequestMapping.setLicencePapers(cabs.getCabDocuments().getLicencePapers());
+                    cabsRequestMapping.setMot(cabs.getMot());
+                    cabsRequestMapping.setMotExpiry(cabs.getMotExpiry());
+                    cabsRequestMapping.setOwnerDriver(cabs.getOwnerDriver());
+                    cabsRequestMapping.setPcolicence(cabs.getCabDocuments().getPcolicence());
+                    cabsRequestMapping.setPlateNumber(cabs.getPlateNumber());
+                    cabsRequestMapping.setPoliceDisclouser(cabs.getCabDocuments().getPoliceDisclouser());
+                    cabsRequestMapping.setPricingId(cabs.getPricingGroups().getPricingId());
+                    cabsRequestMapping.setProofOfAddress(cabs.getCabDocuments().getProofOfAddress());
+                    cabsRequestMapping.setRoadTaxExpiry(cabs.getRoadTaxExpiry());
+                    cabsRequestMapping.setSevenSeater(cabs.getCabAttributes().getSevenSeater());
+                    cabsRequestMapping.setSixSeater(cabs.getCabAttributes().getSixSeater());
+                    cabsRequestMapping.setStatus(cabs.getStatus());
+                    cabsRequestMapping.setVehicleStart(cabs.getVehicleStart());
+                    cabsRequestMapping.setVendorId(cabs.getVendors().getVendorId());
+                    cabsRequestMapping.setWheelChair(cabs.getCabAttributes().getWheelChair());
+                    cabsRequestMapping.setYearOfRegistration(cabs.getYearOfRegistration());
+                    return cabsRequestMapping;
+                }
+            }
+        } catch (HibernateException e) {
+            LOG.error("Exception occured while getting details {}" + e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public CabsViewTo view(long id) throws Exception {
+
+        try {
+            session = sessionFactory.openSession();
+            tx = session.getTransaction();
+            session.beginTransaction();
+            List<Cabs> cabsList = null;
+            String hql = null;
+            hql = "from Cabs cabs where cabs.cabId =:cabId";
+            Query query = (Query) session.createQuery(hql);
+            query.setParameter("cabId", id);
+            cabsList = query.list();
+            tx.commit();
+            if (cabsList.size() > 0) {
+                for (Cabs cabs : cabsList) {
+                    CabsViewTo cabsViewTo = new CabsViewTo();
+                    cabsViewTo.setAttributeId(cabs.getCabAttributes().getAttributeId());
+                    cabsViewTo.setAvgCondition(cabs.getCabAttributes().getAvgCondition());
+                    cabsViewTo.setCabColor(cabs.getCabColor());
+                    cabsViewTo.setCabId(cabs.getCabId());
+                    cabsViewTo.setCabModel(cabs.getCabModel());
+                    cabsViewTo.setCabNo(cabs.getCabNo());
+                    cabsViewTo.setCabRegistrationNo(cabs.getCabRegistrationNo());
+                    cabsViewTo.setCabType(cabs.getCabType());
+                    cabsViewTo.setDocumentId(cabs.getCabDocuments().getDocumentId());
+                    cabsViewTo.setEightSeater(cabs.getCabAttributes().getEightSeater());
+                    cabsViewTo.setExexutive(cabs.getCabAttributes().getExexutive());
+                    cabsViewTo.setFiveSeater(cabs.getCabAttributes().getFiveSeater());
+                    cabsViewTo.setFourSeater(cabs.getCabAttributes().getFourSeater());
+                    cabsViewTo.setGoodCOndition(cabs.getCabAttributes().getGoodCOndition());
+                    cabsViewTo.setHireExpiry(cabs.getHireExpiry());
+                    cabsViewTo.setInsurancePolicyNumber(cabs.getInsurancePolicyNumber());
+                    cabsViewTo.setInsurer(cabs.getInsurer());
+                    cabsViewTo.setInuranceExpiryDate(cabs.getInuranceExpiryDate());
+                    cabsViewTo.setInuranceCopy(cabs.getCabDocuments().getInuranceCopy());
+                    cabsViewTo.setLicencePapers(cabs.getCabDocuments().getLicencePapers());
+                    cabsViewTo.setMot(cabs.getMot());
+                    cabsViewTo.setMotExpiry(cabs.getMotExpiry());
+                    cabsViewTo.setOwnerDriver(cabs.getOwnerDriver());
+                    cabsViewTo.setPcolicence(cabs.getCabDocuments().getPcolicence());
+                    cabsViewTo.setPlateNumber(cabs.getPlateNumber());
+                    cabsViewTo.setPoliceDisclouser(cabs.getCabDocuments().getPoliceDisclouser());
+                    cabsViewTo.setPricingId(cabs.getPricingGroups().getPricingId());
+                    cabsViewTo.setProofOfAddress(cabs.getCabDocuments().getProofOfAddress());
+                    cabsViewTo.setRoadTaxExpiry(cabs.getRoadTaxExpiry());
+                    cabsViewTo.setSevenSeater(cabs.getCabAttributes().getSevenSeater());
+                    cabsViewTo.setSixSeater(cabs.getCabAttributes().getSixSeater());
+                    cabsViewTo.setStatus(cabs.getStatus());
+                    cabsViewTo.setVehicleStart(cabs.getVehicleStart());
+                    cabsViewTo.setVendorId(cabs.getVendors().getVendorId());
+                    cabsViewTo.setWheelChair(cabs.getCabAttributes().getWheelChair());
+                    cabsViewTo.setYearOfRegistration(cabs.getYearOfRegistration());
+                    cabsViewTo.setCreatedAt(cabs.getCreatedAt());
+                    cabsViewTo.setUpdatedAt(cabs.getUpdatedAt());
+                    cabsViewTo.setDeletedAt(cabs.getDeletedAt());
+                    return cabsViewTo;
+                }
+            }
+        } catch (HibernateException e) {
+            LOG.error("Exception occured while getting details {}" + e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return null;
     }
 }

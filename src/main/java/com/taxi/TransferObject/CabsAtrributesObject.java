@@ -25,7 +25,6 @@ public class CabsAtrributesObject {
         cabAttributes.setGoodCOndition(cabsRequestMapping.getGoodCOndition());
         cabAttributes.setSevenSeater(cabsRequestMapping.getSevenSeater());
         cabAttributes.setSixSeater(cabsRequestMapping.getSixSeater());
-        cabAttributes.setStatus(cabsRequestMapping.getStatus());
         cabAttributes.setWheelChair(cabsRequestMapping.getWheelChair());
         return cabAttributes;
     }

@@ -1,7 +1,9 @@
 package com.taxi.dao;
 
+import com.taxi.RequestMapper.CabsRequestMapping;
 import com.taxi.domain.Cabs;
 import com.taxi.to.CabsTo;
+import com.taxi.to.CabsViewTo;
 import java.util.List;
 
 public interface CabsDao {
@@ -12,7 +14,7 @@ public interface CabsDao {
 
     public boolean add(Cabs cabs) throws Exception;
 
-    public CabsTo findById(long id) throws Exception;
+    public Cabs findById(long id) throws Exception;
 
     public CabsTo ViewById(long id) throws Exception;
 
@@ -23,4 +25,6 @@ public interface CabsDao {
     public List<CabsTo> listOfCabsBasedOnVendorType(long vendorId) throws Exception;
     
     public long vendorId(long id) throws Exception;
+    public CabsRequestMapping details(long id) throws Exception;
+    public CabsViewTo view(long id) throws Exception ;
 }

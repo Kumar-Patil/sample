@@ -2,16 +2,13 @@ package com.taxi.daoImpl;
 
 import com.taxi.dao.*;
 import com.taxi.domain.CabAttributes;
-import com.taxi.domain.Cabs;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.taxi.to.CabsTo;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Calendar;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -33,14 +30,13 @@ public class CabsAtributesDaoImpl implements CabsAttributesDao {
 
     @Override
     @Cascade({CascadeType.SAVE_UPDATE})
-    public boolean add(CabAttributes cabAttributes) throws Exception {
-        boolean isAdded = false;
+    public Long add(CabAttributes cabAttributes) throws Exception {
+        Long cabAtributeId = null;
         try {
             session = sessionFactory.openSession();
             tx = session.beginTransaction();
-            session.saveOrUpdate(cabAttributes);
+            cabAtributeId = (Long) session.save(cabAttributes);
             tx.commit();
-            isAdded = true;
         } catch (HibernateException e) {
             LOG.error("Exception occured while adding {}" + e.getMessage());
         } finally {
@@ -48,7 +44,7 @@ public class CabsAtributesDaoImpl implements CabsAttributesDao {
                 session.close();
             }
         }
-        return isAdded;
+        return cabAtributeId;
     }
 
     @Override
@@ -185,5 +181,24 @@ public class CabsAtributesDaoImpl implements CabsAttributesDao {
 
         return isStatusUpdated;
 
+    }
+    @Override
+    @Cascade({CascadeType.SAVE_UPDATE})
+    public boolean update(CabAttributes cabAttributes) throws Exception {
+        boolean isUpdated = false;
+        try {
+            session = sessionFactory.openSession();
+            tx = session.beginTransaction();
+            session.saveOrUpdate(cabAttributes);
+            tx.commit();
+            isUpdated = true;
+        } catch (HibernateException e) {
+            LOG.error("Exception occured while adding {}" + e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return isUpdated;
     }
 }

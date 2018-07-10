@@ -23,7 +23,6 @@ public class CabsDocumentsObject {
         cabDocuments.setPcolicence(cabsRequestMapping.getPcolicence());
         cabDocuments.setPoliceDisclouser(cabsRequestMapping.getPoliceDisclouser());
         cabDocuments.setProofOfAddress(cabsRequestMapping.getProofOfAddress());
-        cabDocuments.setStatus(cabsRequestMapping.getStatus());
         cabDocuments.setUpdatedAt(currentTimestamp);
 
         return cabDocuments;

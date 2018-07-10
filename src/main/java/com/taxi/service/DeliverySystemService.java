@@ -12,4 +12,5 @@ public interface DeliverySystemService {
     public DeliverySystem findById(long id) throws Exception;
 
     public boolean updateStatus(long id) throws Exception;
+    public boolean updateDeliveryStatus(long deliveryId, String deliveryStatus) throws Exception;
 }

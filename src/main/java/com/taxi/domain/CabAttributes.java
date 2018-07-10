@@ -158,15 +158,6 @@ public class CabAttributes implements Serializable {
         this.deletedAt = deletedAt;
     }
 
-    @Column(name = "status", nullable = false)
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-    private int status;
     private String fourSeater;
     private String fiveSeater;
     private String sixSeater;
@@ -179,7 +170,6 @@ public class CabAttributes implements Serializable {
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private Timestamp deletedAt;
-    
 
     @Override
     public int hashCode() {

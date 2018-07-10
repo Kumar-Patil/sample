@@ -1,5 +1,6 @@
 package com.taxi.serviceImpl;
 
+import com.taxi.RequestMapper.CabsRequestMapping;
 import com.taxi.dao.CabsDao;
 import com.taxi.domain.Cabs;
 import java.util.List;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.taxi.service.CabsService;
 import com.taxi.to.CabsTo;
+import com.taxi.to.CabsViewTo;
 
 public class CabsServicesImpl implements CabsService {
 
@@ -30,7 +32,7 @@ public class CabsServicesImpl implements CabsService {
     }
 
     @Override
-    public CabsTo findById(long id) throws Exception {
+    public Cabs findById(long id) throws Exception {
         return cabsDao.findById(id);
     }
 
@@ -57,6 +59,16 @@ public class CabsServicesImpl implements CabsService {
     @Override
     public long vendorId(long id) throws Exception {
         return cabsDao.vendorId(id);
+    }
+
+    @Override
+    public CabsRequestMapping details(long id) throws Exception {
+        return cabsDao.details(id);
+    }
+
+    @Override
+    public CabsViewTo view(long id) throws Exception {
+         return cabsDao.view(id);
     }
 
 }

@@ -9,12 +9,13 @@ public interface CabsAttributesDao {
 
     public boolean delete(long id) throws Exception;
 
-    public boolean add(CabAttributes cabAttributes) throws Exception;
+    public Long add(CabAttributes cabAttributes) throws Exception;
 
     public CabAttributes findById(long id) throws Exception;
 
     public CabAttributes ViewById(long id) throws Exception;
 
     public boolean updateStatus(long cabId) throws Exception;
+    public boolean update(CabAttributes cabAttributes) throws Exception;
 
 }

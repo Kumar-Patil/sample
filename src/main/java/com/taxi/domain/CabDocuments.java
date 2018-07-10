@@ -164,14 +164,4 @@ public class CabDocuments implements Serializable {
         this.pcolicence = pcolicence;
         this.inuranceCopy = inuranceCopy;
     }
-
-    @Column(name = "status", nullable = false)
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-    private int status;
 }

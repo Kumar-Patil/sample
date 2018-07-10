@@ -23,7 +23,7 @@ public class CabsAttributesServicesImpl implements CabsAttributesService {
     }
 
     @Override
-    public boolean add(CabAttributes cabAttributes) throws Exception {
+    public Long add(CabAttributes cabAttributes) throws Exception {
         return cabsAttributesDao.add(cabAttributes);
     }
 
@@ -40,6 +40,11 @@ public class CabsAttributesServicesImpl implements CabsAttributesService {
     @Override
     public boolean updateStatus(long cabId) throws Exception {
         return cabsAttributesDao.updateStatus(cabId);
+    }
+
+    @Override
+    public boolean update(CabAttributes cabAttributes) throws Exception {
+        return cabsAttributesDao.update(cabAttributes);
     }
 
 }

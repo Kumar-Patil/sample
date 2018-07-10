@@ -1,7 +1,9 @@
 package com.taxi.daoImpl;
 
 import com.taxi.dao.*;
+import static com.taxi.daoImpl.LocationsDaoImpl.LOG;
 import com.taxi.domain.CabDocuments;
+import com.taxi.domain.Locations;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -31,14 +33,13 @@ public class CabsDocumentsDaoImpl implements CabsDocumentsDao {
 
     @Override
     @Cascade({CascadeType.SAVE_UPDATE})
-    public boolean add(CabDocuments cabDocuments) throws Exception {
-        boolean isAdded = false;
+    public Long add(CabDocuments cabDocuments) throws Exception {
+        Long cabDcoumentsId = null;
         try {
             session = sessionFactory.openSession();
             tx = session.beginTransaction();
-            session.saveOrUpdate(cabDocuments);
+            cabDcoumentsId = (Long) session.save(cabDocuments);
             tx.commit();
-            isAdded = true;
         } catch (HibernateException e) {
             LOG.error("Exception occured while adding {}" + e.getMessage());
         } finally {
@@ -46,7 +47,7 @@ public class CabsDocumentsDaoImpl implements CabsDocumentsDao {
                 session.close();
             }
         }
-        return isAdded;
+        return cabDcoumentsId;
     }
 
     @Override
@@ -180,5 +181,25 @@ public class CabsDocumentsDaoImpl implements CabsDocumentsDao {
 
         return isStatusUpdated;
 
+    }
+
+    @Override
+    @Cascade({CascadeType.SAVE_UPDATE})
+    public boolean update(CabDocuments cabDocuments) throws Exception {
+        boolean isUpdated = false;
+        try {
+            session = sessionFactory.openSession();
+            tx = session.beginTransaction();
+            session.saveOrUpdate(cabDocuments);
+            tx.commit();
+            isUpdated = true;
+        } catch (HibernateException e) {
+            LOG.error("Exception occured while adding {}" + e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return isUpdated;
     }
 }

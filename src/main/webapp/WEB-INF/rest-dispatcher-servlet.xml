@@ -95,6 +95,7 @@
                 <value>com.taxi.domain.DriverDocuments</value>
                 <value>com.taxi.domain.UserDocuments</value>
                 <value>com.taxi.domain.BankAccountDetails</value>
+                <value>com.taxi.domain.DeliverySystem</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -171,6 +172,9 @@
     
     <bean id="userDocumentsDao" class="com.taxi.daoImpl.UsersDocumentsDaoImpl"></bean>
     <bean id="usersDocumentsService" class="com.taxi.serviceImpl.UsersDocumentsServicesImpl"></bean>
+    
+    <bean id="deliverySystemDao" class="com.taxi.daoImpl.DeliverySystemDaoImpl"></bean>
+    <bean id="deliverySystemService" class="com.taxi.serviceImpl.DeliverySystemServiceImpl"></bean>
     
     <bean id="messageSource"
           class="org.springframework.context.support.ResourceBundleMessageSource">

@@ -31,4 +31,9 @@ public class DeliverySystemServiceImpl implements DeliverySystemService {
         return deliverySystemDao.updateStatus(id);
     }
 
+    @Override
+    public boolean updateDeliveryStatus(long deliveryId, String deliveryStatus) throws Exception {
+        return deliverySystemDao.updateDeliveryStatus(deliveryId, deliveryStatus);
+    }
+
 }

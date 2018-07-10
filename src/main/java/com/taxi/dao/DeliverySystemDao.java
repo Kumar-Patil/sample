@@ -11,5 +11,6 @@ public interface DeliverySystemDao {
 
     public DeliverySystem findById(long id) throws Exception;
 
-    public boolean updateStatus(long cabId) throws Exception;   
+    public boolean updateStatus(long cabId) throws Exception;
+    public boolean updateDeliveryStatus(long deliveryId, String deliveryStatus) throws Exception;
 }

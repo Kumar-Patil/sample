@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface CabsDocumentsService {
 
-    public boolean add(CabDocuments cabDocuments) throws Exception;
+    public Long add(CabDocuments cabDocuments) throws Exception;
 
     public CabDocuments findById(long id) throws Exception;
 
@@ -16,5 +16,6 @@ public interface CabsDocumentsService {
     public CabDocuments viewById(long id) throws Exception;
 
     public boolean updateStatus(long cabId) throws Exception;
+    public boolean update(CabDocuments cabDocuments) throws Exception;
 
 }

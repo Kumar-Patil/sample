@@ -104,7 +104,7 @@ public class DeliverySystemDaoImpl implements DeliverySystemDao {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public boolean updateStatus(long cabId) throws Exception {
+    public boolean updateStatus(long deliveryId) throws Exception {
         boolean isStatusUpdated = false;
         try {
             Calendar calendar = Calendar.getInstance();
@@ -112,17 +112,48 @@ public class DeliverySystemDaoImpl implements DeliverySystemDao {
             session = sessionFactory.openSession();
             tx = session.getTransaction();
             session.beginTransaction();
-            String hql = "UPDATE Cabs cabs set cabs.status =:status,cabs.deletedAt =:deletedAt "
-                    + "WHERE cabs.cabId =:cabId";
+            String hql = "UPDATE DeliverySystem ds set ds.status =:status,ds.deletedAt =:deletedAt "
+                    + "WHERE ds.deliveryId =:deliveryId";
             Query query = (Query) session.createQuery(hql);
-            query.setParameter("cabId", cabId);
+            query.setParameter("deliveryId", deliveryId);
             query.setParameter("status", 0);
             query.setParameter("deletedAt", currentTimestamp);
             query.executeUpdate();
             tx.commit();
             isStatusUpdated = true;
         } catch (HibernateException e) {
-            LOG.error("Exception occured while updating Cabs {}" + e.getMessage());
+            LOG.error("Exception occured while updating ds {}" + e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+
+        return isStatusUpdated;
+
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public boolean updateDeliveryStatus(long deliveryId, String deliveryStatus) throws Exception {
+        boolean isStatusUpdated = false;
+        try {
+            Calendar calendar = Calendar.getInstance();
+            Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
+            session = sessionFactory.openSession();
+            tx = session.getTransaction();
+            session.beginTransaction();
+            String hql = "UPDATE DeliverySystem ds set ds.deliveryCurrentStatus =:deliveryCurrentStatus,ds.updatedAt =:updatedAt "
+                    + "WHERE ds.deliveryId =:deliveryId";
+            Query query = (Query) session.createQuery(hql);
+            query.setParameter("deliveryId", deliveryId);
+            query.setParameter("deliveryCurrentStatus", deliveryStatus);
+            query.setParameter("updatedAt", currentTimestamp);
+            query.executeUpdate();
+            tx.commit();
+            isStatusUpdated = true;
+        } catch (HibernateException e) {
+            LOG.error("Exception occured while updating ds {}" + e.getMessage());
         } finally {
             if (session != null) {
                 session.close();

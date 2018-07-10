@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-
 public class CabsDocumentsServicesImpl implements CabsDocumentsService {
 
     @Autowired
@@ -24,12 +23,12 @@ public class CabsDocumentsServicesImpl implements CabsDocumentsService {
     }
 
     @Override
-    public boolean add(CabDocuments cd) throws Exception {
-        return cabsDocumentsDao.add(cd);
+    public Long add(CabDocuments cabDocuments) throws Exception {
+        return cabsDocumentsDao.add(cabDocuments);
     }
 
     @Override
-    public CabDocuments  findById(long id) throws Exception {
+    public CabDocuments findById(long id) throws Exception {
         return cabsDocumentsDao.findById(id);
     }
 
@@ -41,6 +40,12 @@ public class CabsDocumentsServicesImpl implements CabsDocumentsService {
     @Override
     public boolean updateStatus(long cabId) throws Exception {
         return cabsDocumentsDao.updateStatus(cabId);
+    }
+
+    @Override
+    public boolean update(CabDocuments cabDocuments) throws Exception {
+        return cabsDocumentsDao
+                .update(cabDocuments);
     }
 
 }
