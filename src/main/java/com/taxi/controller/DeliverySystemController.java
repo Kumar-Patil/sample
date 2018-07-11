@@ -1,13 +1,10 @@
 package com.taxi.controller;
 
 import com.taxi.RequestMapper.DeliverySystemRequestMapping;
-import com.taxi.RequestMapper.PricingGroupsMapping;
 import com.taxi.RequestMapper.SearchPriceRequestMapping;
 import com.taxi.TransferObject.DSObject;
 import com.taxi.domain.DeliverySystem;
-import com.taxi.domain.PricingGroups;
 import com.taxi.domain.User;
-import com.taxi.domain.Vendors;
 import com.taxi.service.DeliverySystemService;
 import com.taxi.service.VendorsService;
 import com.taxi.to.PricingGroupsTo;
@@ -16,8 +13,6 @@ import com.taxi.to.Response;
 import com.taxi.util.Constants;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import java.sql.Timestamp;
-import java.util.Calendar;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,7 +94,7 @@ public class DeliverySystemController {
     @ApiOperation(value = "Delete ds", notes = "Delete ds", response = Response.class)
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE,
         MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> deletePrice(@RequestParam("userId") long userId, @RequestParam("id") long id) {
+    public ResponseEntity<?> delete(@RequestParam("userId") long userId, @RequestParam("id") long id) {
         Response response = null;
         try {
             boolean isDSDeleted = deliverySystemService.updateStatus(id);
@@ -118,7 +113,7 @@ public class DeliverySystemController {
     @ApiOperation(value = "All ds List", notes = "Retrieves a List of ds", response = DeliverySystemRequestMapping.class)
     @RequestMapping(value = "/list", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE,
         MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> priceDetails(@RequestParam("userId") long userId) {
+    public ResponseEntity<?> list(@RequestParam("userId") long userId) {
         try {
             return new ResponseEntity<>(deliverySystemService.list(), HttpStatus.OK);
         } catch (Exception ex) {
@@ -127,22 +122,21 @@ public class DeliverySystemController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @ApiOperation(value = "Pricing Groups Details", notes = "Retrieves a PricingGroups details", response = PricingGroupsTo.class)
+    @ApiOperation(value = "DS Details", notes = "Retrieves a DS Details", response = DeliverySystemRequestMapping.class)
     @RequestMapping(value = "/view", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE,
         MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> view(@RequestParam("userId") long userId, @RequestParam("id") long id) {
-        /*try {
-            return new ResponseEntity<>(deliverySystemService.ViewById(id), HttpStatus.OK);
-
+        try {
+            return new ResponseEntity<>(deliverySystemService.findById(id), HttpStatus.OK);
         } catch (Exception ex) {
             LOG.error("Exception occured while viewing {}" + ex.getMessage());
-        }*/
+        }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @ApiOperation(value = "Search ds Details", notes = "Search ds Details", response = PricingTo.class)
     @RequestMapping(value = "/search", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> priceSearch(@RequestParam("userId") long userId, @RequestBody SearchPriceRequestMapping searchPriceRequestMapping) {
+    public ResponseEntity<?> Search(@RequestParam("userId") long userId, @RequestBody SearchPriceRequestMapping searchPriceRequestMapping) {
         /*try {
             return new ResponseEntity<>(deliverySystemService.search(searchPriceRequestMapping.getSearch()), HttpStatus.OK);
         } catch (Exception ex) {
@@ -154,14 +148,13 @@ public class DeliverySystemController {
     @ApiOperation(value = "DS Details", notes = "Retrieves a PricingGroups details", response = PricingGroupsTo.class)
     @RequestMapping(value = "/details", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE,
         MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> getPriceDetails(@RequestParam("userId") long userId, @RequestParam("id") long id) {
+    public ResponseEntity<?> details(@RequestParam("userId") long userId, @RequestParam("id") long id) {
         Response response = null;
-        /*try {
-            return new ResponseEntity<>(deliverySystemService.ViewById(id), HttpStatus.OK);
-
+        try {
+            return new ResponseEntity<>(deliverySystemService.findById(id), HttpStatus.OK);
         } catch (Exception ex) {
             response = new Response(Constants.ERROR_RESPONCE, ex.getMessage());
-        }*/
+        }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

@@ -3,6 +3,7 @@ package com.taxi.serviceImpl;
 import com.taxi.dao.DeliverySystemDao;
 import com.taxi.domain.DeliverySystem;
 import com.taxi.service.DeliverySystemService;
+import com.taxi.to.DeliverySystemTransfer;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,7 +13,7 @@ public class DeliverySystemServiceImpl implements DeliverySystemService {
     DeliverySystemDao deliverySystemDao;
 
     @Override
-    public List<DeliverySystem> list() throws Exception {
+    public List<DeliverySystemTransfer> list() throws Exception {
         return deliverySystemDao.list();
     }
 

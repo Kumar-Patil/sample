@@ -2,6 +2,7 @@ package com.taxi.daoImpl;
 
 import com.taxi.dao.*;
 import com.taxi.domain.DeliverySystem;
+import com.taxi.to.DeliverySystemTransfer;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -16,6 +17,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.transform.Transformers;
+import org.hibernate.type.StandardBasicTypes;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,7 +67,35 @@ public class DeliverySystemDaoImpl implements DeliverySystemDao {
             tx.commit();
             if (deliverySystemList.size() > 0) {
                 for (DeliverySystem deliverySystem : deliverySystemList) {
-                    return deliverySystem;
+                    DeliverySystem ds = new DeliverySystem();
+
+                    ds.setBookingAt(deliverySystem.getBookingAt());
+                    ds.setContactPersonEmail(deliverySystem.getContactPersonEmail());
+                    ds.setContactPersonMobileno(deliverySystem.getContactPersonMobileno());
+                    ds.setContactPersonName(deliverySystem.getContactPersonName());
+
+                    ds.setCreatedAt(deliverySystem.getCreatedAt());
+                    ds.setDeliveryAt(deliverySystem.getDeliveryAt());
+                    ds.setDeliveryCurrentStatus(deliverySystem.getDeliveryCurrentStatus());
+                    ds.setNoOfUnits(deliverySystem.getNoOfUnits());
+
+                    ds.setOrderCategory(deliverySystem.getOrderCategory());
+                    ds.setOrderType(deliverySystem.getOrderType());
+                    ds.setPickUpAddress(deliverySystem.getPickUpAddress());
+                    ds.setPickUpAt(deliverySystem.getPickUpAt());
+
+                    ds.setPickUpPinCode(deliverySystem.getPickUpPinCode());
+                    ds.setReciptentAddress(deliverySystem.getReciptentAddress());
+                    ds.setReciptentName(deliverySystem.getReciptentName());
+                    ds.setReciptentEmail(deliverySystem.getReciptentEmail());
+
+                    ds.setReciptentMobileNo(deliverySystem.getReciptentMobileNo());
+                    ds.setReciptentPinCode(deliverySystem.getReciptentPinCode());
+                    ds.setStatus(deliverySystem.getStatus());
+                    ds.setType(deliverySystem.getType());
+                    ds.setUpdatedAt(deliverySystem.getUpdatedAt());
+                    ds.setWeight(deliverySystem.getWeight());
+                    return ds;
                 }
             }
         } catch (HibernateException e) {
@@ -79,19 +110,33 @@ public class DeliverySystemDaoImpl implements DeliverySystemDao {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<DeliverySystem> list() throws Exception {
-        List<DeliverySystem> deliverySystemList = new ArrayList<>();
+    public List<DeliverySystemTransfer> list() throws Exception {
+        List<DeliverySystemTransfer> deliverySystemList = new ArrayList<>();
         try {
             session = sessionFactory.openSession();
             tx = session.getTransaction();
             session.beginTransaction();
-            String hql = null;
-            hql = "from DeliverySystem deliverySystem where deliverySystem.status =:status";
-            Query query = (Query) session.createQuery(hql);
-            query.setParameter("status", 1);
-            deliverySystemList = query.list();
+            deliverySystemList = session.createSQLQuery(
+                    "SELECT id as deliveryId,type as type,"
+                    + "delivery_current_status as deliveryCurrentStatus"
+                    + ",order_type as orderType,"
+                    + "weight as weight,"
+                    + "no_of_units as noOfUnits,"
+                    + "contact_person_name as contactPersonName,"
+                    + "reciptent_name as reciptentName,"
+                    + "booking_at as bookingAt FROM taxi.delivery_system")
+                    .addScalar("deliveryId", StandardBasicTypes.LONG)
+                    .addScalar("type")
+                    .addScalar("deliveryCurrentStatus")
+                    .addScalar("orderType")
+                    .addScalar("weight", StandardBasicTypes.LONG)
+                    .addScalar("noOfUnits")
+                    .addScalar("contactPersonName")
+                    .addScalar("reciptentName")
+                    .addScalar("bookingAt")
+                    .setResultTransformer(Transformers.aliasToBean(DeliverySystemTransfer.class))
+                    .list();
             tx.commit();
-
         } catch (HibernateException e) {
             LOG.error("Exception occured while getting findById {}" + e.getMessage());
         } finally {
@@ -163,4 +208,5 @@ public class DeliverySystemDaoImpl implements DeliverySystemDao {
         return isStatusUpdated;
 
     }
+
 }

@@ -96,6 +96,7 @@
                 <value>com.taxi.domain.UserDocuments</value>
                 <value>com.taxi.domain.BankAccountDetails</value>
                 <value>com.taxi.domain.DeliverySystem</value>
+                <value>com.taxi.domain.DeliverySystemTrackingDetails</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -175,6 +176,10 @@
     
     <bean id="deliverySystemDao" class="com.taxi.daoImpl.DeliverySystemDaoImpl"></bean>
     <bean id="deliverySystemService" class="com.taxi.serviceImpl.DeliverySystemServiceImpl"></bean>
+    
+    <bean id="deliverySystemTrackingHistoryDao" class="com.taxi.daoImpl.DeliverySystemTrackingHistoryDaoImpl"></bean>
+    <bean id="deliverySystemTrackingHistoryService" class="com.taxi.serviceImpl.DeliverySystemTrackingHistoryServiceImpl"></bean>
+    
     
     <bean id="messageSource"
           class="org.springframework.context.support.ResourceBundleMessageSource">
