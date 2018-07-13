@@ -18,26 +18,18 @@ public class CabsTo {
     private String cabNo;
     private String cabRegistrationNo;
     private String status;
-    private long vendorId;
-    private long pricingId;
-
-    public CabsTo(Timestamp createdAt, Timestamp updatedAt, Timestamp deletedAt, Long cabId, String cabType, String cabModel, String cabColor, String cabNo, String cabRegistrationNo, String status, long vendorId, long pricingId) {
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.deletedAt = deletedAt;
-        this.cabId = cabId;
-        this.cabType = cabType;
-        this.cabModel = cabModel;
-        this.cabColor = cabColor;
-        this.cabNo = cabNo;
-        this.cabRegistrationNo = cabRegistrationNo;
-        this.status = status;
-        this.vendorId = vendorId;
-        this.pricingId = pricingId;
-    }
+    private String plateNumber;
 
     public Timestamp getCreatedAt() {
         return createdAt;
+    }
+
+    public String getPlateNumber() {
+        return plateNumber;
+    }
+
+    public void setPlateNumber(String plateNumber) {
+        this.plateNumber = plateNumber;
     }
 
     public void setCreatedAt(Timestamp createdAt) {
@@ -116,20 +108,18 @@ public class CabsTo {
         this.status = status;
     }
 
-    public long getVendorId() {
-        return vendorId;
-    }
-
-    public void setVendorId(long vendorId) {
-        this.vendorId = vendorId;
-    }
-
-    public long getPricingId() {
-        return pricingId;
-    }
-
-    public void setPricingId(long pricingId) {
-        this.pricingId = pricingId;
+    public CabsTo(Timestamp createdAt, Timestamp updatedAt, Timestamp deletedAt, Long cabId, String cabType, String cabModel, String cabColor, String cabNo, String cabRegistrationNo, String status, String plateNumber) {
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.deletedAt = deletedAt;
+        this.cabId = cabId;
+        this.cabType = cabType;
+        this.cabModel = cabModel;
+        this.cabColor = cabColor;
+        this.cabNo = cabNo;
+        this.cabRegistrationNo = cabRegistrationNo;
+        this.status = status;
+        this.plateNumber = plateNumber;
     }
 
 }

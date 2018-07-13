@@ -102,8 +102,9 @@ public class CabsDaoImpl implements CabsDao {
                             cabs.getUpdatedAt(), cabs.getDeletedAt(),
                             cabs.getCabId(), cabs.getCabType(),
                             cabs.getCabModel(), cabs.getCabColor(),
-                            cabs.getCabNo(), cabs.getCabRegistrationNo(), Constants.status().get(cabs.getStatus()),
-                            cabs.getVendors().getVendorId(), cabs.getPricingGroups().getPricingId()));
+                            cabs.getCabNo(), cabs.getCabRegistrationNo(),
+                            Constants.status().get(cabs.getStatus()),
+                            cabs.getPlateNumber()));
                 }
             }
         } catch (HibernateException e) {
@@ -140,6 +141,7 @@ public class CabsDaoImpl implements CabsDao {
 
     @Override
     public CabsTo ViewById(long id) throws Exception {
+        List<CabsTo> cabsTo = new ArrayList<>();
         try {
             session = sessionFactory.openSession();
             tx = session.getTransaction();
@@ -153,12 +155,13 @@ public class CabsDaoImpl implements CabsDao {
             tx.commit();
             if (cabsList.size() > 0) {
                 for (Cabs cabs : cabsList) {
-                    return new CabsTo(cabs.getCreatedAt(),
+                    cabsTo.add(new CabsTo(cabs.getCreatedAt(),
                             cabs.getUpdatedAt(), cabs.getDeletedAt(),
                             cabs.getCabId(), cabs.getCabType(),
                             cabs.getCabModel(), cabs.getCabColor(),
-                            cabs.getCabNo(), cabs.getCabRegistrationNo(), Constants.status().get(cabs.getStatus()),
-                            cabs.getVendors().getVendorId(), cabs.getPricingGroups().getPricingId());
+                            cabs.getCabNo(), cabs.getCabRegistrationNo(),
+                            Constants.status().get(cabs.getStatus()),
+                            cabs.getPlateNumber()));
                 }
             }
         } catch (HibernateException e) {
@@ -225,8 +228,9 @@ public class CabsDaoImpl implements CabsDao {
                             cabs.getUpdatedAt(), cabs.getDeletedAt(),
                             cabs.getCabId(), cabs.getCabType(),
                             cabs.getCabModel(), cabs.getCabColor(),
-                            cabs.getCabNo(), cabs.getCabRegistrationNo(), Constants.status().get(cabs.getStatus()),
-                            cabs.getVendors().getVendorId(), cabs.getPricingGroups().getPricingId()));
+                            cabs.getCabNo(), cabs.getCabRegistrationNo(),
+                            Constants.status().get(cabs.getStatus()),
+                            cabs.getPlateNumber()));
                 }
             }
 
@@ -261,8 +265,9 @@ public class CabsDaoImpl implements CabsDao {
                             cabs.getUpdatedAt(), cabs.getDeletedAt(),
                             cabs.getCabId(), cabs.getCabType(),
                             cabs.getCabModel(), cabs.getCabColor(),
-                            cabs.getCabNo(), cabs.getCabRegistrationNo(), Constants.status().get(cabs.getStatus()),
-                            cabs.getVendors().getVendorId(), cabs.getPricingGroups().getPricingId()));
+                            cabs.getCabNo(), cabs.getCabRegistrationNo(),
+                            Constants.status().get(cabs.getStatus()),
+                            cabs.getPlateNumber()));
                 }
             }
         } catch (HibernateException e) {

@@ -124,7 +124,7 @@ public class DeliverySystemDaoImpl implements DeliverySystemDao {
                     + "no_of_units as noOfUnits,"
                     + "contact_person_name as contactPersonName,"
                     + "reciptent_name as reciptentName,"
-                    + "booking_at as bookingAt FROM taxi.delivery_system")
+                    + "booking_at as bookingAt FROM taxi.delivery_system where status=1")
                     .addScalar("deliveryId", StandardBasicTypes.LONG)
                     .addScalar("type")
                     .addScalar("deliveryCurrentStatus")
