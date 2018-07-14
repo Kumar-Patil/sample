@@ -21,6 +21,7 @@ import com.taxi.to.VendorsTo;
 import com.taxi.to.fileUpload;
 import com.taxi.util.Constants;
 import com.taxi.to.Status;
+import com.taxi.util.Config;
 import com.taxi.util.Util;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -219,11 +220,12 @@ public class CommonController {
     }
 
     @RequestMapping(value = "/fileHandler", method = RequestMethod.POST)
-    public ResponseEntity<?> fileHandler(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<?> fileHandler(@RequestParam("file") MultipartFile file) throws FileNotFoundException {
         if (!file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();
-                String rootPath = "D:\\Freelancer";
+                Config config = new Config();
+                String rootPath = config.getProperty("IMAGE_PATH");
                 File dir = new File(rootPath + File.separator + "images");
                 if (!dir.exists()) {
                     dir.mkdirs();

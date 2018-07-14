@@ -2,9 +2,7 @@ package com.taxi.controller;
 
 import com.taxi.RequestMapper.DeliverySystemRequestMapping;
 import com.taxi.RequestMapper.DeliverySystemTackingHistoryRequestMapping;
-import com.taxi.TransferObject.DSObject;
 import com.taxi.domain.Cabs;
-import com.taxi.domain.DeliverySystem;
 import com.taxi.domain.DeliverySystemTrackingDetails;
 import com.taxi.domain.Drivers;
 import com.taxi.domain.User;
