@@ -4,6 +4,7 @@ import com.taxi.RequestMapper.UserRequestMapper;
 import java.util.List;
 
 import com.taxi.domain.User;
+import com.taxi.to.UserViewTo;
 
 public interface UserService {
 
@@ -15,7 +16,7 @@ public interface UserService {
 
     public boolean delete(long id) throws Exception;
 
-    public User viewById(long id) throws Exception;
+    public UserViewTo viewById(long id) throws Exception;
 
     long isValidUser(String emailId, String password) throws Exception;
 

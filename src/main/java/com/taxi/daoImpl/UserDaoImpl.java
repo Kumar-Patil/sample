@@ -9,8 +9,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.taxi.domain.User;
+import com.taxi.to.UserViewTo;
+import com.taxi.util.Constants;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Calendar;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -22,14 +23,14 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 public class UserDaoImpl implements UserDao {
-
+    
     @Autowired
     SessionFactory sessionFactory;
-
+    
     Session session = null;
     Transaction tx = null;
     static final Logger LOG = Logger.getLogger(UserDaoImpl.class);
-
+    
     @Override
     @Cascade({CascadeType.SAVE_UPDATE})
     public boolean add(User user) throws Exception {
@@ -49,7 +50,7 @@ public class UserDaoImpl implements UserDao {
         }
         return isAdded;
     }
-
+    
     @Override
     public User findById(long id) throws Exception {
         User user = null;
@@ -78,7 +79,7 @@ public class UserDaoImpl implements UserDao {
         }
         return user;
     }
-
+    
     @SuppressWarnings("unchecked")
     @Override
     public List<User> list() throws Exception {
@@ -88,8 +89,9 @@ public class UserDaoImpl implements UserDao {
             tx = session.getTransaction();
             session.beginTransaction();
             String hql = null;
-            hql = "from User";
+            hql = "from User user where user.status =:status";
             Query query = (Query) session.createQuery(hql);
+             query.setParameter("status", 1);
             userList = query.list();
             tx.commit();
         } catch (HibernateException e) {
@@ -101,7 +103,7 @@ public class UserDaoImpl implements UserDao {
         }
         return userList;
     }
-
+    
     @Override
     @Cascade({CascadeType.DELETE})
     public boolean delete(long id)
@@ -122,10 +124,10 @@ public class UserDaoImpl implements UserDao {
         }
         return false;
     }
-
+    
     @Override
-    public User ViewById(long id) throws Exception {
-        List<User> user = null;
+    public UserViewTo ViewById(long id) throws Exception {
+        UserViewTo user = new UserViewTo();
         try {
             session = sessionFactory.openSession();
             tx = session.getTransaction();
@@ -139,7 +141,34 @@ public class UserDaoImpl implements UserDao {
             tx.commit();
             if (userList.size() > 0) {
                 for (User users : userList) {
-                    return users;
+                    user.setAccountNo(users.getAccountDetails().getAccountNo());
+                    user.setAddress(users.getLocations().getStreet());
+                    user.setAggrement1(users.getUserDocuments().getAggrement1());
+                    user.setAggrement2(users.getUserDocuments().getAggrement2());
+                    user.setAggrement4(users.getUserDocuments().getAggrement3());
+                    user.setAggrement4(users.getUserDocuments().getAggrement4());
+                    user.setCityName(users.getLocations().getCities().getCitieName());
+                    user.setCountryName(users.getLocations().getCountries().getName());
+                    user.setEmail(users.getEmail());
+                    user.setFirstName(users.getFirstName());
+                    user.setHireDate(users.getHireDate());
+                    user.setHireEndDate(users.getHireEndDate());
+                    user.setIfsc(users.getAccountDetails().getIfsc());
+                    user.setLastName(users.getLastName());
+                    user.setName(users.getAccountDetails().getName());
+                    user.setOtherphone(users.getOtherphone());
+                    user.setPhone(users.getPhone());
+                    user.setProofOfAddress(users.getUserDocuments().getProofOfAddress());
+                    user.setRole(users.getRole());
+                    user.setSex(users.getSex());
+                    user.setStateName(users.getLocations().getStates().getState());
+                    user.setStatus(Constants.status().get(users.getStatus()));
+                    user.setStreet(users.getLocations().getStreet());
+                    user.setUserPic(users.getUserDocuments().getUserPic());
+                    user.setZip(users.getLocations().getZip());
+                    user.setCreatedAt((Timestamp) users.getCreatedAt());
+                    user.setUpdateAt(users.getUpdatedAt());
+                    user.setDeletedAt(users.getDeletedAt());
                 }
             }
         } catch (HibernateException e) {
@@ -149,9 +178,9 @@ public class UserDaoImpl implements UserDao {
                 session.close();
             }
         }
-        return (User) user;
+        return user;
     }
-
+    
     @SuppressWarnings("unchecked")
     @Override
     public long isValidUser(String emailId, String password) throws Exception {
@@ -182,7 +211,7 @@ public class UserDaoImpl implements UserDao {
         }
         return userId;
     }
-
+    
     @SuppressWarnings("unchecked")
     @Override
     public boolean isValidEmailId(String emailId) throws Exception {
@@ -210,7 +239,7 @@ public class UserDaoImpl implements UserDao {
         }
         return isValidEmailID;
     }
-
+    
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public boolean updateOTP(String emailId, String OTPValue) throws Exception {
@@ -234,11 +263,11 @@ public class UserDaoImpl implements UserDao {
                 session.close();
             }
         }
-
+        
         return isOTPUpdated;
-
+        
     }
-
+    
     @SuppressWarnings("unchecked")
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
@@ -268,7 +297,7 @@ public class UserDaoImpl implements UserDao {
         }
         return isValidOTP;
     }
-
+    
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public boolean forgotPassword(String newPwd, String emailId, String otpValue) throws Exception {
@@ -291,7 +320,7 @@ public class UserDaoImpl implements UserDao {
                 isUpdate = true;
             }
             tx.commit();
-
+            
         } catch (HibernateException e) {
             LOG.error("Exception occured while getting changePassword {}" + e.getMessage());
         } finally {
@@ -301,7 +330,7 @@ public class UserDaoImpl implements UserDao {
         }
         return isUpdate;
     }
-
+    
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public boolean updateStatus(long userId) throws Exception {
@@ -328,11 +357,11 @@ public class UserDaoImpl implements UserDao {
                 session.close();
             }
         }
-
+        
         return isStatusUpdated;
-
+        
     }
-
+    
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public List<User> search(String searchVal) throws Exception {
@@ -348,7 +377,7 @@ public class UserDaoImpl implements UserDao {
                     + "or user.firstName like '" + searchVal + "%' or user.lastName like '" + searchVal + "%'";
             Query query = (Query) session.createQuery(hql);
             userList = query.list();
-
+            
         } catch (HibernateException e) {
             LOG.error("Exception occured while getting search {}" + e.getMessage());
         } finally {
@@ -358,7 +387,7 @@ public class UserDaoImpl implements UserDao {
         }
         return userList;
     }
-
+    
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public List<User> getAll() throws Exception {
         List<User> userList = null;
@@ -370,7 +399,7 @@ public class UserDaoImpl implements UserDao {
             hql = "from User";
             Query query = (Query) session.createQuery(hql);
             userList = query.list();
-
+            
         } catch (HibernateException e) {
             LOG.error("Exception occured while getting getAll {}" + e.getMessage());
         } finally {
@@ -380,7 +409,7 @@ public class UserDaoImpl implements UserDao {
         }
         return userList;
     }
-
+    
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public boolean changePassword(String newPwd, String emailId) throws Exception {
@@ -404,7 +433,7 @@ public class UserDaoImpl implements UserDao {
         }
         return isUpdate;
     }
-
+    
     @Override
     @Cascade({CascadeType.SAVE_UPDATE})
     public boolean update(User user) throws Exception {
@@ -424,7 +453,7 @@ public class UserDaoImpl implements UserDao {
         }
         return isAdded;
     }
-
+    
     @Override
     public UserRequestMapper details(long id) throws Exception {
         try {

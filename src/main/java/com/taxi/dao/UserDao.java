@@ -4,6 +4,7 @@ import com.taxi.RequestMapper.UserRequestMapper;
 import java.util.List;
 
 import com.taxi.domain.User;
+import com.taxi.to.UserViewTo;
 
 public interface UserDao {
 
@@ -15,7 +16,7 @@ public interface UserDao {
 
     public User findById(long id) throws Exception;
 
-    public User ViewById(long id) throws Exception;
+    public UserViewTo ViewById(long id) throws Exception;
 
     long isValidUser(String emailId, String password) throws Exception;
 

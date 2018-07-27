@@ -284,11 +284,11 @@ public class UserController {
     public ResponseEntity<?> view(@RequestParam("userId") long userId, @RequestParam("id") long id) {
         User details = null;
         try {
-            details = userServices.viewById(id);
+            return new ResponseEntity<>(userServices.viewById(id), HttpStatus.OK);
         } catch (Exception ex) {
             LOG.error("Exception occured while search view {}" + ex.getMessage());
         }
-        return new ResponseEntity<>(details, HttpStatus.OK);
+        return new ResponseEntity<>(details, HttpStatus.NO_CONTENT);
     }
 
     @ApiOperation(value = "user details", notes = "user details", response = UserRequestMapper.class)

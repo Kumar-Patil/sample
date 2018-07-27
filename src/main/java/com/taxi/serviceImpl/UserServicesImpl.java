@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.taxi.domain.User;
 import com.taxi.dao.UserDao;
 import com.taxi.service.UserService;
+import com.taxi.to.UserViewTo;
 
 public class UserServicesImpl implements UserService {
 
@@ -35,7 +36,7 @@ public class UserServicesImpl implements UserService {
     }
 
     @Override
-    public User viewById(long id) throws Exception {
+    public UserViewTo viewById(long id) throws Exception {
         return userDao.ViewById(id);
     }
 
