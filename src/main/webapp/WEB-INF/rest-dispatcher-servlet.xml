@@ -97,6 +97,7 @@
                 <value>com.taxi.domain.BankAccountDetails</value>
                 <value>com.taxi.domain.DeliverySystem</value>
                 <value>com.taxi.domain.DeliverySystemTrackingDetails</value>
+                <value>com.taxi.domain.UserVendorMapping</value>
             </list>
         </property>
         <property name="hibernateProperties">

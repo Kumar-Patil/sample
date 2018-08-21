@@ -49,8 +49,8 @@ public class User implements Serializable {
     private BankAccountDetails accountDetails;
     private UserDocuments userDocuments;
     private Locations Locations;
+    private String regNo;
 
-    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ_USER_DETAILS")
     @SequenceGenerator(name = "SEQ_USER_DETAILS", sequenceName = "user_id_seq")
@@ -248,7 +248,7 @@ public class User implements Serializable {
     public void setUserDocuments(UserDocuments userDocuments) {
         this.userDocuments = userDocuments;
     }
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id", nullable = true)
     public Locations getLocations() {
@@ -258,7 +258,16 @@ public class User implements Serializable {
     public void setLocations(Locations Locations) {
         this.Locations = Locations;
     }
-    
+
+    @Column(name = "vendor_registration_no", nullable = true)
+    public String getRegNo() {
+        return regNo;
+    }
+
+    public void setRegNo(String regNo) {
+        this.regNo = regNo;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;

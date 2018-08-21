@@ -10,37 +10,44 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.taxi.domain.User;
 import com.taxi.to.UserViewTo;
+import com.taxi.to.VendorMap;
 import com.taxi.util.Constants;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.transform.Transformers;
+import org.hibernate.type.StandardBasicTypes;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 public class UserDaoImpl implements UserDao {
-    
+
     @Autowired
     SessionFactory sessionFactory;
-    
+
     Session session = null;
     Transaction tx = null;
     static final Logger LOG = Logger.getLogger(UserDaoImpl.class);
-    
+
     @Override
     @Cascade({CascadeType.SAVE_UPDATE})
-    public boolean add(User user) throws Exception {
+    public boolean add(User user, long loggedInUser) throws Exception {
         boolean isAdded = false;
+        Long userId = null;
         try {
             session = sessionFactory.openSession();
             tx = session.beginTransaction();
-            session.saveOrUpdate(user);
+            userId = (Long) session.save(user);
             tx.commit();
             isAdded = true;
+            this.userVendorMappingTable(loggedInUser, user.getId());
         } catch (HibernateException e) {
             LOG.error("Exception occured while adding {}" + e.getMessage());
         } finally {
@@ -50,7 +57,7 @@ public class UserDaoImpl implements UserDao {
         }
         return isAdded;
     }
-    
+
     @Override
     public User findById(long id) throws Exception {
         User user = null;
@@ -79,7 +86,7 @@ public class UserDaoImpl implements UserDao {
         }
         return user;
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public List<User> list() throws Exception {
@@ -91,7 +98,7 @@ public class UserDaoImpl implements UserDao {
             String hql = null;
             hql = "from User user where user.status =:status";
             Query query = (Query) session.createQuery(hql);
-             query.setParameter("status", 1);
+            query.setParameter("status", 1);
             userList = query.list();
             tx.commit();
         } catch (HibernateException e) {
@@ -103,7 +110,7 @@ public class UserDaoImpl implements UserDao {
         }
         return userList;
     }
-    
+
     @Override
     @Cascade({CascadeType.DELETE})
     public boolean delete(long id)
@@ -124,7 +131,7 @@ public class UserDaoImpl implements UserDao {
         }
         return false;
     }
-    
+
     @Override
     public UserViewTo ViewById(long id) throws Exception {
         UserViewTo user = new UserViewTo();
@@ -180,7 +187,7 @@ public class UserDaoImpl implements UserDao {
         }
         return user;
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public long isValidUser(String emailId, String password) throws Exception {
@@ -211,7 +218,7 @@ public class UserDaoImpl implements UserDao {
         }
         return userId;
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public boolean isValidEmailId(String emailId) throws Exception {
@@ -239,7 +246,7 @@ public class UserDaoImpl implements UserDao {
         }
         return isValidEmailID;
     }
-    
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public boolean updateOTP(String emailId, String OTPValue) throws Exception {
@@ -263,11 +270,11 @@ public class UserDaoImpl implements UserDao {
                 session.close();
             }
         }
-        
+
         return isOTPUpdated;
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
@@ -297,7 +304,7 @@ public class UserDaoImpl implements UserDao {
         }
         return isValidOTP;
     }
-    
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public boolean forgotPassword(String newPwd, String emailId, String otpValue) throws Exception {
@@ -320,7 +327,7 @@ public class UserDaoImpl implements UserDao {
                 isUpdate = true;
             }
             tx.commit();
-            
+
         } catch (HibernateException e) {
             LOG.error("Exception occured while getting changePassword {}" + e.getMessage());
         } finally {
@@ -330,7 +337,7 @@ public class UserDaoImpl implements UserDao {
         }
         return isUpdate;
     }
-    
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public boolean updateStatus(long userId) throws Exception {
@@ -357,11 +364,11 @@ public class UserDaoImpl implements UserDao {
                 session.close();
             }
         }
-        
+
         return isStatusUpdated;
-        
+
     }
-    
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public List<User> search(String searchVal) throws Exception {
@@ -377,7 +384,7 @@ public class UserDaoImpl implements UserDao {
                     + "or user.firstName like '" + searchVal + "%' or user.lastName like '" + searchVal + "%'";
             Query query = (Query) session.createQuery(hql);
             userList = query.list();
-            
+
         } catch (HibernateException e) {
             LOG.error("Exception occured while getting search {}" + e.getMessage());
         } finally {
@@ -387,7 +394,7 @@ public class UserDaoImpl implements UserDao {
         }
         return userList;
     }
-    
+
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public List<User> getAll() throws Exception {
         List<User> userList = null;
@@ -399,7 +406,7 @@ public class UserDaoImpl implements UserDao {
             hql = "from User";
             Query query = (Query) session.createQuery(hql);
             userList = query.list();
-            
+
         } catch (HibernateException e) {
             LOG.error("Exception occured while getting getAll {}" + e.getMessage());
         } finally {
@@ -409,7 +416,7 @@ public class UserDaoImpl implements UserDao {
         }
         return userList;
     }
-    
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public boolean changePassword(String newPwd, String emailId) throws Exception {
@@ -433,7 +440,7 @@ public class UserDaoImpl implements UserDao {
         }
         return isUpdate;
     }
-    
+
     @Override
     @Cascade({CascadeType.SAVE_UPDATE})
     public boolean update(User user) throws Exception {
@@ -453,7 +460,7 @@ public class UserDaoImpl implements UserDao {
         }
         return isAdded;
     }
-    
+
     @Override
     public UserRequestMapper details(long id) throws Exception {
         try {
@@ -508,5 +515,96 @@ public class UserDaoImpl implements UserDao {
             }
         }
         return null;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public void userVendorMappingTable(long userId, long vendorId) throws Exception {
+        try {
+            session = sessionFactory.openSession();
+            tx = session.beginTransaction();
+            String sql = "insert into user_mapping(user_id,user_vendor_id) values(" + userId + "," + vendorId + ")";
+            SQLQuery query = session.createSQLQuery(sql);
+            tx.commit();
+        } catch (HibernateException e) {
+            LOG.error("Exception occured while adding in userVendorMappingTable{}" + e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public String getRoleType(long userId) throws Exception {
+        String roleType = null;
+        try {
+            session = sessionFactory.openSession();
+            tx = session.getTransaction();
+            session.beginTransaction();
+            List<User> userList = null;
+            String hql = null;
+            hql = "from User user where user.id =:id";
+            Query query = (Query) session.createQuery(hql);
+            query.setParameter("id", userId);
+            userList = query.list();
+            tx.commit();
+            if (userList.size() > 0) {
+                for (User users : userList) {
+                    roleType = users.getRole();
+                }
+            }
+        } catch (HibernateException e) {
+            LOG.error("Exception occured while getting getRoleType {}" + e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return roleType;
+    }
+
+    @Override
+    public List<VendorMap> roleBasedVendorList(long userId) throws Exception {
+        List<VendorMap> vendorList = new ArrayList<>();
+        try {
+            session = sessionFactory.openSession();
+            tx = session.getTransaction();
+            session.beginTransaction();
+            String sqlQuery = null;
+            String roleType = getRoleType(userId);
+            if (roleType.equalsIgnoreCase(Constants.SUPREME_USER) || roleType.equalsIgnoreCase(Constants.VIEW_USER)) {
+                sqlQuery = "SELECT id as userId, role as role "
+                        + ",phone as mobileNo,first_name as firstName,"
+                        + "last_name as lastName, email as email, "
+                        + "vendor_registration_no as vendorRegNo, status as status "
+                        + "FROM users where role='Vendor' and status=1";
+            } else {
+                sqlQuery = "SELECT id as userId, role as role "
+                        + ",phone as mobileNo,first_name as firstName, "
+                        + "last_name as lastName, email as email, "
+                        + "vendor_registration_no as vendorRegNo, status as status "
+                        + "FROM users where role='Vendor' and status=1 and id in (select user_vendor_id from user_mapping where user_id = " + userId + " )";
+            }
+            vendorList = session.createSQLQuery(sqlQuery)
+                    .addScalar("userId", StandardBasicTypes.LONG)
+                    .addScalar("role")
+                    .addScalar("mobileNo")
+                    .addScalar("firstName")
+                    .addScalar("lastName")
+                    .addScalar("email")
+                    .addScalar("vendorRegNo")
+                    .addScalar("status")
+                    .setResultTransformer(Transformers.aliasToBean(VendorMap.class))
+                    .list();
+            tx.commit();
+        } catch (HibernateException e) {
+            LOG.error("Exception occured while getting findById {}" + e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return vendorList;
     }
 }

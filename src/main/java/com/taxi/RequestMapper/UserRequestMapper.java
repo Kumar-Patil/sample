@@ -254,5 +254,13 @@ public class UserRequestMapper {
     private String phone;
     private String email;
     private String password;
-    
+    private String regNo;
+
+    public String getRegNo() {
+        return regNo;
+    }
+
+    public void setRegNo(String regNo) {
+        this.regNo = regNo;
+    }
 }

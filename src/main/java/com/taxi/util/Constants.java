@@ -19,6 +19,8 @@ public class Constants {
     public static int STATUS_ACTVIE = 1;
     public static int STATUS_INACTIVE = 0;
     public static String UNAUTHORIZED = "unauthorized";
+    public static String SUPREME_USER="Supreme User";
+    public static String VIEW_USER="View User";
     /**
      *
      * @return

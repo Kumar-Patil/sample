@@ -9,6 +9,7 @@ import com.taxi.domain.User;
 import com.taxi.dao.UserDao;
 import com.taxi.service.UserService;
 import com.taxi.to.UserViewTo;
+import com.taxi.to.VendorMap;
 
 public class UserServicesImpl implements UserService {
 
@@ -26,8 +27,8 @@ public class UserServicesImpl implements UserService {
     }
 
     @Override
-    public boolean add(User user) throws Exception {
-        return userDao.add(user);
+    public boolean add(User user, long loggedInUser) throws Exception {
+        return userDao.add(user, loggedInUser);
     }
 
     @Override
@@ -93,6 +94,16 @@ public class UserServicesImpl implements UserService {
     @Override
     public UserRequestMapper details(long id) throws Exception {
         return userDao.details(id);
+    }
+
+    @Override
+    public String getRoleType(long userId) throws Exception {
+        return userDao.getRoleType(userId);
+    }
+
+    @Override
+    public List<VendorMap> roleBasedVendorList(long userId) throws Exception {
+        return userDao.roleBasedVendorList(userId);
     }
 
 }

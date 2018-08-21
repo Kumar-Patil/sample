@@ -130,6 +130,7 @@ public class UserController {
             user.setLastName(userRequestMapper.getLastName());
             user.setEmailVerified(0);
             user.setPhoneVerified(0);
+            user.setRegNo(userRequestMapper.getRegNo());
             //Additional Fields
             user.setHireDate(currentTimestamp);
             user.setHireEndDate(currentTimestamp);
@@ -139,7 +140,7 @@ public class UserController {
             user.setUserDocuments(UserDocuments);
             user.setAccountDetails(bankAccountDetails);
             user.setLocations(locations);
-            boolean isUserAdded = userServices.add(user);
+            boolean isUserAdded = userServices.add(user,userId);
             if (isUserAdded) {
                 response = new Response(Constants.SUCESS_RESPONCE, "yes");
             } else {
@@ -204,6 +205,7 @@ public class UserController {
             user.setLastName(userRequestMapper.getLastName());
             user.setEmailVerified(0);
             user.setPhoneVerified(0);
+            user.setRegNo(userRequestMapper.getRegNo());
             //Additional Fields
             user.setHireDate(currentTimestamp);
             user.setHireEndDate(currentTimestamp);
@@ -214,7 +216,7 @@ public class UserController {
             user.setAccountDetails(bankAccountDetails);
             user.setLocations(locations);
             user.setId(userRequestMapper.getId());
-            boolean isUserAdded = userServices.add(user);
+            boolean isUserAdded = userServices.update(user);
             if (isUserAdded) {
                 response = new Response(Constants.SUCESS_RESPONCE, "yes");
             } else {

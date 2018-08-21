@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.taxi.domain.User;
 import com.taxi.to.UserViewTo;
+import com.taxi.to.VendorMap;
 
 public interface UserDao {
 
@@ -12,7 +13,7 @@ public interface UserDao {
 
     public boolean delete(long id) throws Exception;
 
-    public boolean add(User user) throws Exception;
+    public boolean add(User user, long loggedInUser) throws Exception;
 
     public User findById(long id) throws Exception;
 
@@ -39,4 +40,8 @@ public interface UserDao {
     public boolean update(User user) throws Exception;
 
     UserRequestMapper details(long id) throws Exception;
+
+    public String getRoleType(long userId) throws Exception;
+
+    public List<VendorMap> roleBasedVendorList(long userId) throws Exception;
 }
