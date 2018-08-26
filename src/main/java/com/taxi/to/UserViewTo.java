@@ -28,6 +28,117 @@ public class UserViewTo {
     private Timestamp updateAt;
     private Timestamp deletedAt;
 
+    /* New Fileds for view*/
+    private String currentpossition;
+    private String fatherName;
+    private Timestamp dob;
+    //Added documents related documents
+    private String insurance;
+    private String policeDisclose;
+    private String licencePhoto;
+    private String licencePaper;
+    private String pcoLicence;
+    private String licenceNumber;
+    private Timestamp licenceExpiry;
+    private String insuranceNumber;
+
+    public String getCurrentpossition() {
+        return currentpossition;
+    }
+
+    public void setCurrentpossition(String currentpossition) {
+        this.currentpossition = currentpossition;
+    }
+
+    public String getFatherName() {
+        return fatherName;
+    }
+
+    public void setFatherName(String fatherName) {
+        this.fatherName = fatherName;
+    }
+
+    public Timestamp getDob() {
+        return dob;
+    }
+
+    public void setDob(Timestamp dob) {
+        this.dob = dob;
+    }
+
+    public String getInsurance() {
+        return insurance;
+    }
+
+    public void setInsurance(String insurance) {
+        this.insurance = insurance;
+    }
+
+    public String getPoliceDisclose() {
+        return policeDisclose;
+    }
+
+    public void setPoliceDisclose(String policeDisclose) {
+        this.policeDisclose = policeDisclose;
+    }
+
+    public String getLicencePhoto() {
+        return licencePhoto;
+    }
+
+    public void setLicencePhoto(String licencePhoto) {
+        this.licencePhoto = licencePhoto;
+    }
+
+    public String getLicencePaper() {
+        return licencePaper;
+    }
+
+    public void setLicencePaper(String licencePaper) {
+        this.licencePaper = licencePaper;
+    }
+
+    public String getPcoLicence() {
+        return pcoLicence;
+    }
+
+    public void setPcoLicence(String pcoLicence) {
+        this.pcoLicence = pcoLicence;
+    }
+
+    public String getLicenceNumber() {
+        return licenceNumber;
+    }
+
+    public void setLicenceNumber(String licenceNumber) {
+        this.licenceNumber = licenceNumber;
+    }
+
+    public Timestamp getLicenceExpiry() {
+        return licenceExpiry;
+    }
+
+    public void setLicenceExpiry(Timestamp licenceExpiry) {
+        this.licenceExpiry = licenceExpiry;
+    }
+
+    public String getInsuranceNumber() {
+        return insuranceNumber;
+    }
+
+    public void setInsuranceNumber(String insuranceNumber) {
+        this.insuranceNumber = insuranceNumber;
+    }
+
+    public Timestamp getInsuranceExpiry() {
+        return insuranceExpiry;
+    }
+
+    public void setInsuranceExpiry(Timestamp insuranceExpiry) {
+        this.insuranceExpiry = insuranceExpiry;
+    }
+    private Timestamp insuranceExpiry;
+
     public Timestamp getCreatedAt() {
         return createdAt;
     }

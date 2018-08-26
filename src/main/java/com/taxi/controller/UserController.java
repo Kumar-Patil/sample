@@ -13,6 +13,7 @@ import com.taxi.service.LocationsService;
 import com.taxi.service.UserService;
 import com.taxi.service.UsersDocumentsService;
 import com.taxi.to.Response;
+import com.taxi.to.RiderList;
 import com.taxi.to.UserDetails;
 import com.taxi.util.Constants;
 import io.swagger.annotations.Api;
@@ -115,6 +116,12 @@ public class UserController {
             UserDocuments.setStatus(userRequestMapper.getStatus());
             UserDocuments.setUpdatedAt(currentTimestamp);
             UserDocuments.setUserPic(userRequestMapper.getUserPic());
+            UserDocuments.setInsurance(userRequestMapper.getInsurance());
+            UserDocuments.setLicencePaper(userRequestMapper.getLicencePaper());
+            UserDocuments.setLicencePhoto(UserDocuments.getLicencePhoto());
+            UserDocuments.setPcoLicence(UserDocuments.getPcoLicence());
+            UserDocuments.setPoliceDisclose(UserDocuments.getPoliceDisclose());
+
             Long documentId = documentsService.add(UserDocuments);
             UserDocuments.setUserId(documentId);
 
@@ -132,15 +139,37 @@ public class UserController {
             user.setPhoneVerified(0);
             user.setRegNo(userRequestMapper.getRegNo());
             //Additional Fields
-            user.setHireDate(currentTimestamp);
-            user.setHireEndDate(currentTimestamp);
+
             user.setSex(userRequestMapper.getSex());
             user.setOtherphone(userRequestMapper.getOtherphone());
+
             //Mapping setting here
             user.setUserDocuments(UserDocuments);
             user.setAccountDetails(bankAccountDetails);
             user.setLocations(locations);
-            boolean isUserAdded = userServices.add(user,userId);
+
+            //Adding Latest fileds
+            user.setFather_name(userRequestMapper.getFatherName());
+            user.setCurrent_possition(userRequestMapper.getCurrentpossition());
+            user.setInsurance_number(userRequestMapper.getInsuranceNumber());
+            user.setLicence_number(userRequestMapper.getLicenceNumber());
+            //New Fields
+            if (userRequestMapper.getDob().getTime() != 0) {
+                user.setDob(userRequestMapper.getDob());
+            }
+            if (userRequestMapper.getHireDate() != null) {
+                user.setHireDate(userRequestMapper.getHireDate());
+            }
+            if (userRequestMapper.getHireEndDate() != null) {
+                user.setHireEndDate(userRequestMapper.getHireEndDate());
+            }
+            if (userRequestMapper.getInsuranceExpiry().getTime() != 0) {
+                user.setInsurance_expiry_Date(userRequestMapper.getInsuranceExpiry());
+            }
+            if (userRequestMapper.getLicenceExpiry().getTime() != 0) {
+                user.setLicence_expiry_date(userRequestMapper.getLicenceExpiry());
+            }
+            boolean isUserAdded = userServices.add(user, userId);
             if (isUserAdded) {
                 response = new Response(Constants.SUCESS_RESPONCE, "yes");
             } else {
@@ -191,6 +220,12 @@ public class UserController {
             UserDocuments.setStatus(userRequestMapper.getStatus());
             UserDocuments.setUpdatedAt(currentTimestamp);
             UserDocuments.setUserPic(userRequestMapper.getUserPic());
+            UserDocuments.setInsurance(userRequestMapper.getInsurance());
+            UserDocuments.setLicencePaper(userRequestMapper.getLicencePaper());
+            UserDocuments.setLicencePhoto(UserDocuments.getLicencePhoto());
+            UserDocuments.setPcoLicence(UserDocuments.getPcoLicence());
+            UserDocuments.setPoliceDisclose(UserDocuments.getPoliceDisclose());
+
             UserDocuments.setUserId(userDetails.getUserDocuments().getUserId());
             documentsService.update(UserDocuments);
 
@@ -216,6 +251,28 @@ public class UserController {
             user.setAccountDetails(bankAccountDetails);
             user.setLocations(locations);
             user.setId(userRequestMapper.getId());
+            //Adding Latest fileds
+            user.setFather_name(userRequestMapper.getFatherName());
+            user.setCurrent_possition(userRequestMapper.getCurrentpossition());
+            user.setInsurance_number(userRequestMapper.getInsuranceNumber());
+            user.setLicence_number(userRequestMapper.getLicenceNumber());
+
+            //New Fields
+            if (userRequestMapper.getDob().getTime() != 0) {
+                user.setDob(userRequestMapper.getDob());
+            }
+            if (userRequestMapper.getHireDate() != null) {
+                user.setHireDate(userRequestMapper.getHireDate());
+            }
+            if (userRequestMapper.getHireEndDate() != null) {
+                user.setHireEndDate(userRequestMapper.getHireEndDate());
+            }
+            if (userRequestMapper.getInsuranceExpiry().getTime() != 0) {
+                user.setInsurance_expiry_Date(userRequestMapper.getInsuranceExpiry());
+            }
+            if (userRequestMapper.getLicenceExpiry().getTime() != 0) {
+                user.setLicence_expiry_date(userRequestMapper.getLicenceExpiry());
+            }
             boolean isUserAdded = userServices.update(user);
             if (isUserAdded) {
                 response = new Response(Constants.SUCESS_RESPONCE, "yes");
@@ -302,5 +359,17 @@ public class UserController {
             LOG.error("Exception occured while search view {}" + ex.getMessage());
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Rider users", notes = "Rider users", response = RiderList.class)
+    @RequestMapping(value = "/riderList", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE,
+        MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> riderUsers(@RequestParam("userId") long userId) {
+        try {
+            return new ResponseEntity<>(userServices.riders(userId), HttpStatus.OK);
+        } catch (Exception ex) {
+            LOG.error("Exception occured while search records {}" + ex.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT, HttpStatus.OK);
     }
 }

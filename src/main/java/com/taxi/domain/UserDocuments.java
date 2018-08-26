@@ -46,6 +46,13 @@ public class UserDocuments implements Serializable {
     private Timestamp updatedAt;
     private Timestamp deletedAt;
 
+    //Added New fileds
+    private String policeDisclose;
+    private String licencePhoto;
+    private String licencePaper;
+    private String pcoLicence;
+    private String insurance;
+
     @Column(name = "proof_of_address", nullable = true)
     public String getProofOfAddress() {
         return proofOfAddress;
@@ -151,4 +158,50 @@ public class UserDocuments implements Serializable {
     public void setAggrement4(String aggrement4) {
         this.aggrement4 = aggrement4;
     }
+
+    @Column(name = "police_disclose", nullable = true)
+    public String getPoliceDisclose() {
+        return policeDisclose;
+    }
+
+    public void setPoliceDisclose(String policeDisclose) {
+        this.policeDisclose = policeDisclose;
+    }
+
+    @Column(name = "licence_photo", nullable = true)
+    public String getLicencePhoto() {
+        return licencePhoto;
+    }
+
+    public void setLicencePhoto(String licencePhoto) {
+        this.licencePhoto = licencePhoto;
+    }
+
+    @Column(name = "licence_paper", nullable = true)
+    public String getLicencePaper() {
+        return licencePaper;
+    }
+
+    public void setLicencePaper(String licencePaper) {
+        this.licencePaper = licencePaper;
+    }
+
+    @Column(name = "pco_licence", nullable = true)
+    public String getPcoLicence() {
+        return pcoLicence;
+    }
+
+    public void setPcoLicence(String pcoLicence) {
+        this.pcoLicence = pcoLicence;
+    }
+
+    @Column(name = "insurance", nullable = true)
+    public String getInsurance() {
+        return insurance;
+    }
+
+    public void setInsurance(String insurance) {
+        this.insurance = insurance;
+    }
+
 }

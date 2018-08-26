@@ -51,6 +51,15 @@ public class User implements Serializable {
     private Locations Locations;
     private String regNo;
 
+    //Addition fields added
+    private Timestamp dob;
+    private String current_possition;
+    private String father_name;
+    private Timestamp licence_expiry_date;
+    private Timestamp insurance_expiry_Date;
+    private String insurance_number;
+    private String licence_number;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ_USER_DETAILS")
     @SequenceGenerator(name = "SEQ_USER_DETAILS", sequenceName = "user_id_seq")
@@ -266,6 +275,69 @@ public class User implements Serializable {
 
     public void setRegNo(String regNo) {
         this.regNo = regNo;
+    }
+
+    @Column(name = "dob", nullable = true)
+    public Timestamp getDob() {
+        return dob;
+    }
+
+    public void setDob(Timestamp dob) {
+        this.dob = dob;
+    }
+
+    @Column(name = "current_possition", nullable = true)
+    public String getCurrent_possition() {
+        return current_possition;
+    }
+
+    public void setCurrent_possition(String current_possition) {
+        this.current_possition = current_possition;
+    }
+
+    @Column(name = "father_name", nullable = true)
+    public String getFather_name() {
+        return father_name;
+    }
+
+    public void setFather_name(String father_name) {
+        this.father_name = father_name;
+    }
+
+    @Column(name = "licence_expiry_date", nullable = true)
+    public Timestamp getLicence_expiry_date() {
+        return licence_expiry_date;
+    }
+
+    public void setLicence_expiry_date(Timestamp licence_expiry_date) {
+        this.licence_expiry_date = licence_expiry_date;
+    }
+
+    @Column(name = "insurance_expiry_Date", nullable = true)
+    public Timestamp getInsurance_expiry_Date() {
+        return insurance_expiry_Date;
+    }
+
+    public void setInsurance_expiry_Date(Timestamp insurance_expiry_Date) {
+        this.insurance_expiry_Date = insurance_expiry_Date;
+    }
+
+    @Column(name = "insurance_number", nullable = true)
+    public String getInsurance_number() {
+        return insurance_number;
+    }
+
+    public void setInsurance_number(String insurance_number) {
+        this.insurance_number = insurance_number;
+    }
+
+    @Column(name = "licence_number", nullable = true)
+    public String getLicence_number() {
+        return licence_number;
+    }
+
+    public void setLicence_number(String licence_number) {
+        this.licence_number = licence_number;
     }
 
     @Override

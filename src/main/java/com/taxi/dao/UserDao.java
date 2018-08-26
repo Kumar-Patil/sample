@@ -4,6 +4,7 @@ import com.taxi.RequestMapper.UserRequestMapper;
 import java.util.List;
 
 import com.taxi.domain.User;
+import com.taxi.to.RiderList;
 import com.taxi.to.UserViewTo;
 import com.taxi.to.VendorMap;
 
@@ -44,4 +45,6 @@ public interface UserDao {
     public String getRoleType(long userId) throws Exception;
 
     public List<VendorMap> roleBasedVendorList(long userId) throws Exception;
+    
+    public List<RiderList> riders(long userId) throws Exception;
 }

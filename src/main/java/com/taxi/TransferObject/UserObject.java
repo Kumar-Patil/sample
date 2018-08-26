@@ -17,18 +17,22 @@ public class UserObject {
         locations.setAddress(userRequestMapper.getAddress());
         locations.setStreet(userRequestMapper.getStreet());
         locations.setZip(userRequestMapper.getZip());
-
         Cities cities = new Cities();
         States states = new States();
         Countries countries = new Countries();
+        if (userRequestMapper.getCityId() != 0) {
+            cities.setCityId(userRequestMapper.getCityId());
+            locations.setCities(cities);
+        } 
+        if (userRequestMapper.getStateId() != 0) {
+            states.setStateId(userRequestMapper.getStateId());
+            locations.setStates(states);
+        } 
+        if (userRequestMapper.getCountryId() != 0) {
+            countries.setCountriId(userRequestMapper.getCountryId());
+            locations.setCountries(countries);
+        }
 
-        cities.setCityId(userRequestMapper.getCityId());
-        states.setStateId(userRequestMapper.getStateId());
-        countries.setCountriId(userRequestMapper.getCountryId());
-
-        locations.setCities(cities);
-        locations.setStates(states);
-        locations.setCountries(countries);
         locations.setLng(0);
         locations.setLat(0);
         return locations;

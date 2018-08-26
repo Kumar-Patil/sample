@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.taxi.domain.User;
+import com.taxi.to.RiderList;
 import com.taxi.to.UserViewTo;
 import com.taxi.to.VendorMap;
 import com.taxi.util.Constants;
@@ -47,13 +48,15 @@ public class UserDaoImpl implements UserDao {
             userId = (Long) session.save(user);
             tx.commit();
             isAdded = true;
-            this.userVendorMappingTable(loggedInUser, user.getId());
         } catch (HibernateException e) {
             LOG.error("Exception occured while adding {}" + e.getMessage());
         } finally {
             if (session != null) {
                 session.close();
             }
+        }
+        if (isAdded) {
+            this.userVendorMappingTable(loggedInUser, user.getId());
         }
         return isAdded;
     }
@@ -154,8 +157,15 @@ public class UserDaoImpl implements UserDao {
                     user.setAggrement2(users.getUserDocuments().getAggrement2());
                     user.setAggrement4(users.getUserDocuments().getAggrement3());
                     user.setAggrement4(users.getUserDocuments().getAggrement4());
-                    user.setCityName(users.getLocations().getCities().getCitieName());
-                    user.setCountryName(users.getLocations().getCountries().getName());
+                    if (users.getLocations().getCities() != null) {
+                        user.setCityName(users.getLocations().getCities().getCitieName());
+                    }
+                    if (users.getLocations().getCountries() != null) {
+                        user.setCountryName(users.getLocations().getCountries().getName());
+                    }
+                    if (users.getLocations().getStates() != null) {
+                        user.setStateName(users.getLocations().getStates().getState());
+                    }
                     user.setEmail(users.getEmail());
                     user.setFirstName(users.getFirstName());
                     user.setHireDate(users.getHireDate());
@@ -168,7 +178,6 @@ public class UserDaoImpl implements UserDao {
                     user.setProofOfAddress(users.getUserDocuments().getProofOfAddress());
                     user.setRole(users.getRole());
                     user.setSex(users.getSex());
-                    user.setStateName(users.getLocations().getStates().getState());
                     user.setStatus(Constants.status().get(users.getStatus()));
                     user.setStreet(users.getLocations().getStreet());
                     user.setUserPic(users.getUserDocuments().getUserPic());
@@ -176,6 +185,19 @@ public class UserDaoImpl implements UserDao {
                     user.setCreatedAt((Timestamp) users.getCreatedAt());
                     user.setUpdateAt(users.getUpdatedAt());
                     user.setDeletedAt(users.getDeletedAt());
+                    /* Adding new field data */
+                    user.setFatherName(users.getFather_name());
+                    user.setCurrentpossition(users.getCurrent_possition());
+                    user.setDob(users.getDob());
+                    user.setLicenceNumber(users.getInsurance_number());
+                    user.setLicenceExpiry(users.getLicence_expiry_date());
+                    user.setInsuranceExpiry(users.getInsurance_expiry_Date());
+                    user.setInsuranceNumber(users.getInsurance_number());
+                    user.setPcoLicence(users.getUserDocuments().getPcoLicence());
+                    user.setLicencePhoto(users.getUserDocuments().getLicencePhoto());
+                    user.setLicencePaper(users.getUserDocuments().getLicencePaper());
+                    user.setPoliceDisclose(users.getUserDocuments().getPoliceDisclose());
+                    user.setInsurance(users.getUserDocuments().getInsurance());
                 }
             }
         } catch (HibernateException e) {
@@ -483,8 +505,6 @@ public class UserDaoImpl implements UserDao {
                     requestMapper.setAggrement2(users.getUserDocuments().getAggrement2());
                     requestMapper.setAggrement3(users.getUserDocuments().getAggrement3());
                     requestMapper.setAggrement4(users.getUserDocuments().getAggrement4());
-                    requestMapper.setCityId(users.getLocations().getCities().getCityId());
-                    requestMapper.setCountryId(users.getLocations().getCountries().getCountriId());
                     requestMapper.setEmail(users.getEmail());
                     requestMapper.setFirstName(users.getFirstName());
                     requestMapper.setHireDate(users.getHireDate());
@@ -497,13 +517,35 @@ public class UserDaoImpl implements UserDao {
                     requestMapper.setProofOfAddress(users.getUserDocuments().getProofOfAddress());
                     requestMapper.setRole(users.getRole());
                     requestMapper.setSex(users.getSex());
-                    requestMapper.setStateId(users.getLocations().getStates().getStateId());
+                    if (users.getLocations().getCities() != null) {
+                        requestMapper.setCityId(users.getLocations().getCities().getCityId());
+                    }
+                    if (users.getLocations().getCountries() != null) {
+                        requestMapper.setCountryId(users.getLocations().getCountries().getCountriId());
+                    }
+                    if (users.getLocations().getStates() != null) {
+                        requestMapper.setStateId(users.getLocations().getStates().getStateId());
+                    }
                     requestMapper.setStatus(users.getStatus());
                     requestMapper.setStreet(users.getLocations().getStreet());
                     requestMapper.setUserPic(users.getUserDocuments().getUserPic());
                     requestMapper.setZip(users.getLocations().getZip());
                     requestMapper.setId(users.getId());
                     requestMapper.setPhone(users.getPhone());
+
+                    requestMapper.setFatherName(users.getFather_name());
+                    requestMapper.setCurrentpossition(users.getCurrent_possition());
+                    requestMapper.setDob(users.getDob());
+                    requestMapper.setLicenceNumber(users.getInsurance_number());
+                    requestMapper.setLicenceExpiry(users.getLicence_expiry_date());
+                    requestMapper.setInsuranceExpiry(users.getInsurance_expiry_Date());
+                    requestMapper.setInsuranceNumber(users.getInsurance_number());
+                    requestMapper.setPcoLicence(users.getUserDocuments().getPcoLicence());
+                    requestMapper.setLicencePhoto(users.getUserDocuments().getLicencePhoto());
+                    requestMapper.setLicencePaper(users.getUserDocuments().getLicencePaper());
+                    requestMapper.setPoliceDisclose(users.getUserDocuments().getPoliceDisclose());
+                    requestMapper.setInsurance(users.getUserDocuments().getInsurance());
+                    requestMapper.setOtherphone(users.getOtherphone());
                     return requestMapper;
                 }
             }
@@ -524,6 +566,7 @@ public class UserDaoImpl implements UserDao {
             tx = session.beginTransaction();
             String sql = "insert into user_mapping(user_id,user_vendor_id) values(" + userId + "," + vendorId + ")";
             SQLQuery query = session.createSQLQuery(sql);
+            query.executeUpdate();
             tx.commit();
         } catch (HibernateException e) {
             LOG.error("Exception occured while adding in userVendorMappingTable{}" + e.getMessage());
@@ -606,5 +649,41 @@ public class UserDaoImpl implements UserDao {
             }
         }
         return vendorList;
+    }
+
+    @Override
+    public List<RiderList> riders(long userId) throws Exception {
+        List<RiderList> riderListList = new ArrayList<>();
+        try {
+            session = sessionFactory.openSession();
+            tx = session.getTransaction();
+            session.beginTransaction();
+            String sqlQuery = null;
+            sqlQuery = "SELECT id as userId, role as role "
+                    + ",phone as mobileNo,first_name as firstName,"
+                    + "last_name as lastName, email as email, "
+                    + "vendor_registration_no as vendorRegNo, status as status "
+                    + "FROM users where role='rider' and status=1";
+
+            riderListList = session.createSQLQuery(sqlQuery)
+                    .addScalar("userId", StandardBasicTypes.LONG)
+                    .addScalar("role")
+                    .addScalar("mobileNo")
+                    .addScalar("firstName")
+                    .addScalar("lastName")
+                    .addScalar("email")
+                    .addScalar("vendorRegNo")
+                    .addScalar("status")
+                    .setResultTransformer(Transformers.aliasToBean(VendorMap.class))
+                    .list();
+            tx.commit();
+        } catch (HibernateException e) {
+            LOG.error("Exception occured while getting riderListList {}" + e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return riderListList;
     }
 }

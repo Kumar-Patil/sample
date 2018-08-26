@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.taxi.domain.User;
 import com.taxi.dao.UserDao;
 import com.taxi.service.UserService;
+import com.taxi.to.RiderList;
 import com.taxi.to.UserViewTo;
 import com.taxi.to.VendorMap;
 
@@ -104,6 +105,11 @@ public class UserServicesImpl implements UserService {
     @Override
     public List<VendorMap> roleBasedVendorList(long userId) throws Exception {
         return userDao.roleBasedVendorList(userId);
+    }
+
+    @Override
+    public List<RiderList> riders(long userId) throws Exception {
+        return userDao.riders(userId);
     }
 
 }

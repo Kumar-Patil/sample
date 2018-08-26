@@ -1,14 +1,149 @@
 package com.taxi.RequestMapper;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.sql.Timestamp;
 
 /**
  *
  * @author Santosh
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserRequestMapper {
+
     private long id;
     private int status;
+    private String fatherName;
+    private String role;
+    private String phone;
+    private String email;
+    private String password;
+    private String regNo;
+
+    /* Location Details */
+    private String street;
+    private String zip;
+    private int cityId;
+    private int stateId;
+    private int countryId;
+    private String address;
+
+    /* Added new column */
+    private Timestamp hireDate;
+    private Timestamp hireEndDate;
+    private String otherphone;
+    private String sex;
+    private String name;
+    private String ifsc;
+    private String accountNo;
+    //Added documents related documents
+    private String insurance;
+    private String policeDisclose;
+    private String licencePhoto;
+    private String licencePaper;
+    private String pcoLicence;
+
+    public String getPoliceDisclose() {
+        return policeDisclose;
+    }
+
+    public void setPoliceDisclose(String policeDisclose) {
+        this.policeDisclose = policeDisclose;
+    }
+
+    public String getLicencePhoto() {
+        return licencePhoto;
+    }
+
+    public void setLicencePhoto(String licencePhoto) {
+        this.licencePhoto = licencePhoto;
+    }
+
+    public String getLicencePaper() {
+        return licencePaper;
+    }
+
+    public void setLicencePaper(String licencePaper) {
+        this.licencePaper = licencePaper;
+    }
+
+    public String getPcoLicence() {
+        return pcoLicence;
+    }
+
+    public void setPcoLicence(String pcoLicence) {
+        this.pcoLicence = pcoLicence;
+    }
+    
+    private String licenceNumber;
+    private Timestamp licenceExpiry;
+    private String insuranceNumber;
+    private Timestamp insuranceExpiry;
+
+    public String getInsurance() {
+        return insurance;
+    }
+
+    public void setInsurance(String insurance) {
+        this.insurance = insurance;
+    }
+
+    public String getLicenceNumber() {
+        return licenceNumber;
+    }
+
+    public void setLicenceNumber(String licenceNumber) {
+        this.licenceNumber = licenceNumber;
+    }
+
+    public Timestamp getLicenceExpiry() {
+        return licenceExpiry;
+    }
+
+    public void setLicenceExpiry(Timestamp licenceExpiry) {
+        this.licenceExpiry = licenceExpiry;
+    }
+
+    public String getInsuranceNumber() {
+        return insuranceNumber;
+    }
+
+    public void setInsuranceNumber(String insuranceNumber) {
+        this.insuranceNumber = insuranceNumber;
+    }
+
+    public Timestamp getInsuranceExpiry() {
+        return insuranceExpiry;
+    }
+
+    public void setInsuranceExpiry(Timestamp insuranceExpiry) {
+        this.insuranceExpiry = insuranceExpiry;
+    }
+
+    public String getFatherName() {
+        return fatherName;
+    }
+
+    public void setFatherName(String fatherName) {
+        this.fatherName = fatherName;
+    }
+
+    public Timestamp getDob() {
+        return dob;
+    }
+
+    public void setDob(Timestamp dob) {
+        this.dob = dob;
+    }
+    private String currentpossition;
+    private Timestamp dob;
+
+    public String getCurrentpossition() {
+        return currentpossition;
+    }
+
+    public void setCurrentpossition(String currentpossition) {
+        this.currentpossition = currentpossition;
+    }
 
     public int getStatus() {
         return status;
@@ -129,23 +264,7 @@ public class UserRequestMapper {
     public void setAggrement4(String aggrement4) {
         this.aggrement4 = aggrement4;
     }
-    /* Location Details */
-    private String street;
-    private String zip;
-    private int cityId;
-    private int stateId;
-    private int countryId;
-    private String address;
-    
-    /* Added new column */
-    private Timestamp hireDate;
-    private Timestamp hireEndDate;
-    private String otherphone;
-    private String sex;
-    private String name;
-    private String ifsc;
-    private String accountNo;
-    
+
     public String getName() {
         return name;
     }
@@ -169,6 +288,7 @@ public class UserRequestMapper {
     public void setAccountNo(String accountNo) {
         this.accountNo = accountNo;
     }
+
     public String getOtherphone() {
         return otherphone;
     }
@@ -184,7 +304,7 @@ public class UserRequestMapper {
     public void setSex(String sex) {
         this.sex = sex;
     }
-    
+
     /* Documents */
     private String userPic;
     private String proofOfAddress;
@@ -192,7 +312,7 @@ public class UserRequestMapper {
     private String aggrement2;
     private String aggrement3;
     private String aggrement4;
-    
+
     public long getId() {
         return id;
     }
@@ -218,6 +338,7 @@ public class UserRequestMapper {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
     public String getRole() {
         return role;
     }
@@ -249,12 +370,6 @@ public class UserRequestMapper {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    private String role;
-    private String phone;
-    private String email;
-    private String password;
-    private String regNo;
 
     public String getRegNo() {
         return regNo;
