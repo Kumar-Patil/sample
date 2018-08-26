@@ -13,7 +13,15 @@ public class RiderList {
     private String vendorRegNo;
     private long userId;
     private int status;
+    private String role;
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
     public String getFirstName() {
         return firstName;
     }

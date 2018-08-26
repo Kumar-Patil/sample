@@ -372,4 +372,16 @@ public class UserController {
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT, HttpStatus.OK);
     }
+
+    @ApiOperation(value = "Vendor users", notes = "Vendor users", response = RiderList.class)
+    @RequestMapping(value = "/vendorList", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE,
+        MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> vendorUsers(@RequestParam("userId") long userId) {
+        try {
+            return new ResponseEntity<>(userServices.roleBasedVendorList(userId), HttpStatus.OK);
+        } catch (Exception ex) {
+            LOG.error("Exception occured while search records {}" + ex.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT, HttpStatus.OK);
+    }
 }

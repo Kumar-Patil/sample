@@ -674,7 +674,7 @@ public class UserDaoImpl implements UserDao {
                     .addScalar("email")
                     .addScalar("vendorRegNo")
                     .addScalar("status")
-                    .setResultTransformer(Transformers.aliasToBean(VendorMap.class))
+                    .setResultTransformer(Transformers.aliasToBean(RiderList.class))
                     .list();
             tx.commit();
         } catch (HibernateException e) {
