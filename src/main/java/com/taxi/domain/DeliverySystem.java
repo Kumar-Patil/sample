@@ -49,6 +49,9 @@ public class DeliverySystem implements Serializable {
     private String reciptentPinCode;
     private String reciptentEmail;
 
+    private Timestamp delevery_completed_at;
+    private Timestamp last_updated_at;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", unique = true, nullable = false)
@@ -275,6 +278,24 @@ public class DeliverySystem implements Serializable {
 
     public void setReciptentEmail(String reciptentEmail) {
         this.reciptentEmail = reciptentEmail;
+    }
+
+    @Column(name = "delevery_completed_at", nullable = true)
+    public Timestamp getDelevery_completed_at() {
+        return delevery_completed_at;
+    }
+
+    public void setDelevery_completed_at(Timestamp delevery_completed_at) {
+        this.delevery_completed_at = delevery_completed_at;
+    }
+
+    @Column(name = "last_updated_at", nullable = true)
+    public Timestamp getLast_updated_at() {
+        return last_updated_at;
+    }
+
+    public void setLast_updated_at(Timestamp last_updated_at) {
+        this.last_updated_at = last_updated_at;
     }
 
     public DeliverySystem(Long deliveryId, Timestamp createdAt, Timestamp updatedAt, Timestamp deletedAt, User user, int status, String orderCategory, String deliveryCurrentStatus, String orderType, String type, Long weight, int noOfUnits, Timestamp bookingAt, Timestamp deliveryAt, Timestamp pickUpAt, String contactPersonName, String contactPersonEmail, String contactPersonMobileno, String pickUpAddress, String pickUpPinCode, String reciptentName, String reciptentMobileNo, String reciptentAddress, String reciptentPinCode, String reciptentEmail) {

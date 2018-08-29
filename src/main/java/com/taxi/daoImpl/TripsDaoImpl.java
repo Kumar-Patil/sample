@@ -1,7 +1,9 @@
 package com.taxi.daoImpl;
 
 import com.taxi.dao.*;
-import com.taxi.domain.TripsBookings;
+import com.taxi.domain.Trips;
+import com.taxi.to.TripsInProgress;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -10,21 +12,22 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
-public class TripsBookingsDaoImpl implements TripBookingsDao {
+public class TripsDaoImpl implements TripsDao {
 
     @Autowired
     SessionFactory sessionFactory;
 
     Session session = null;
     Transaction tx = null;
-    static final Logger LOG = Logger.getLogger(TripsBookingsDaoImpl.class);
+    static final Logger LOG = Logger.getLogger(TripsDaoImpl.class);
 
     @Override
     @Cascade({CascadeType.SAVE_UPDATE})
-    public Long add(TripsBookings tripsBookings) throws Exception {
+    public Long add(Trips tripsBookings) throws Exception {
         Long id = null;
         try {
             session = sessionFactory.openSession();
@@ -42,11 +45,11 @@ public class TripsBookingsDaoImpl implements TripBookingsDao {
     }
 
     @Override
-    public TripsBookings findById(long id) throws Exception {
-        TripsBookings tripsBookings = null;
+    public Trips findById(long id) throws Exception {
+        Trips tripsBookings = null;
         try {
             session = sessionFactory.openSession();
-            tripsBookings = (TripsBookings) session.load(TripsBookings.class, id);
+            tripsBookings = (Trips) session.load(Trips.class, id);
             tx = session.getTransaction();
             session.beginTransaction();
             tx.commit();
@@ -62,12 +65,12 @@ public class TripsBookingsDaoImpl implements TripBookingsDao {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<TripsBookings> list() throws Exception {
-        List<TripsBookings> tripsBookingses = null;
+    public List<Trips> list() throws Exception {
+        List<Trips> tripsBookingses = null;
         try {
             session = sessionFactory.openSession();
             tx = session.beginTransaction();
-            tripsBookingses = session.createCriteria(TripsBookings.class)
+            tripsBookingses = session.createCriteria(Trips.class)
                     .list();
             tx.commit();
         } catch (HibernateException e) {
@@ -82,7 +85,7 @@ public class TripsBookingsDaoImpl implements TripBookingsDao {
 
     @Override
     @Cascade({CascadeType.SAVE_UPDATE})
-    public boolean update(TripsBookings tripsBookings) throws Exception {
+    public boolean update(Trips tripsBookings) throws Exception {
         boolean isUpdated = false;
         try {
             session = sessionFactory.openSession();
@@ -99,4 +102,38 @@ public class TripsBookingsDaoImpl implements TripBookingsDao {
         }
         return isUpdated;
     }
+
+    @Override
+    public List<TripsInProgress> tripsInProgress(long userId, String status) throws Exception {
+        List<Trips> trips = new ArrayList<>();
+        List<TripsInProgress> inProgresses = new ArrayList<>();
+        try {
+            session = sessionFactory.openSession();
+            tx = session.getTransaction();
+            session.beginTransaction();
+            String hql = null;
+            hql = "from Trips trips where trips.trip_status =:status and trips.createdAt > DATE_SUB(now(), INTERVAL 1 DAY)";
+            Query query = (Query) session.createQuery(hql);
+            query.setParameter("status", status);
+            trips = query.list();
+            tx.commit();
+        } catch (HibernateException e) {
+            LOG.error("Exception occured while getting tripsInProgress {}" + e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        if (trips.size() > 0) {
+            for (Trips ts : trips) {
+                inProgresses.add(new TripsInProgress(ts.getTripId(),
+                        ts.getUserRider().getId(),
+                        ts.getUserDriver().getFirstName(),
+                        ts.getSource(),
+                        ts.getDestination(), 2, 3, ts.getTrip_status()));
+            }
+        }
+        return inProgresses;
+    }
+
 }

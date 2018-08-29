@@ -21,7 +21,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 @Entity
 @Table(name = "trips")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class TripsBookings implements Serializable {
+public class Trips implements Serializable {
 
     private Long tripId;
     private String source;
@@ -44,6 +44,10 @@ public class TripsBookings implements Serializable {
     private User userVendor;
     private User userDriver;
     private Cabs cab;
+    private String event_message;
+    private float destination_lat;
+
+    private float destination_lng;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -155,7 +159,7 @@ public class TripsBookings implements Serializable {
         this.actual_fare = actual_fare;
     }
 
-    @Column(name = "lat", nullable = false)
+    @Column(name = "source_lat", nullable = false)
     public float getLat() {
         return lat;
     }
@@ -164,7 +168,7 @@ public class TripsBookings implements Serializable {
         this.lat = lat;
     }
 
-    @Column(name = "lng", nullable = false)
+    @Column(name = "source_lng", nullable = false)
     public float getLng() {
         return lng;
     }
@@ -173,7 +177,7 @@ public class TripsBookings implements Serializable {
         this.lng = lng;
     }
 
-    @Column(name = "createdAt", nullable = false)
+    @Column(name = "created_at", nullable = false)
     public Timestamp getCreatedAt() {
         return createdAt;
     }
@@ -182,7 +186,7 @@ public class TripsBookings implements Serializable {
         this.createdAt = createdAt;
     }
 
-    @Column(name = "updatedAt", nullable = false)
+    @Column(name = "updated_at", nullable = false)
     public Timestamp getUpdatedAt() {
         return updatedAt;
     }
@@ -240,30 +244,58 @@ public class TripsBookings implements Serializable {
         this.cab = cab;
     }
 
+    @Column(name = "event_message", nullable = false)
+    public String getEvent_message() {
+        return event_message;
+    }
+
+    public void setEvent_message(String event_message) {
+        this.event_message = event_message;
+    }
+
+    @Column(name = "destination_lat", nullable = false)
+    public float getDestination_lat() {
+        return destination_lat;
+    }
+
+    public void setDestination_lat(float destination_lat) {
+        this.destination_lat = destination_lat;
+    }
+
+    @Column(name = "destination_lng", nullable = false)
+    public float getDestination_lng() {
+        return destination_lng;
+    }
+
+    public void setDestination_lng(float destination_lng) {
+        this.destination_lng = destination_lng;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 23 * hash + Objects.hashCode(this.tripId);
-        hash = 23 * hash + Objects.hashCode(this.source);
-        hash = 23 * hash + Objects.hashCode(this.destination);
-        hash = 23 * hash + Objects.hashCode(this.trip_status);
-        hash = 23 * hash + Objects.hashCode(this.estimated_start_time);
-        hash = 23 * hash + Objects.hashCode(this.actual_start_time);
-        hash = 23 * hash + Objects.hashCode(this.estimated_end_time);
-        hash = 23 * hash + Objects.hashCode(this.actual_end_time);
-        hash = 23 * hash + Float.floatToIntBits(this.estimated_distance);
-        hash = 23 * hash + Float.floatToIntBits(this.actual_distance);
-        hash = 23 * hash + Float.floatToIntBits(this.estimated_fare);
-        hash = 23 * hash + Float.floatToIntBits(this.actual_fare);
-        hash = 23 * hash + Float.floatToIntBits(this.lat);
-        hash = 23 * hash + Float.floatToIntBits(this.lng);
-        hash = 23 * hash + Objects.hashCode(this.createdAt);
-        hash = 23 * hash + Objects.hashCode(this.updatedAt);
-        hash = 23 * hash + Objects.hashCode(this.last_updated_at);
-        hash = 23 * hash + Objects.hashCode(this.userRider);
-        hash = 23 * hash + Objects.hashCode(this.userVendor);
-        hash = 23 * hash + Objects.hashCode(this.userDriver);
-        hash = 23 * hash + Objects.hashCode(this.cab);
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.tripId);
+        hash = 41 * hash + Objects.hashCode(this.source);
+        hash = 41 * hash + Objects.hashCode(this.destination);
+        hash = 41 * hash + Objects.hashCode(this.trip_status);
+        hash = 41 * hash + Objects.hashCode(this.estimated_start_time);
+        hash = 41 * hash + Objects.hashCode(this.actual_start_time);
+        hash = 41 * hash + Objects.hashCode(this.estimated_end_time);
+        hash = 41 * hash + Objects.hashCode(this.actual_end_time);
+        hash = 41 * hash + Float.floatToIntBits(this.estimated_distance);
+        hash = 41 * hash + Float.floatToIntBits(this.actual_distance);
+        hash = 41 * hash + Float.floatToIntBits(this.estimated_fare);
+        hash = 41 * hash + Float.floatToIntBits(this.actual_fare);
+        hash = 41 * hash + Float.floatToIntBits(this.lat);
+        hash = 41 * hash + Float.floatToIntBits(this.lng);
+        hash = 41 * hash + Objects.hashCode(this.createdAt);
+        hash = 41 * hash + Objects.hashCode(this.updatedAt);
+        hash = 41 * hash + Objects.hashCode(this.last_updated_at);
+        hash = 41 * hash + Objects.hashCode(this.userRider);
+        hash = 41 * hash + Objects.hashCode(this.userVendor);
+        hash = 41 * hash + Objects.hashCode(this.userDriver);
+        hash = 41 * hash + Objects.hashCode(this.cab);
+        hash = 41 * hash + Objects.hashCode(this.event_message);
         return hash;
     }
 
@@ -278,14 +310,14 @@ public class TripsBookings implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final TripsBookings other = (TripsBookings) obj;
+        final Trips other = (Trips) obj;
         return true;
     }
 
-    public TripsBookings() {
+    public Trips() {
     }
 
-    public TripsBookings(Long tripId, String source, String destination, String trip_status, Timestamp estimated_start_time, Timestamp actual_start_time, Timestamp estimated_end_time, Timestamp actual_end_time, float estimated_distance, float actual_distance, float estimated_fare, float actual_fare, float lat, float lng, Timestamp createdAt, Timestamp updatedAt, Timestamp last_updated_at, User userRider, User userVendor, User userDriver, Cabs cab) {
+    public Trips(Long tripId, String source, String destination, String trip_status, Timestamp estimated_start_time, Timestamp actual_start_time, Timestamp estimated_end_time, Timestamp actual_end_time, float estimated_distance, float actual_distance, float estimated_fare, float actual_fare, float lat, float lng, Timestamp createdAt, Timestamp updatedAt, Timestamp last_updated_at, User userRider, User userVendor, User userDriver, Cabs cab) {
         this.tripId = tripId;
         this.source = source;
         this.destination = destination;

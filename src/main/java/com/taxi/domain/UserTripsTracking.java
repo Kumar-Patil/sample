@@ -35,7 +35,7 @@ public class UserTripsTracking implements Serializable {
     private Timestamp updatedAt;
     private Timestamp last_updated_at;
     private User user;
-    private TripsBookings tripsBookings;
+    private Trips tripsBookings;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -134,11 +134,11 @@ public class UserTripsTracking implements Serializable {
     }
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "trip_id", nullable = true)
-    public TripsBookings getTripsBookings() {
+    public Trips getTripsBookings() {
         return tripsBookings;
     }
 
-    public void setTripsBookings(TripsBookings tripsBookings) {
+    public void setTripsBookings(Trips tripsBookings) {
         this.tripsBookings = tripsBookings;
     }
 
