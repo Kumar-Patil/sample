@@ -611,11 +611,11 @@ public class UserDaoImpl implements UserDao {
     public List<VendorMap> roleBasedVendorList(long userId) throws Exception {
         List<VendorMap> vendorList = new ArrayList<>();
         try {
+            String sqlQuery = null;
+            String roleType = getRoleType(userId);
             session = sessionFactory.openSession();
             tx = session.getTransaction();
             session.beginTransaction();
-            String sqlQuery = null;
-            String roleType = getRoleType(userId);
             if (roleType.equalsIgnoreCase(Constants.SUPREME_USER) || roleType.equalsIgnoreCase(Constants.VIEW_USER)) {
                 sqlQuery = "SELECT id as userId, role as role "
                         + ",phone as mobileNo,first_name as firstName,"
@@ -642,7 +642,7 @@ public class UserDaoImpl implements UserDao {
                     .list();
             tx.commit();
         } catch (HibernateException e) {
-            LOG.error("Exception occured while getting findById {}" + e.getMessage());
+            LOG.error("Exception occured while getting roleBasedVendorList {}" + e.getMessage());
         } finally {
             if (session != null) {
                 session.close();

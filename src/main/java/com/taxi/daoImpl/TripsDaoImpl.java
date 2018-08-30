@@ -3,6 +3,7 @@ package com.taxi.daoImpl;
 import com.taxi.dao.*;
 import com.taxi.domain.Trips;
 import com.taxi.to.TripsInProgress;
+import com.taxi.util.PolylineData;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,9 +113,9 @@ public class TripsDaoImpl implements TripsDao {
             tx = session.getTransaction();
             session.beginTransaction();
             String hql = null;
-            hql = "from Trips trips where trips.trip_status =:status and trips.createdAt > DATE_SUB(now(), INTERVAL 1 DAY)";
+            hql = "from Trips trips ";
             Query query = (Query) session.createQuery(hql);
-            query.setParameter("status", status);
+            //query.setParameter("status", status);
             trips = query.list();
             tx.commit();
         } catch (HibernateException e) {
@@ -127,8 +128,8 @@ public class TripsDaoImpl implements TripsDao {
         if (trips.size() > 0) {
             for (Trips ts : trips) {
                 inProgresses.add(new TripsInProgress(ts.getTripId(),
-                        ts.getUserRider().getId(),
-                        ts.getUserDriver().getFirstName(),
+                        new Long(88),
+                        "Santosh",
                         ts.getSource(),
                         ts.getDestination(), 2, 3, ts.getTrip_status()));
             }
@@ -136,4 +137,36 @@ public class TripsDaoImpl implements TripsDao {
         return inProgresses;
     }
 
+    @Override
+    public List<PolylineData> polyLineData(long userId, String status) throws Exception {
+        List<Trips> trips = new ArrayList<>();
+        List<PolylineData> polylineDatas = new ArrayList<>();
+        try {
+            session = sessionFactory.openSession();
+            tx = session.getTransaction();
+            session.beginTransaction();
+            String hql = null;
+            hql = "from Trips trips ";
+            Query query = (Query) session.createQuery(hql);
+            //query.setParameter("status", status);
+            trips = query.list();
+            tx.commit();
+        } catch (HibernateException e) {
+            LOG.error("Exception occured while getting polyLineData {}" + e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        if (trips.size() > 0) {
+            for (Trips ts : trips) {
+                polylineDatas.add(new PolylineData(ts.getLat(), ts.getLng(), "SOURCE",
+                        "https://maps.google.com/mapfiles/kml/shapes/parking_lot_maps.png", true));
+
+                polylineDatas.add(new PolylineData(ts.getDestination_lat(), ts.getDestination_lng(), "Destination",
+                        "", true));
+            }
+        }
+        return polylineDatas;
+    }
 }

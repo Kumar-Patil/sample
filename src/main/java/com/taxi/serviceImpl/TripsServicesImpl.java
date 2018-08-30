@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.taxi.dao.TripsDao;
 import com.taxi.service.TripsService;
 import com.taxi.to.TripsInProgress;
+import com.taxi.util.PolylineData;
 
 public class TripsServicesImpl implements TripsService {
 
@@ -35,7 +36,12 @@ public class TripsServicesImpl implements TripsService {
 
     @Override
     public List<TripsInProgress> tripsInProgress(long userId, String status) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return tripBookingsDao.tripsInProgress(userId, status);
+    }
+
+    @Override
+    public List<PolylineData> polyLineData(long userId, String status) throws Exception {
+        return tripBookingsDao.polyLineData(userId, status);
     }
 
 }

@@ -253,7 +253,7 @@ public class Trips implements Serializable {
         this.event_message = event_message;
     }
 
-    @Column(name = "destination_lat", nullable = false)
+    @Column(name = "destincation_lat", nullable = false)
     public float getDestination_lat() {
         return destination_lat;
     }

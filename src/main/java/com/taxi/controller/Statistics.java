@@ -44,7 +44,7 @@ public class Statistics {
             m.put("totalDelivery", statisticsService.totalDelivery(userId));
             return new ResponseEntity<>(m, HttpStatus.OK);
         } catch (Exception ex) {
-            LOG.error("Exception occured while search records {}" + ex.getMessage());
+            LOG.error("Exception occured while getting staticstics {}" + ex.getMessage());
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT, HttpStatus.OK);
     }

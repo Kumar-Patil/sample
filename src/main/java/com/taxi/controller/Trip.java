@@ -8,6 +8,7 @@ import com.taxi.service.TripsService;
 import com.taxi.to.Response;
 import com.taxi.to.TripsInProgress;
 import com.taxi.util.Constants;
+import com.taxi.util.PolylineData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.sql.Timestamp;
@@ -32,8 +33,8 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author santopat
  */
 @Controller
-@RequestMapping("/statistics")
-@Api(value = "statistics")
+@RequestMapping("/trips")
+@Api(value = "trips")
 @Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 @Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 public class Trip {
@@ -90,7 +91,7 @@ public class Trip {
             trips.setUserDriver(user);
             trips.setUserRider(user);
             trips.setUserVendor(user);
-            
+
             Cabs cab = new Cabs();
             cab.setCabId(new Long(1));
             trips.setCab(cab);
@@ -128,4 +129,21 @@ public class Trip {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Poly Map Data", notes = "Poly Map Data", response = PolylineData.class)
+    @RequestMapping(value = "/polymapdata", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE,
+        MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> polylineData(@RequestParam("userId") long userId) {
+        try {
+            List<PolylineData> polylineDatas = tripsService.polyLineData(userId, "in progress");
+            if (polylineDatas.size() > 0) {
+                return new ResponseEntity<>(polylineDatas, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT, HttpStatus.OK);
+            }
+        } catch (Exception ex) {
+            LOG.error("Exception occured while getting system staticstics {}" + ex.getMessage());
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 }
