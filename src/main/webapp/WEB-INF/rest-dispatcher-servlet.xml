@@ -98,6 +98,7 @@
                 <value>com.taxi.domain.DeliverySystem</value>
                 <value>com.taxi.domain.DeliverySystemTrackingDetails</value>
                 <value>com.taxi.domain.Trips</value>
+                <value>com.taxi.domain.EnableOrDisableBoostingFare</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -186,6 +187,9 @@
     
     <bean id="tripsDao" class="com.taxi.daoImpl.TripsDaoImpl"></bean>
     <bean id="tripsService" class="com.taxi.serviceImpl.TripsServicesImpl"></bean>
+    
+    <bean id="enableOrDisableBoostingFareDao" class="com.taxi.daoImpl.EnableOrDisableBoostingFareDaoImpl"></bean>
+    <bean id="enableOrDisableBoostingFareService" class="com.taxi.serviceImpl.EnableOrDisableBoostingFareServicesImpl"></bean>
     
     <bean id="messageSource"
           class="org.springframework.context.support.ResourceBundleMessageSource">

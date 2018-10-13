@@ -13,9 +13,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,9 +69,6 @@ public class Trip {
             Calendar calendar = Calendar.getInstance();
             Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
 
-            trips.setLat(userId);
-            trips.setLng(userId);
-
             /*User rider = new User();
             rider.setId(bookingRequestMapping.getCust_id());
             trips.setUserRider(rider);
@@ -117,6 +112,11 @@ public class Trip {
             trips.setLast_updated_at(currentTimestamp);
             trips.setTrip_status("in progress");
 
+            //Lattitude and langitude
+            trips.setDestination_lat(bookingRequestMapping.getDestinationLattitud());
+            trips.setDestination_lng(bookingRequestMapping.getDestinationLngitude());
+            trips.setSourceLng(bookingRequestMapping.getSourceLngitude());
+            trips.setSourceLat(bookingRequestMapping.getSourceLattitude());
             Long isAdded = tripsService.add(trips);
             if (isAdded != null) {
                 response = new Response(Constants.SUCESS_RESPONCE, "yes");

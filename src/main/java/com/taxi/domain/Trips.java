@@ -35,8 +35,8 @@ public class Trips implements Serializable {
     private float actual_distance;
     private float estimated_fare;
     private float actual_fare;
-    private float lat;
-    private float lng;
+    private float sourceLat;
+    private float sourceLng;
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private Timestamp last_updated_at;
@@ -160,21 +160,21 @@ public class Trips implements Serializable {
     }
 
     @Column(name = "source_lat", nullable = false)
-    public float getLat() {
-        return lat;
+    public float getSourceLat() {
+        return sourceLat;
     }
 
-    public void setLat(float lat) {
-        this.lat = lat;
+    public void setSourceLat(float lat) {
+        this.sourceLat = lat;
     }
 
     @Column(name = "source_lng", nullable = false)
-    public float getLng() {
-        return lng;
+    public float getSourceLng() {
+        return sourceLng;
     }
 
-    public void setLng(float lng) {
-        this.lng = lng;
+    public void setSourceLng(float lng) {
+        this.sourceLng = lng;
     }
 
     @Column(name = "created_at", nullable = false)
@@ -286,8 +286,8 @@ public class Trips implements Serializable {
         hash = 41 * hash + Float.floatToIntBits(this.actual_distance);
         hash = 41 * hash + Float.floatToIntBits(this.estimated_fare);
         hash = 41 * hash + Float.floatToIntBits(this.actual_fare);
-        hash = 41 * hash + Float.floatToIntBits(this.lat);
-        hash = 41 * hash + Float.floatToIntBits(this.lng);
+        hash = 41 * hash + Float.floatToIntBits(this.sourceLat);
+        hash = 41 * hash + Float.floatToIntBits(this.sourceLng);
         hash = 41 * hash + Objects.hashCode(this.createdAt);
         hash = 41 * hash + Objects.hashCode(this.updatedAt);
         hash = 41 * hash + Objects.hashCode(this.last_updated_at);
@@ -330,8 +330,8 @@ public class Trips implements Serializable {
         this.actual_distance = actual_distance;
         this.estimated_fare = estimated_fare;
         this.actual_fare = actual_fare;
-        this.lat = lat;
-        this.lng = lng;
+        this.sourceLat = lat;
+        this.sourceLng = lng;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.last_updated_at = last_updated_at;

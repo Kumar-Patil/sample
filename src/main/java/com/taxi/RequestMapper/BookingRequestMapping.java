@@ -14,8 +14,44 @@ public class BookingRequestMapping {
     private String remarks;
     private String source;
     private String destination;
-    private float lat;
-    private float lng;
+    private float sourceLattitude;
+    private float sourceLngitude;
+    private float destinationLattitud;
+    private float destinationLngitude;
+
+    public float getSourceLattitude() {
+        return sourceLattitude;
+    }
+
+    public void setSourceLattitude(float sourceLattitude) {
+        this.sourceLattitude = sourceLattitude;
+    }
+
+    public float getSourceLngitude() {
+        return sourceLngitude;
+    }
+
+    public void setSourceLngitude(float sourceLngitude) {
+        this.sourceLngitude = sourceLngitude;
+    }
+
+    public float getDestinationLattitud() {
+        return destinationLattitud;
+    }
+
+    public void setDestinationLattitud(float destinationLattitud) {
+        this.destinationLattitud = destinationLattitud;
+    }
+
+    public float getDestinationLngitude() {
+        return destinationLngitude;
+    }
+
+    public void setDestinationLngitude(float destinationLngitude) {
+        this.destinationLngitude = destinationLngitude;
+    }
+
+    
     private Long driverId;
 
     public String getMobileNo() {
@@ -80,22 +116,6 @@ public class BookingRequestMapping {
 
     public void setDestination(String destination) {
         this.destination = destination;
-    }
-
-    public float getLat() {
-        return lat;
-    }
-
-    public void setLat(float lat) {
-        this.lat = lat;
-    }
-
-    public float getLng() {
-        return lng;
-    }
-
-    public void setLng(float lng) {
-        this.lng = lng;
     }
 
     public Long getDriverId() {
