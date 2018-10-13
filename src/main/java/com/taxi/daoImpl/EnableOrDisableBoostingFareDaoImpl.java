@@ -2,6 +2,7 @@ package com.taxi.daoImpl;
 
 import com.taxi.dao.*;
 import com.taxi.domain.EnableOrDisableBoostingFare;
+import com.taxi.to.EnableDisableBoostPricing;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -41,10 +42,9 @@ public class EnableOrDisableBoostingFareDaoImpl implements EnableOrDisableBoosti
         return false;
     }
 
-    
     @SuppressWarnings("unchecked")
     @Override
-    public List<EnableOrDisableBoostingFare> list() throws Exception {
+    public EnableDisableBoostPricing list() throws Exception {
         try {
             session = sessionFactory.openSession();
             tx = session.getTransaction();
@@ -55,7 +55,9 @@ public class EnableOrDisableBoostingFareDaoImpl implements EnableOrDisableBoosti
             Query query = (Query) session.createQuery(hql);
             boostingFaresList = query.list();
             tx.commit();
-            return boostingFaresList;
+            for (EnableOrDisableBoostingFare enableOrDisableBoostingFare : boostingFaresList) {
+                return new EnableDisableBoostPricing(enableOrDisableBoostingFare.getId(), enableOrDisableBoostingFare.getBoostEnable(), enableOrDisableBoostingFare.getSurgeEnable());
+            }
         } catch (HibernateException e) {
             LOG.error("Exception occured while getting boostingFaresList {}" + e.getMessage());
         } finally {

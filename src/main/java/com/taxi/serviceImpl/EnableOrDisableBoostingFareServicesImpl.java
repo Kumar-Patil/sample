@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.taxi.dao.EnableOrDisableBoostingFareDao;
 import com.taxi.domain.EnableOrDisableBoostingFare;
 import com.taxi.service.EnableOrDisableBoostingFareService;
-import java.util.List;
+import com.taxi.to.EnableDisableBoostPricing;
 
 public class EnableOrDisableBoostingFareServicesImpl implements EnableOrDisableBoostingFareService {
 
@@ -13,7 +13,7 @@ public class EnableOrDisableBoostingFareServicesImpl implements EnableOrDisableB
     EnableOrDisableBoostingFareDao boostingFareDao;
 
     @Override
-    public List<EnableOrDisableBoostingFare> list() throws Exception {
+    public EnableDisableBoostPricing list() throws Exception {
         return boostingFareDao.list();
     }
 

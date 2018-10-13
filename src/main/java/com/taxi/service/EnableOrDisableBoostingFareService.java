@@ -1,10 +1,10 @@
 package com.taxi.service;
 
 import com.taxi.domain.EnableOrDisableBoostingFare;
-import java.util.List;
+import com.taxi.to.EnableDisableBoostPricing;
 
 public interface EnableOrDisableBoostingFareService {
 
-    public List<EnableOrDisableBoostingFare> list() throws Exception;
+    public EnableDisableBoostPricing list() throws Exception;
     public boolean update(EnableOrDisableBoostingFare enableOrDisableBoostingFare) throws Exception;
 }
