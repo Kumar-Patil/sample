@@ -114,7 +114,7 @@ public class UserOnlineDaoImpl implements UserOnlineDao {
             tx.commit();
             isUpdated = true;
         } catch (HibernateException e) {
-            LOG.error("Exception occured while adding {}" + e.getMessage());
+            LOG.error("Exception occured while update {}" + e.getMessage());
         } finally {
             if (session != null) {
                 session.close();

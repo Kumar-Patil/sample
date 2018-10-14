@@ -39,17 +39,7 @@ public class CabsOnline implements Serializable {
     public void setIsOnline(int isOnline) {
         this.isOnline = isOnline;
     }
-    private int isOnTrip;
-
-    @Column(name = "is_on_trip", nullable = false)
-    public int getIsOnTrip() {
-        return isOnTrip;
-    }
-
-    public void setIsOnTrip(int isOnTrip) {
-        this.isOnTrip = isOnTrip;
-    }
-
+    
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private Timestamp last_updated_at;
@@ -175,7 +165,7 @@ public class CabsOnline implements Serializable {
         return true;
     }
 
-    public CabsOnline(Long userOnlineId, String source, String destination, float sourceLat, float sourceLng, float destinationLat, float destinationLng, int isOnline, int isOnTrip, Timestamp createdAt, Timestamp updatedAt, Timestamp last_updated_at, User user) {
+    public CabsOnline(Long userOnlineId, String source, String destination, float sourceLat, float sourceLng, float destinationLat, float destinationLng,int isOnTrip, Timestamp createdAt, Timestamp updatedAt, Timestamp last_updated_at, User user) {
         this.userOnlineId = userOnlineId;
         this.source = source;
         this.destination = destination;
@@ -184,7 +174,6 @@ public class CabsOnline implements Serializable {
         this.destinationLat = destinationLat;
         this.destinationLng = destinationLng;
         this.isOnline = isOnline;
-        this.isOnTrip = isOnTrip;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.last_updated_at = last_updated_at;

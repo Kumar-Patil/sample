@@ -1,7 +1,9 @@
 package com.taxi.daoImpl;
 
 import com.taxi.dao.*;
+import static com.taxi.daoImpl.UserOnlineDaoImpl.LOG;
 import com.taxi.domain.CabsOnline;
+import com.taxi.domain.UserOnline;
 import com.taxi.to.MapData;
 import com.taxi.util.PolylineData;
 import java.util.ArrayList;
@@ -13,6 +15,8 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
 
@@ -65,8 +69,23 @@ public class CabsOnlineDaoImpl implements CabsOnlineDao {
     }
 
     @Override
+    @Cascade({CascadeType.SAVE_UPDATE})
     public boolean update(CabsOnline cabsOnline) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean isUpdated = false;
+        try {
+            session = sessionFactory.openSession();
+            tx = session.beginTransaction();
+            session.saveOrUpdate(cabsOnline);
+            tx.commit();
+            isUpdated = true;
+        } catch (HibernateException e) {
+            LOG.error("Exception occured while update {}" + e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return isUpdated;
     }
 
 }
