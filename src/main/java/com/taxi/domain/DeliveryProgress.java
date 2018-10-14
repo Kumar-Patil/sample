@@ -18,39 +18,29 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
  * @author Santosh
  */
 @Entity
-@Table(name = "user_online")
+@Table(name = "delivery_progress")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class UserOnline implements Serializable {
+public class DeliveryProgress implements Serializable {
 
-    private Long userOnlineId;
+    private Long deliveryProgressId;
+    private Long deliveryId;
+
     private String source;
     private String destination;
     private float sourceLat;
     private float sourceLng;
     private float destinationLat;
     private float destinationLng;
+    private int isProgress;
 
-    private int isOnline;
-
-    @Column(name = "is_online", nullable = false)
-    public int getIsOnline() {
-        return isOnline;
+    @Column(name = "is_progress", nullable = false)
+    public int getIsProgress() {
+        return isProgress;
     }
 
-    public void setIsOnline(int isOnline) {
-        this.isOnline = isOnline;
+    public void setIsProgress(int isProgress) {
+        this.isProgress = isProgress;
     }
-    private int isOnTrip;
-
-    @Column(name = "is_on_trip", nullable = false)
-    public int getIsOnTrip() {
-        return isOnTrip;
-    }
-
-    public void setIsOnTrip(int isOnTrip) {
-        this.isOnTrip = isOnTrip;
-    }
-
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private Timestamp last_updated_at;
@@ -59,12 +49,12 @@ public class UserOnline implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", unique = true, nullable = false)
-    public Long getUserOnlineId() {
-        return userOnlineId;
+    public Long getDeliveryProgressId() {
+        return deliveryProgressId;
     }
 
-    public void setUserOnlineId(Long userOnlineId) {
-        this.userOnlineId = userOnlineId;
+    public void setDeliveryProgressId(Long deliveryProgressId) {
+        this.deliveryProgressId = deliveryProgressId;
     }
 
     @Column(name = "source", nullable = false, length = 255)
@@ -118,7 +108,7 @@ public class UserOnline implements Serializable {
         return user;
     }
 
-    public UserOnline() {
+    public DeliveryProgress() {
     }
 
     public void setUser(User user) {
@@ -161,6 +151,15 @@ public class UserOnline implements Serializable {
         this.destinationLng = destinationLng;
     }
 
+    @Column(name = "delivery_id", nullable = false)
+    public Long getDeliveryId() {
+        return deliveryId;
+    }
+
+    public void setDeliveryId(Long deliveryId) {
+        this.deliveryId = deliveryId;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -172,25 +171,8 @@ public class UserOnline implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final UserOnline other = (UserOnline) obj;
+        final DeliveryProgress other = (DeliveryProgress) obj;
         return true;
     }
 
-    public UserOnline(Long userOnlineId, String source, String destination, float sourceLat, float sourceLng, float destinationLat, float destinationLng, int isOnline, int isOnTrip, Timestamp createdAt, Timestamp updatedAt, Timestamp last_updated_at, User user) {
-        this.userOnlineId = userOnlineId;
-        this.source = source;
-        this.destination = destination;
-        this.sourceLat = sourceLat;
-        this.sourceLng = sourceLng;
-        this.destinationLat = destinationLat;
-        this.destinationLng = destinationLng;
-        this.isOnline = isOnline;
-        this.isOnTrip = isOnTrip;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.last_updated_at = last_updated_at;
-        this.user = user;
-    }
-
-    
 }

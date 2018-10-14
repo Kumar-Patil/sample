@@ -99,6 +99,9 @@
                 <value>com.taxi.domain.DeliverySystemTrackingDetails</value>
                 <value>com.taxi.domain.Trips</value>
                 <value>com.taxi.domain.EnableOrDisableBoostingFare</value>
+                <value>com.taxi.domain.CabsOnline</value>
+                <value>com.taxi.domain.UserOnline</value>
+                <value>com.taxi.domain.DeliveryProgress</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -190,6 +193,15 @@
     
     <bean id="enableOrDisableBoostingFareDao" class="com.taxi.daoImpl.EnableOrDisableBoostingFareDaoImpl"></bean>
     <bean id="enableOrDisableBoostingFareService" class="com.taxi.serviceImpl.EnableOrDisableBoostingFareServicesImpl"></bean>
+    
+    <bean id="cabsOnlineDao" class="com.taxi.daoImpl.CabsOnlineDaoImpl"></bean>
+    <bean id="cabsOnlineService" class="com.taxi.serviceImpl.CabsOnlineServicesImpl"></bean>
+    
+    <bean id="userOnlineDao" class="com.taxi.daoImpl.UserOnlineDaoImpl"></bean>
+    <bean id="userOnlineService" class="com.taxi.serviceImpl.UserOnlineServicesImpl"></bean>
+    
+     <bean id="deliveryProgressDao" class="com.taxi.daoImpl.DeliveryProgressDaoImpl"></bean>
+    <bean id="deliveryProgressService" class="com.taxi.serviceImpl.DeliveryProgressServicesImpl"></bean>
     
     <bean id="messageSource"
           class="org.springframework.context.support.ResourceBundleMessageSource">

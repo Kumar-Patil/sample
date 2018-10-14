@@ -161,9 +161,9 @@ public class TripsDaoImpl implements TripsDao {
         if (trips.size() > 0) {
             for (Trips ts : trips) {
                 polylineDatas.add(new PolylineData(ts.getSourceLat(), ts.getSourceLng(), "SOURCE",
-                        "https://maps.google.com/mapfiles/kml/shapes/parking_lot_maps.png", true));
-                polylineDatas.add(new PolylineData(ts.getDestination_lat(), ts.getDestination_lng(), "Destination",
-                        "", true));
+                        "http://maps.google.com/mapfiles/kml/pal4/icon37.png", true));
+                /*polylineDatas.add(new PolylineData(ts.getDestination_lat(), ts.getDestination_lng(), "Destination",
+                        "", true));*/
             }
         }
         return polylineDatas;

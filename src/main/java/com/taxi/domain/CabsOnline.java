@@ -18,9 +18,9 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
  * @author Santosh
  */
 @Entity
-@Table(name = "user_online")
+@Table(name = "cabs_online")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class UserOnline implements Serializable {
+public class CabsOnline implements Serializable {
 
     private Long userOnlineId;
     private String source;
@@ -29,7 +29,6 @@ public class UserOnline implements Serializable {
     private float sourceLng;
     private float destinationLat;
     private float destinationLng;
-
     private int isOnline;
 
     @Column(name = "is_online", nullable = false)
@@ -118,7 +117,7 @@ public class UserOnline implements Serializable {
         return user;
     }
 
-    public UserOnline() {
+    public CabsOnline() {
     }
 
     public void setUser(User user) {
@@ -172,11 +171,11 @@ public class UserOnline implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final UserOnline other = (UserOnline) obj;
+        final CabsOnline other = (CabsOnline) obj;
         return true;
     }
 
-    public UserOnline(Long userOnlineId, String source, String destination, float sourceLat, float sourceLng, float destinationLat, float destinationLng, int isOnline, int isOnTrip, Timestamp createdAt, Timestamp updatedAt, Timestamp last_updated_at, User user) {
+    public CabsOnline(Long userOnlineId, String source, String destination, float sourceLat, float sourceLng, float destinationLat, float destinationLng, int isOnline, int isOnTrip, Timestamp createdAt, Timestamp updatedAt, Timestamp last_updated_at, User user) {
         this.userOnlineId = userOnlineId;
         this.source = source;
         this.destination = destination;
@@ -192,5 +191,6 @@ public class UserOnline implements Serializable {
         this.user = user;
     }
 
-    
+   
+
 }

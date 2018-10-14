@@ -1,11 +1,12 @@
 package com.taxi.dao;
 
 import com.taxi.domain.UserOnline;
+import com.taxi.util.PolylineData;
 import java.util.List;
 
 public interface UserOnlineDao {
 
-    public List<UserOnline> list() throws Exception;
+    public List<PolylineData> list() throws Exception;
 
     public Long add(UserOnline userOnline) throws Exception;
 

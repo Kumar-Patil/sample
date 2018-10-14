@@ -1,6 +1,7 @@
 package com.taxi.service;
 
 import com.taxi.domain.UserOnline;
+import com.taxi.util.PolylineData;
 import java.util.List;
 
 public interface UserOnlineService {
@@ -9,7 +10,7 @@ public interface UserOnlineService {
 
     public UserOnline findById(long id) throws Exception;
 
-    public List<UserOnline> list() throws Exception;
+    public List<PolylineData> list() throws Exception;
 
     public boolean update(UserOnline userOnline) throws Exception;
 }

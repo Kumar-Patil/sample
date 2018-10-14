@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.taxi.service.UserOnlineService;
+import com.taxi.util.PolylineData;
 
 public class UserOnlineServicesImpl implements UserOnlineService {
 
@@ -24,7 +25,7 @@ public class UserOnlineServicesImpl implements UserOnlineService {
     }
 
     @Override
-    public List<UserOnline> list() throws Exception {
+    public List<PolylineData> list() throws Exception {
         return userOnlineDao.list();
     }
 
